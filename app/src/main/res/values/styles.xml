@@ -5,4 +5,17 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="Title">
+        <item name="android:textSize">20sp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="Title.Genre" parent="Title">
+        <item name="android:background">#BADAFF</item>
+        <item name="android:layout_marginTop">10dp</item>
+    </style>
+
 </resources>
