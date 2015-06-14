@@ -1,0 +1,10 @@
+[
+  {
+    "name":"Dance",
+    "details":"dance.json"
+  },
+  {
+    "name":"Music",
+    "details":"music.json"
+  }
+]

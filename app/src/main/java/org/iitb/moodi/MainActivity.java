@@ -103,4 +103,9 @@ public class MainActivity extends ActionBarActivity
         return super.onOptionsItemSelected(item);
     }
 
+    public void loadSubGenreList(String genre_name) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, SubGenreListFragment.newInstance(genre_name))
+                .commit();
+    }
 }

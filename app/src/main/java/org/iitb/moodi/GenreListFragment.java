@@ -6,14 +6,17 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
-public class GenreListFragment extends Fragment {
+import java.io.LineNumberReader;
+
+public class GenreListFragment extends Fragment implements View.OnClickListener{
+    private MainActivity mAttachedActivity;
 
     public static GenreListFragment newInstance() {
         GenreListFragment fragment = new GenreListFragment();
-        Bundle args = new Bundle();
 
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -31,12 +34,23 @@ public class GenreListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_genre_list, container, false);
+        LinearLayout view = (LinearLayout) inflater.inflate(R.layout.fragment_genre_list, container, false);
+
+        for(int i=0; i<view.getChildCount(); i++)
+            view.getChildAt(i).setOnClickListener(this);
+
+        return view;
     }
 
     @Override
     public void onAttach(Activity activity){
         super.onAttach(activity);
-        ((MainActivity)activity).onSectionAttached(1);
+        mAttachedActivity=(MainActivity)activity;
+        mAttachedActivity.onSectionAttached(1);
+    }
+
+    @Override
+    public void onClick(View v) {
+        mAttachedActivity.loadSubGenreList(((TextView)v).getText().toString());
     }
 }
