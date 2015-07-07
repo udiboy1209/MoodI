@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -54,5 +55,31 @@ public class GenreCard extends RelativeLayout{
 
     public void setColor(int color){
         mColor.setColorFilter(color, PorterDuff.Mode.MULTIPLY);
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+
+        int width = MeasureSpec.getSize(widthMeasureSpec);
+        int height = MeasureSpec.getSize(heightMeasureSpec);
+        int widthDesc = MeasureSpec.getMode(widthMeasureSpec);
+        int heightDesc = MeasureSpec.getMode(heightMeasureSpec);
+        int size = 0;
+        if (widthDesc == MeasureSpec.UNSPECIFIED
+                && heightDesc == MeasureSpec.UNSPECIFIED) {
+            size = getContext().getResources().getDimensionPixelSize(R.dimen.genre_card_size); // Use your own default size, for example 125dp
+        } else if ((widthDesc == MeasureSpec.UNSPECIFIED || heightDesc == MeasureSpec.UNSPECIFIED)
+                && !(widthDesc == MeasureSpec.UNSPECIFIED && heightDesc == MeasureSpec.UNSPECIFIED)) {
+            //Only one of the dimensions has been specified so we choose the dimension that has a value (in the case of unspecified, the value assigned is 0)
+            size = width > height ? width : height;
+        } else {
+            //In all other cases both dimensions have been specified so we choose the smaller of the two
+            //size = width > height ? height : width;
+            size = width;
+        }
+        setMeasuredDimension(size, size);
+
+        Log.d("GenreCard", "on Measure : "+size);
     }
 }
