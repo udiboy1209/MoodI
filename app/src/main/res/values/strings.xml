@@ -9,5 +9,8 @@
     <string name="action_settings">Settings</string>
 
     <string name="title_navbar_tab1">Home</string>
+    <string name="title_activity_splash">SplashActivity</string>
+
+    <string name="hello_world">Hello world!</string>
 
 </resources>

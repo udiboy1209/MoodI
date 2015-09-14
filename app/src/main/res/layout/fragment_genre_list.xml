@@ -6,6 +6,7 @@
     android:horizontalSpacing="1.5dp"
     android:verticalSpacing="1.5dp"
     android:numColumns="2"
-    android:stretchMode="columnWidth">
+    android:stretchMode="columnWidth"
+    android:id="@+id/">
 
     </GridView>
