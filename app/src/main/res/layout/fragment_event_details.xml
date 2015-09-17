@@ -1,25 +1,22 @@
-<android.support.v4.app.FragmentTabHost
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@android:id/tabhost"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <android.support.design.widget.TabLayout
+        android:id="@+id/sliding_tabs"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical" >
+        android:layout_height="wrap_content"
+        />
 
-        <TabWidget
-            android:id="@android:id/tabs"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"/>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="0px"
+        android:layout_weight="1"
+        android:background="@android:color/white"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
-        <FrameLayout
-            android:id="@android:id/tabcontent"
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-    </LinearLayout>
-
-</android.support.v4.app.FragmentTabHost>
+</LinearLayout>
