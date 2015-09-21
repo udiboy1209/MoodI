@@ -18,7 +18,8 @@
         </activity>
         <activity
             android:name=".ui.activity.SplashActivity"
-            android:label="@string/title_activity_splash">
+            android:label="@string/title_activity_splash"
+            android:theme="@android:style/Theme.NoTitleBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
