@@ -1,0 +1,98 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="org.iitb.moodi.RegistrationActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="7"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:orientation="vertical" >
+        <TextView
+            android:id="@+id/reg_name"
+            android:hint="Name"
+            android:textSize="18dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            style="?android:listSeparatorTextViewStyle"/>
+
+        <TextView
+            android:id="@+id/reg_email"
+            android:hint="Email"
+            android:textSize="18dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            style="?android:listSeparatorTextViewStyle"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/reg_phone"
+                android:hint="Phone"
+                android:layout_width="0dp"
+                android:textSize="18dp"
+                android:layout_weight="3"
+                android:layout_height="match_parent"
+                style="?android:listSeparatorTextViewStyle"/>
+            <Spinner
+                android:id="@+id/reg_gender"
+                android:layout_width="0dp"
+
+                android:layout_weight="2"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/reg_college"
+            android:hint="College"
+            android:textSize="18dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            style="?android:listSeparatorTextViewStyle"/>
+
+        <TextView
+            android:id="@+id/reg_city"
+            android:hint="City"
+            android:textSize="18dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            style="?android:listSeparatorTextViewStyle"/>
+
+        <TextView
+            android:id="@+id/reg_year"
+            android:hint="Year of Study"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:textSize="18dp"
+            android:layout_weight="1"
+            style="?android:listSeparatorTextViewStyle"/>
+
+        <TextView
+            android:id="@+id/reg_dob"
+            android:hint="Date of Birth (DD-MM-YYYY)"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:textSize="18dp"
+            style="?android:listSeparatorTextViewStyle"/>
+    </LinearLayout>
+
+    <Button
+        android:background="@color/action_bar"
+        style="?android:buttonBarButtonStyle"
+        android:text="Register"
+        android:textColor="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+</LinearLayout>

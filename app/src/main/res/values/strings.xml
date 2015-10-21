@@ -21,4 +21,5 @@
         <item>Augmented Reality</item>
         <item>Contact Us</item>
     </string-array>
+    <string name="title_activity_registration">RegistrationActivity</string>
 </resources>
