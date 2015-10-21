@@ -13,4 +13,12 @@
 
     <string name="hello_world">Hello world!</string>
 
+    <string-array  name="drawer_list">
+        <item>Home</item>
+        <item>Treasure Hunt</item>
+        <item>Events Registration</item>
+        <item>Results</item>
+        <item>Augmented Reality</item>
+        <item>Contact Us</item>
+    </string-array>
 </resources>
