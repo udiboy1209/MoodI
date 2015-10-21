@@ -3,7 +3,6 @@ package org.iitb.moodi;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTabHost;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -70,7 +69,18 @@ public class EventDetailsFragment extends Fragment {
          */
         @Override
         public CharSequence getPageTitle(int position) {
-            return "Item " + (position + 1);
+            switch (position) {
+                case 0:
+                    return "About";
+                case 1:
+                    return "Rules";
+                case 2:
+                    return "Prizes";
+                case 3:
+                    return "Register";
+                default:
+                    return "Item";
+            }
         }
 
         /**

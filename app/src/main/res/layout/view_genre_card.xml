@@ -1,26 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/shape_genre_card_background"
-    android:layout_gravity="center_horizontal">
-    <TextView
+    android:padding="5dp">
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:text="Example Genre"
-        android:layout_marginTop="25dp"
-        android:id="@+id/genre_card_title"
-        android:gravity="center"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="25dp"
-        android:id="@+id/genre_card_color"
-        android:src="@drawable/shape_genre_card_color"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/genre_card_color"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/shape_genre_card_color"
+            />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Example Genre"
+            android:layout_gravity="center_vertical"
+            android:id="@+id/genre_card_title"
+            />
+
+    </LinearLayout>
 </RelativeLayout>

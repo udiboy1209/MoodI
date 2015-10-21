@@ -54,7 +54,7 @@ public class MainActivity extends ActionBarActivity
 
         if(position==0) {
             fragmentManager.beginTransaction()
-                    .replace(R.id.container, EventDetailsFragment.newInstance())
+                    .replace(R.id.container, GenreListFragment.newInstance())
                     .commit();
         }
     }

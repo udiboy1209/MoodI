@@ -8,13 +8,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.iitb.moodi.MainActivity;
 import org.iitb.moodi.R;
 
-public class GenreCard extends RelativeLayout{
+public class GenreCard extends LinearLayout {
     MainActivity mContext;
 
     TextView mTitle;
