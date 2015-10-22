@@ -1,25 +1,17 @@
-package org.iitb.moodi;
+package org.iitb.moodi.ui.activity;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
+import android.view.View;
+
+import org.iitb.moodi.ui.fragment.NavigationDrawerFragment;
+import org.iitb.moodi.R;
 
 
 public class MainActivity extends AppCompatActivity
@@ -62,16 +54,17 @@ public class MainActivity extends AppCompatActivity
         FragmentManager fragmentManager = getSupportFragmentManager();
 
         if(position==0) {
-            fragmentManager.beginTransaction()
-                    .replace(R.id.container, GenreListFragment.newInstance())
-                    .commit();
+
         }
     }
 
-    public void onSectionAttached(int number) {
-        switch (number) {
-            case 1:
-                mTitle = getString(R.string.title_navbar_tab1);
+    public void onSectionAttached(int id) {
+        findViewById(R.id.countdown_container).setVisibility(View.GONE);
+        switch (id) {
+            case R.layout.fragment_main:
+                mTitle = "MOOD INDIGO";
+                findViewById(R.id.countdown_container).setVisibility(View.VISIBLE);
+                toolbar.setBackgroundResource(R.drawable.toolbar_shadow_gradient);
                 break;
         }
     }
@@ -107,11 +100,5 @@ public class MainActivity extends AppCompatActivity
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public void loadSubGenreList(String genre_name) {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, SubGenreListFragment.newInstance(genre_name))
-                .commit();
     }
 }

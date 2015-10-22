@@ -1,4 +1,4 @@
-package org.iitb.moodi;
+package org.iitb.moodi.ui.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +10,9 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import org.iitb.moodi.BaseActivity;
+import org.iitb.moodi.R;
 
 public class RegistrationActivity extends BaseActivity {
 
