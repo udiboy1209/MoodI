@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
-    private Toolbar toolbar;
+    public Toolbar toolbar;
 
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
@@ -30,8 +30,8 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Intent i = new Intent(getBaseContext(), RegistrationActivity.class);
-        startActivity(i);
+        //Intent i = new Intent(getBaseContext(), RegistrationActivity.class);
+        //startActivity(i);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 

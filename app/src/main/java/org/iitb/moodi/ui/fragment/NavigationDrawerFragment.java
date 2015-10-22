@@ -11,6 +11,8 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,6 +25,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import org.iitb.moodi.R;
+import org.iitb.moodi.ui.activity.MainActivity;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -101,7 +104,7 @@ public class NavigationDrawerFragment extends Fragment {
         });
 
         mDrawerListView.setAdapter(new ArrayAdapter<String>(
-                getActionBar().getThemedContext(),
+                getActivity(),
                 android.R.layout.simple_list_item_1,
                 android.R.id.text1,
                 new String[]{
@@ -129,9 +132,9 @@ public class NavigationDrawerFragment extends Fragment {
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         // set up the drawer's list view with items and click listener
 
-        ActionBar actionBar = getActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeButtonEnabled(true);
+        Toolbar actionBar = getActionBar();
+        //actionBar.setDisplayHomeAsUpEnabled(true);
+        //actionBar.setHomeButtonEnabled(true);
 
         // ActionBarDrawerToggle ties together the the proper interactions
         // between the navigation drawer and the action bar app icon.
@@ -256,14 +259,14 @@ public class NavigationDrawerFragment extends Fragment {
      * 'context', rather than just what's in the current screen.
      */
     private void showGlobalContextActionBar() {
-        ActionBar actionBar = getActionBar();
-        actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+        Toolbar actionBar = getActionBar();
+        //actionBar.setDisplayShowTitleEnabled(true);
+        //actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setTitle(R.string.app_name);
     }
 
-    private ActionBar getActionBar() {
-        return ((ActionBarActivity) getActivity()).getSupportActionBar();
+    private Toolbar getActionBar() {
+        return ((MainActivity) getActivity()).toolbar;
     }
 
     /**
