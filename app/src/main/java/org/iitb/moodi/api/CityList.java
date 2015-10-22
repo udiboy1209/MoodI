@@ -34,4 +34,28 @@ public class CityList extends BaseResponse {
         /* TODO :- Return appropriate String  */
         return "";
     }
+
+    public class City {
+        @SerializedName("city_id")
+        private int id;
+        @SerializedName("city_name")
+        private String name;
+        @SerializedName("count_clgs")
+        private int college_count;
+        @SerializedName("count_allusers")
+        private int user_count;
+
+        public int getId() {
+            return id;
+        }
+        public String getName() {
+            return name;
+        }
+        public int getCollegeCount() {
+            return college_count;
+        }
+        public int getUserCount() {
+            return user_count;
+        }
+    }
 }
