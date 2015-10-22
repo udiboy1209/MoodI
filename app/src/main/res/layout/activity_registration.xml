@@ -11,37 +11,34 @@
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:orientation="vertical" >
-        <TextView
+        <EditText
             android:id="@+id/reg_name"
             android:hint="Name"
             android:textSize="18dp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            style="?android:listSeparatorTextViewStyle"/>
+            android:layout_weight="1" />
 
-        <TextView
+        <EditText
             android:id="@+id/reg_email"
             android:hint="Email"
             android:textSize="18dp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            style="?android:listSeparatorTextViewStyle"/>
+            android:layout_weight="1" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="horizontal">
-            <TextView
+            <EditText
                 android:id="@+id/reg_phone"
                 android:hint="Phone"
                 android:layout_width="0dp"
                 android:textSize="18dp"
                 android:layout_weight="3"
-                android:layout_height="match_parent"
-                style="?android:listSeparatorTextViewStyle"/>
+                android:layout_height="match_parent" />
             <Spinner
                 android:id="@+id/reg_gender"
                 android:layout_width="0dp"
@@ -50,41 +47,37 @@
                 android:layout_height="match_parent" />
         </LinearLayout>
 
-        <TextView
+        <EditText
             android:id="@+id/reg_college"
             android:hint="College"
             android:textSize="18dp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            style="?android:listSeparatorTextViewStyle"/>
+            android:layout_weight="1" />
 
-        <TextView
+        <EditText
             android:id="@+id/reg_city"
             android:hint="City"
             android:textSize="18dp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            style="?android:listSeparatorTextViewStyle"/>
+            android:layout_weight="1" />
 
-        <TextView
+        <EditText
             android:id="@+id/reg_year"
             android:hint="Year of Study"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:textSize="18dp"
-            android:layout_weight="1"
-            style="?android:listSeparatorTextViewStyle"/>
+            android:layout_weight="1" />
 
-        <TextView
+        <EditText
             android:id="@+id/reg_dob"
             android:hint="Date of Birth (DD-MM-YYYY)"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:textSize="18dp"
-            style="?android:listSeparatorTextViewStyle"/>
+            android:textSize="18dp" />
     </LinearLayout>
 
     <Button
