@@ -1,6 +1,5 @@
 package org.iitb.moodi;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.Menu;
@@ -9,7 +8,14 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
+import android.widget.Toast;
+
+import org.iitb.moodi.api.CityList;
+
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class RegistrationActivity extends BaseActivity {
 
@@ -26,6 +32,26 @@ public class RegistrationActivity extends BaseActivity {
                 android.R.layout.simple_spinner_item, items);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         gender.setAdapter(adapter);
+
+        RestAdapter restAdapter = new RestAdapter.Builder()
+                .setEndpoint(API_URL)
+                .build();
+        MoodIndigoClient methods = restAdapter.create(MoodIndigoClient.class);
+        Callback callback = new Callback() {
+            @Override
+            public void success(Object o, Response response) {
+                CityList cities = (CityList)o;
+                Toast.makeText(getBaseContext(),""+cities.getCityList().length,Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void failure(RetrofitError retrofitError) {
+                String error = retrofitError.getMessage();
+                Toast.makeText(getBaseContext(),error,Toast.LENGTH_SHORT).show();
+            }
+        };
+        methods.getCities(callback);
+
     }
 
     @Override

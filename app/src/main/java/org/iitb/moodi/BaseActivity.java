@@ -10,6 +10,7 @@ import org.iitb.moodi.api.User;
 public class BaseActivity extends AppCompatActivity {
 
     public User me;
+    public final String API_URL = "http://moodi.org";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
