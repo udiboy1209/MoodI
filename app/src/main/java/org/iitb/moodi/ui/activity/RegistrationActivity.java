@@ -1,6 +1,7 @@
 package org.iitb.moodi.ui.activity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,7 +15,7 @@ import android.widget.Toast;
 import org.iitb.moodi.MoodIndigoClient;
 import org.iitb.moodi.R;
 import org.iitb.moodi.api.CityList;
-import org.iitb.moodi.api.College;
+import org.iitb.moodi.api.CollegeList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,12 +28,12 @@ import retrofit.client.Response;
 public class RegistrationActivity extends BaseActivity implements AdapterView.OnItemSelectedListener {
 
     CityList.City[] cities;
-    College[] colleges;
+    CollegeList.College[] colleges;
     Spinner gender, city, college, year;
     String[] gender_choices = new String[] {"Gender","Male","Female"};
     String[] year_choices = new String[] {"First","Second","Third","Fourth","Fifth"};
     List<String> city_choices = new ArrayList<String>();
-
+    List<String> college_choices = new ArrayList<String>();
     private static final String TAG = "RegistrationActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,9 +55,11 @@ public class RegistrationActivity extends BaseActivity implements AdapterView.On
         year.setAdapter(adapter);
 
         // Getting city details
+        String[] help_text = new String[] {"Please select your city"};
+        city = (Spinner) findViewById(R.id.reg_city);
+        city.setOnItemSelectedListener(this);
+
         setCities();
-
-
     }
 
     @Override
@@ -92,8 +95,8 @@ public class RegistrationActivity extends BaseActivity implements AdapterView.On
     public boolean validateData() {
         boolean check = true;
         String emptyErrorMsg = getResources().getString(R.string.empty_error);
-        int[] checksArray = {R.id.reg_name,R.id.reg_city, R.id.reg_email, R.id.reg_year,
-                             R.id.reg_dob,R.id.reg_phone,R.id.reg_college};
+        int[] checksArray = {R.id.reg_name, R.id.reg_email, R.id.reg_year,
+                             R.id.reg_dob,R.id.reg_phone};
         // Checking whether edit texts are empty
         for(int id : checksArray) {
             if (getEditText(id).equals("")) {
@@ -124,9 +127,11 @@ public class RegistrationActivity extends BaseActivity implements AdapterView.On
     }
 
     public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
+
         if (parent.getId()==R.id.reg_city) {
             int city_number = (int)parent.getSelectedItemId();
             setColleges(cities[city_number].getId());
+            Toast.makeText(getBaseContext(), "Fetching colleges..", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -152,11 +157,13 @@ public class RegistrationActivity extends BaseActivity implements AdapterView.On
                         android.R.layout.simple_spinner_item, city_choices);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 city.setAdapter(adapter);
+                //city.setOnItemSelectedListener();
             }
             @Override
             public void failure(RetrofitError retrofitError) {
                 String error = retrofitError.getMessage();
-                Toast.makeText(getBaseContext(), error, Toast.LENGTH_SHORT).show();
+                Log.e(TAG, error);
+                //Toast.makeText(getBaseContext(), error, Toast.LENGTH_SHORT).show();
             }
         };
         methods.getCities(callback);
@@ -170,12 +177,21 @@ public class RegistrationActivity extends BaseActivity implements AdapterView.On
         Callback callback = new Callback() {
             @Override
             public void success(Object o, Response response) {
-
+                CollegeList collegeList = (CollegeList)o;
+                colleges = collegeList.getCollegeList();
+                for (CollegeList.College college_obj : colleges) {
+                    college_choices.add(college_obj.getName());
+                }
+                college = (Spinner) findViewById(R.id.reg_college);
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getBaseContext(),
+                        android.R.layout.simple_spinner_item, college_choices);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                college.setAdapter(adapter);
             }
             @Override
             public void failure(RetrofitError retrofitError) {
                 String error = retrofitError.getMessage();
-                Toast.makeText(getBaseContext(),error,Toast.LENGTH_SHORT).show();
+                Log.e(TAG,error);
             }
         };
         methods.getColleges(""+city_id,callback);
