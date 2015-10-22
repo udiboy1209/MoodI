@@ -1,4 +1,4 @@
-package org.iitb.moodi;
+package org.iitb.moodi.ui.activity;
 
 import android.os.Bundle;
 import android.util.Patterns;
@@ -11,6 +11,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import org.iitb.moodi.BaseActivity;
+import org.iitb.moodi.MoodIndigoClient;
+import org.iitb.moodi.R;
 import org.iitb.moodi.api.CityList;
 import org.iitb.moodi.api.College;
 
