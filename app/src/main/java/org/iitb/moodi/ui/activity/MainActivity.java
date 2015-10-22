@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 
+import org.iitb.moodi.ui.fragment.HomeFragment;
 import org.iitb.moodi.ui.fragment.NavigationDrawerFragment;
 import org.iitb.moodi.R;
 
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity
 
         toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -47,6 +49,10 @@ public class MainActivity extends AppCompatActivity
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.container, HomeFragment.newInstance())
+                .commit();
     }
 
     @Override
@@ -63,7 +69,7 @@ public class MainActivity extends AppCompatActivity
         findViewById(R.id.countdown_container).setVisibility(View.GONE);
         switch (id) {
             case R.layout.fragment_main:
-                mTitle = "MOOD INDIGO";
+                //mTitle = "MOOD INDIGO";
                 findViewById(R.id.countdown_container).setVisibility(View.VISIBLE);
                 toolbar.setBackgroundResource(R.drawable.toolbar_shadow_gradient);
                 break;

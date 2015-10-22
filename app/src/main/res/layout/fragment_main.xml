@@ -1,26 +1,30 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <TextView
-        android:text="Competitions"
-        style="@style/ListItemText"
-        android:drawableLeft="@drawable/list_icon_compi"/>
-    <TextView
-        android:text="Informals"
-        style="@style/ListItemText"
-        android:drawableLeft="@drawable/list_icon_informals"/>
-    <TextView
-        android:text="Concerts"
-        style="@style/ListItemText"
-        android:drawableLeft="@drawable/list_icon_concerts"/>
-    <TextView
-        android:text="Proshows"
-        style="@style/ListItemText"
-        android:drawableLeft="@drawable/list_icon_proshows"/>
-    <TextView
-        android:text="Arts and Workshops"
-        style="@style/ListItemText"
-        android:drawableLeft="@drawable/list_icon_arts"/>
-</LinearLayout>
+        <TextView
+            android:text="Competitions"
+            style="@style/ListItemText"
+            android:drawableLeft="@drawable/list_icon_compi"/>
+        <TextView
+            android:text="Informals"
+            style="@style/ListItemText"
+            android:drawableLeft="@drawable/list_icon_informals"/>
+        <TextView
+            android:text="Concerts"
+            style="@style/ListItemText"
+            android:drawableLeft="@drawable/list_icon_concerts"/>
+        <TextView
+            android:text="Proshows"
+            style="@style/ListItemText"
+            android:drawableLeft="@drawable/list_icon_proshows"/>
+        <TextView
+            android:text="Arts and Workshops"
+            style="@style/ListItemText"
+            android:drawableLeft="@drawable/list_icon_arts"/>
+    </LinearLayout>
+</ScrollView>
