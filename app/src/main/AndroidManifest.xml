@@ -32,7 +32,7 @@
             android:label="@string/title_activity_registration" >
         </activity>
         <activity
-            android:name=".BaseActivity"
+            android:name=".ui.activity.BaseActivity"
             android:label="@string/title_activity_base" >
         </activity>
     </application>

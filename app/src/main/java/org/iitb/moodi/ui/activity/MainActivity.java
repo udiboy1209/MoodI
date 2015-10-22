@@ -30,6 +30,8 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Intent i = new Intent(getBaseContext(), RegistrationActivity.class);
+        startActivity(i);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -44,8 +46,7 @@ public class MainActivity extends AppCompatActivity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
-        Intent i = new Intent(getBaseContext(), RegistrationActivity.class);
-        startActivity(i);
+
     }
 
     @Override
