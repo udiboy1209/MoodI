@@ -12,7 +12,7 @@
     <string name="title_activity_splash">SplashActivity</string>
 
     <string name="hello_world">Hello world!</string>
-
+    <string name="empty_error">Field cannot be empty!</string>
     <string-array  name="drawer_list">
         <item>Home</item>
         <item>Treasure Hunt</item>
@@ -22,4 +22,5 @@
         <item>Contact Us</item>
     </string-array>
     <string name="title_activity_registration">RegistrationActivity</string>
+    <string name="title_activity_base">BaseActivity</string>
 </resources>

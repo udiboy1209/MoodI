@@ -8,7 +8,8 @@ import java.io.IOException;
  * Created by kalpesh on 22/10/15.
  */
 public class User {
-    public String id, name, email, gender, date_of_birth, phone, year, city, college;
+    public String fbid, id, name, email, gender, dob,
+            phone, year_study, city_id, college_id;
 
     public User() {
 
@@ -19,15 +20,16 @@ public class User {
     }
 
     public void loadJSONData(JSONObject user) throws IOException {
+        fbid=user.optString("fbid");
         id=user.optString("id");
         name=user.optString("name");
         email=user.optString("email");
         gender=user.optString("gender");
-        college=user.optString("college");
+        college_id=user.optString("college_id");
         phone =user.optString("phone");
-        city=user.optString("city");
-        year=user.optString("year");
-        date_of_birth=user.optString("date_of_birth");
+        city_id=user.optString("city_id");
+        year_study=user.optString("year_study");
+        dob=user.optString("dob");
     }
 
     public String getJSON() {
@@ -37,11 +39,11 @@ public class User {
         json+=",\"name\":\""+name+"\"";
         json+=",\"email\":\""+email+"\"";
         json+=",\"gender\":\""+gender+"\"";
-        json+=",\"college\":\""+college+"\"";
+        json+=",\"college_id\":\""+college_id+"\"";
         json+=",\"phone\":\""+ phone +"\"";
-        json+=",\"city\":\""+city+"\"";
-        json+=",\"year\":\""+year+"\"";
-        json+=",\"date_of_birth\":\""+date_of_birth+"\"";
+        json+=",\"city_id\":\""+city_id+"\"";
+        json+=",\"year_study\":\""+year_study+"\"";
+        json+=",\"dob\":\""+dob+"\"";
         return json;
     }
 }

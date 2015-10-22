@@ -14,7 +14,6 @@
         <EditText
             android:id="@+id/reg_name"
             android:hint="Name"
-            android:textSize="18dp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1" />
@@ -22,7 +21,6 @@
         <EditText
             android:id="@+id/reg_email"
             android:hint="Email"
-            android:textSize="18dp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1" />
@@ -36,13 +34,11 @@
                 android:id="@+id/reg_phone"
                 android:hint="Phone"
                 android:layout_width="0dp"
-                android:textSize="18dp"
                 android:layout_weight="3"
                 android:layout_height="match_parent" />
             <Spinner
                 android:id="@+id/reg_gender"
                 android:layout_width="0dp"
-
                 android:layout_weight="2"
                 android:layout_height="match_parent" />
         </LinearLayout>
@@ -50,7 +46,6 @@
         <EditText
             android:id="@+id/reg_college"
             android:hint="College"
-            android:textSize="18dp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1" />
@@ -58,7 +53,6 @@
         <EditText
             android:id="@+id/reg_city"
             android:hint="City"
-            android:textSize="18dp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1" />
@@ -68,7 +62,6 @@
             android:hint="Year of Study"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:textSize="18dp"
             android:layout_weight="1" />
 
         <EditText
@@ -76,14 +69,14 @@
             android:hint="Date of Birth (DD-MM-YYYY)"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:textSize="18dp" />
+            android:layout_weight="1" />
     </LinearLayout>
 
     <Button
         android:background="@color/action_bar"
         style="?android:buttonBarButtonStyle"
         android:text="Register"
+        android:onClick="saveData"
         android:textColor="@color/white"
         android:layout_width="match_parent"
         android:layout_height="0dp"
