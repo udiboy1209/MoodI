@@ -5,52 +5,51 @@ import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import org.iitb.moodi.api.CityList;
+import org.iitb.moodi.api.College;
+
+import java.util.List;
 
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class RegistrationActivity extends BaseActivity {
+public class RegistrationActivity extends BaseActivity implements AdapterView.OnItemSelectedListener {
 
-    Spinner gender;
+    CityList.City[] cities;
+    College[] colleges;
+    Spinner gender, city, college, year;
+    String[] gender_choices = new String[] {"Male","Female", "Gender"};
+    String[] year_choices = new String[] {"First","Second","Third","Fourth","Fifth"};
     private static final String TAG = "RegistrationActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
 
-        String[] items = new String[] {"Male","Female"};
+        // Working on Gender Spinner
         gender = (Spinner) findViewById(R.id.reg_gender);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, items);
+                android.R.layout.simple_spinner_item, gender_choices);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         gender.setAdapter(adapter);
 
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(API_URL)
-                .build();
-        MoodIndigoClient methods = restAdapter.create(MoodIndigoClient.class);
-        Callback callback = new Callback() {
-            @Override
-            public void success(Object o, Response response) {
-                CityList cities = (CityList)o;
-                Toast.makeText(getBaseContext(),""+cities.getCityList().length,Toast.LENGTH_SHORT).show();
-            }
+        // Working on Year of Study Spinner
+        year = (Spinner) findViewById(R.id.reg_year);
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, year_choices);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        year.setAdapter(adapter2);
 
-            @Override
-            public void failure(RetrofitError retrofitError) {
-                String error = retrofitError.getMessage();
-                Toast.makeText(getBaseContext(),error,Toast.LENGTH_SHORT).show();
-            }
-        };
-        methods.getCities(callback);
+        // Getting city details
+        setCities();
 
     }
 
@@ -108,12 +107,65 @@ public class RegistrationActivity extends BaseActivity {
                 ((EditText)findViewById(R.id.reg_phone)).setError("Please type 10 digit phone number");
                 check= false;
             }
+
         }
         return check;
     }
+
     public void saveData(View view) {
         if (!validateData())
             return;
+    }
+
+    public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
+        if (parent.getId()==R.id.reg_city) {
+            int city_number = (int)parent.getSelectedItemId();
+            setColleges(cities[city_number].getId());
+        }
+    }
+
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
+    public void setCities() {
+        RestAdapter restAdapter = new RestAdapter.Builder()
+                .setEndpoint(API_URL)
+                .build();
+        MoodIndigoClient methods = restAdapter.create(MoodIndigoClient.class);
+        Callback callback = new Callback() {
+            @Override
+            public void success(Object o, Response response) {
+                CityList citylist = (CityList)o;
+                cities = citylist.getCityList();
+            }
+            @Override
+            public void failure(RetrofitError retrofitError) {
+                String error = retrofitError.getMessage();
+                Toast.makeText(getBaseContext(),error,Toast.LENGTH_SHORT).show();
+            }
+        };
+        methods.getCities(callback);
+    }
+
+    public void setColleges(int city_id) {
+        RestAdapter restAdapter = new RestAdapter.Builder()
+                .setEndpoint(API_URL)
+                .build();
+        MoodIndigoClient methods = restAdapter.create(MoodIndigoClient.class);
+        Callback callback = new Callback() {
+            @Override
+            public void success(Object o, Response response) {
+                //CityList citylist = (CityList)o;
+                //colleges = citylist.getCityList();
+            }
+            @Override
+            public void failure(RetrofitError retrofitError) {
+                String error = retrofitError.getMessage();
+                Toast.makeText(getBaseContext(),error,Toast.LENGTH_SHORT).show();
+            }
+        };
+        methods.getColleges(""+city_id,callback);
     }
 
 }
