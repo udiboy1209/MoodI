@@ -9,7 +9,7 @@
         android:theme="@style/AppTheme" >
 
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.activity.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,7 +28,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".RegistrationActivity"
+            android:name=".ui.activity.RegistrationActivity"
             android:label="@string/title_activity_registration" >
         </activity>
         <activity

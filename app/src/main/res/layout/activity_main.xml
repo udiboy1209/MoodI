@@ -10,10 +10,19 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical">
-        <android.support.v7.widget.Toolbar
+        <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/toolbar"/>
+            android:orientation="vertical"
+            android:background="#0077FF">
+            <android.support.v7.widget.Toolbar
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/toolbar"
+                android:background="@drawable/toolbar_shadow_gradient"/>
+            <include layout="@layout/widget_countdown_clock" android:id="@+id/countdown_container"/>
+        </LinearLayout>
+
         <FrameLayout android:id="@+id/container" android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>
@@ -27,7 +36,7 @@
          the container. -->
     <fragment android:id="@+id/navigation_drawer"
         android:layout_width="@dimen/navigation_drawer_width" android:layout_height="match_parent"
-        android:layout_gravity="start" android:name="org.iitb.moodi.NavigationDrawerFragment"
+        android:layout_gravity="start" android:name="org.iitb.moodi.ui.fragment.NavigationDrawerFragment"
         tools:layout="@layout/fragment_navigation_drawer" />
 
 </android.support.v4.widget.DrawerLayout>

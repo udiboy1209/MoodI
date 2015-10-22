@@ -2,17 +2,15 @@ package org.iitb.moodi.ui;
 
 import android.content.Context;
 import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import org.iitb.moodi.MainActivity;
+import org.iitb.moodi.ui.activity.MainActivity;
 import org.iitb.moodi.R;
 
 public class GenreCard extends LinearLayout {

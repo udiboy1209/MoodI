@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="30dp"
+    android:paddingBottom="30dp">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/countdown_days"
+        android:gravity="center"
+        android:text="78"
+        android:layout_toLeftOf="@+id/countdown_hrs"
+        android:layout_marginBottom="3dp"
+        android:textSize="40sp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="DAYS"
+        android:id="@+id/countdown_label_days"
+        android:layout_alignLeft="@+id/countdown_days"
+        android:layout_alignRight="@+id/countdown_days"
+        android:layout_below="@+id/countdown_days"
+        android:gravity="center" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/countdown_hrs"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:text="13"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="3dp"
+        android:textSize="40sp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="HOURS"
+        android:id="@+id/countdown_label_hrs"
+        android:layout_below="@+id/countdown_hrs"
+        android:layout_alignLeft="@+id/countdown_hrs"
+        android:layout_alignRight="@+id/countdown_hrs"
+        android:gravity="center" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/countdown_min"
+        android:gravity="center"
+        android:text="54"
+        android:layout_toRightOf="@+id/countdown_hrs"
+        android:layout_marginBottom="3dp"
+        android:textSize="40sp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MINS"
+        android:id="@+id/countdown_label_mins"
+        android:layout_below="@+id/countdown_min"
+        android:layout_alignLeft="@+id/countdown_min"
+        android:layout_alignRight="@+id/countdown_min"
+        android:gravity="center" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Countdown to the best days of your life"
+        android:id="@+id/countdown_message"
+        android:layout_below="@+id/countdown_label_hrs"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp" />
+
+</RelativeLayout>
