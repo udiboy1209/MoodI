@@ -36,3 +36,4 @@ proguard/
 captures/
 
 *.iml
+app/*.iml
