@@ -1,7 +1,5 @@
 package org.iitb.moodi.ui.fragment;
-
-import android.app.Activity;
-import android.support.v4.app.Fragment;
+;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -9,18 +7,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.iitb.moodi.R;
-import org.iitb.moodi.ui.activity.MainActivity;
 
 /**
  * Created by udiboy on 22/10/15.
  */
-public class HomeFragment extends Fragment {
-    MainActivity mActivity;
-
+public class HomeFragment extends BaseFragment {
     public static HomeFragment newInstance() {
         Bundle args = new Bundle();
 
         HomeFragment fragment = new HomeFragment();
+        fragment.mID = R.layout.fragment_main;
         fragment.setArguments(args);
         return fragment;
     }
@@ -33,11 +29,10 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        if(activity instanceof MainActivity)
-            mActivity=(MainActivity)activity;
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
-        mActivity.onSectionAttached(R.layout.fragment_main);
-        super.onAttach(activity);
+        View v = mActivity.getLayoutInflater().inflate(R.layout.widget_countdown_clock,mActivity.toolbarContainer,false);
+        mActivity.customizeToolbar(R.color.color_arts, "Mood Indigo '15", v);
     }
 }

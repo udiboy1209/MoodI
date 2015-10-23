@@ -14,7 +14,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="#0077FF">
+            android:background="#0077FF"
+            android:id="@+id/toolbar_container">
             <android.support.v7.widget.Toolbar
                 android:layout_width="fill_parent"
                 android:layout_height="?attr/actionBarSize"
@@ -24,7 +25,7 @@
             <include layout="@layout/widget_countdown_clock" android:id="@+id/countdown_container" android:visibility="gone"/>
         </LinearLayout>
 
-        <FrameLayout android:id="@+id/container" android:layout_width="match_parent"
+        <ScrollView android:id="@+id/container" android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>
 

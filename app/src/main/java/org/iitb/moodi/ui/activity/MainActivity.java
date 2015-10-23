@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import org.iitb.moodi.ui.fragment.HomeFragment;
 import org.iitb.moodi.ui.fragment.NavigationDrawerFragment;
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
     public Toolbar toolbar;
+    public LinearLayout toolbarContainer;
 
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
@@ -36,6 +38,8 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //collapsingToolbar = (CollapsingToolbarLayout)findViewById(R.id.collapsing_toolbar);
+        toolbarContainer = (LinearLayout) findViewById(R.id.toolbar_container);
         toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp);
@@ -66,12 +70,12 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void onSectionAttached(int id) {
-        findViewById(R.id.countdown_container).setVisibility(View.GONE);
+        //findViewById(R.id.countdown_container).setVisibility(View.GONE);
         switch (id) {
             case R.layout.fragment_main:
                 //mTitle = "MOOD INDIGO";
-                findViewById(R.id.countdown_container).setVisibility(View.VISIBLE);
-                toolbar.setBackgroundResource(R.drawable.toolbar_shadow_gradient);
+                //findViewById(R.id.countdown_container).setVisibility(View.VISIBLE);
+                //toolbar.setBackgroundResource(R.drawable.toolbar_shadow_gradient);
                 break;
         }
     }
@@ -107,5 +111,13 @@ public class MainActivity extends AppCompatActivity
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void customizeToolbar(int resId, String title, View widget){
+        toolbarContainer.removeViewAt(toolbarContainer.getChildCount()-1);
+        toolbarContainer.addView(widget);
+
+        mTitle = title;
+        restoreActionBar();
     }
 }
