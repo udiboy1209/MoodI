@@ -55,9 +55,22 @@ public class RegistrationActivity extends BaseActivity implements AdapterView.On
         year.setAdapter(adapter);
 
         // Getting city details
-        String[] help_text = new String[] {"Please select your city"};
+        city_choices.add("Fetching cities.. Please wait");
         city = (Spinner) findViewById(R.id.reg_city);
+        city = (Spinner) findViewById(R.id.reg_city);
+        adapter = new ArrayAdapter<String>(getBaseContext(),
+                android.R.layout.simple_spinner_item, city_choices);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        city.setAdapter(adapter);
         city.setOnItemSelectedListener(this);
+
+        // Getting college choices
+        college_choices.add("Please select your city");
+        college = (Spinner) findViewById(R.id.reg_college);
+        adapter = new ArrayAdapter<String>(getBaseContext(),
+                android.R.layout.simple_spinner_item, college_choices);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        college.setAdapter(adapter);
 
         setCities();
     }
@@ -128,10 +141,19 @@ public class RegistrationActivity extends BaseActivity implements AdapterView.On
 
     public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
 
-        if (parent.getId()==R.id.reg_city) {
+        if (parent.getId()==R.id.reg_city && city_choices.size()>1) {
+
+            // Getting college choices
+            college_choices.clear();
+            college_choices.add("Fetching colleges...");
+            college = (Spinner) findViewById(R.id.reg_college);
+            ArrayAdapter adapter = new ArrayAdapter<String>(getBaseContext(),
+                    android.R.layout.simple_spinner_item, college_choices);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            college.setAdapter(adapter);
+
             int city_number = (int)parent.getSelectedItemId();
             setColleges(cities[city_number].getId());
-            Toast.makeText(getBaseContext(), "Fetching colleges..", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -149,6 +171,7 @@ public class RegistrationActivity extends BaseActivity implements AdapterView.On
             public void success(Object o, Response response) {
                 CityList citylist = (CityList)o;
                 cities = citylist.getCityList();
+                city_choices.clear();
                 for (CityList.City city_obj : cities) {
                     city_choices.add(city_obj.getName());
                 }
@@ -157,7 +180,6 @@ public class RegistrationActivity extends BaseActivity implements AdapterView.On
                         android.R.layout.simple_spinner_item, city_choices);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 city.setAdapter(adapter);
-                //city.setOnItemSelectedListener();
             }
             @Override
             public void failure(RetrofitError retrofitError) {
@@ -179,6 +201,7 @@ public class RegistrationActivity extends BaseActivity implements AdapterView.On
             public void success(Object o, Response response) {
                 CollegeList collegeList = (CollegeList)o;
                 colleges = collegeList.getCollegeList();
+                college_choices.clear();
                 for (CollegeList.College college_obj : colleges) {
                     college_choices.add(college_obj.getName());
                 }
