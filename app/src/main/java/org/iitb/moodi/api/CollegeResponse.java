@@ -5,20 +5,20 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by kalpesh on 22/10/15.
  */
-public class CollegeList {
+public class CollegeResponse {
 
     @SerializedName("status")
     private boolean status;
 
     @SerializedName("data")
-    private College[] colleges;
+    private College[] collegeList;
 
     public boolean getStatus() {
         return status;
     }
 
     public College[] getCollegeList() {
-        return colleges;
+        return collegeList;
     }
 
     @Override

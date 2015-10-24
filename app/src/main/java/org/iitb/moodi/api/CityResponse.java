@@ -5,21 +5,21 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by kalpesh on 22/10/15.
  */
-public class CityList {
+public class CityResponse {
 
 
     @SerializedName("status")
     private boolean status;
 
     @SerializedName("data")
-    private City[] cities;
+    private City[] cityList;
 
     public boolean getStatus() {
         return status;
     }
 
     public City[] getCityList() {
-        return cities;
+        return cityList;
     }
 
     @Override

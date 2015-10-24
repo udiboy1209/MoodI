@@ -13,6 +13,9 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="empty_error">Field cannot be empty!</string>
+    <string name="city_spinner_error">City not selected. Check internet connection</string>
+    <string name="college_spinner_error">College not selected. Check internet connection</string>
+
     <string-array  name="drawer_list">
         <item>Home</item>
         <item>Treasure Hunt</item>
