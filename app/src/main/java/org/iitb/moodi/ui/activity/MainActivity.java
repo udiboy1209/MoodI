@@ -11,6 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import org.iitb.moodi.ui.fragment.EventListFragment;
 import org.iitb.moodi.ui.fragment.HomeFragment;
 import org.iitb.moodi.ui.fragment.NavigationDrawerFragment;
 import org.iitb.moodi.R;
@@ -119,5 +120,12 @@ public class MainActivity extends AppCompatActivity
 
         mTitle = title;
         restoreActionBar();
+    }
+
+    public void gotoEventList(View v){
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.container, EventListFragment.newInstance())
+                .commit();
     }
 }
