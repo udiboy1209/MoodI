@@ -15,6 +15,7 @@ import org.iitb.moodi.ui.fragment.EventListFragment;
 import org.iitb.moodi.ui.fragment.HomeFragment;
 import org.iitb.moodi.ui.fragment.NavigationDrawerFragment;
 import org.iitb.moodi.R;
+import org.iitb.moodi.ui.fragment.ScheduleFragment;
 
 
 public class MainActivity extends AppCompatActivity
@@ -27,9 +28,6 @@ public class MainActivity extends AppCompatActivity
     public Toolbar toolbar;
     public LinearLayout toolbarContainer;
 
-    /**
-     * Used to store the last screen title. For use in {@link #restoreActionBar()}.
-     */
     private CharSequence mTitle;
 
     @Override
@@ -65,8 +63,10 @@ public class MainActivity extends AppCompatActivity
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
 
-        if(position==0) {
-
+        if(position==1) {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, ScheduleFragment.newInstance())
+                    .commit();
         }
     }
 
@@ -81,11 +81,6 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    public void restoreActionBar() {
-        toolbar.setTitle(mTitle);
-    }
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (!mNavigationDrawerFragment.isDrawerOpen()) {
@@ -93,7 +88,6 @@ public class MainActivity extends AppCompatActivity
             // if the drawer is not showing. Otherwise, let the drawer
             // decide what to show in the action bar.
             getMenuInflater().inflate(R.menu.main, menu);
-            restoreActionBar();
             return true;
         }
         return super.onCreateOptionsMenu(menu);
@@ -114,12 +108,29 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    public void customizeToolbar(int resId, String title, View widget){
-        toolbarContainer.removeViewAt(toolbarContainer.getChildCount()-1);
+
+
+    public void customizeToolbar(Toolbar t, int imgId, String title,
+                                 boolean showTitle, View widget){
+        toolbarContainer.removeAllViews();
+        toolbarContainer.addView(t);
         toolbarContainer.addView(widget);
 
+        toolbar = t;
+        setSupportActionBar(t);
+
         mTitle = title;
-        restoreActionBar();
+        getSupportActionBar().setDisplayShowTitleEnabled(showTitle);
+        if(showTitle)
+            toolbar.setTitle(mTitle);
+        else
+            toolbar.setTitle("");
+    }
+
+    public void customizeToolbar(int toolbarId, int imgId, String title, boolean showTitle, View widget) {
+        Toolbar t = (Toolbar) getLayoutInflater().inflate(toolbarId,toolbarContainer,false);
+
+        customizeToolbar(t,imgId,title,showTitle, widget);
     }
 
     public void gotoEventList(View v){

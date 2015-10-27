@@ -1,44 +1,62 @@
 package org.iitb.moodi.ui.fragment;
 
+
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.app.Fragment;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 
 import org.iitb.moodi.R;
+import org.iitb.moodi.api.Event;
+import org.iitb.moodi.ui.widget.EventListAdapter;
 
 /**
- * Created by udiboy on 23/10/15.
+ * A simple {@link Fragment} subclass.
+ * Use the {@link ScheduleFragment#newInstance} factory method to
+ * create an instance of this fragment.
  */
-public class EventListFragment extends BaseFragment {
+public class ScheduleFragment extends BaseFragment {
     TabLayout mTabLayout;
     ViewPager mViewPager;
+    EventListAdapter mAdapter;
+    Spinner mDayDropdown;
 
-    public static EventListFragment newInstance() {
-        
+    public static ScheduleFragment newInstance() {
+        ScheduleFragment fragment = new ScheduleFragment();
         Bundle args = new Bundle();
-        
-        EventListFragment fragment = new EventListFragment();
-        fragment.setArguments(args);
+
         return fragment;
     }
 
-    @Nullable
+    public ScheduleFragment() {
+        // Required empty public constructor
+    }
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_event_list, container, false);
-        return v;
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_schedule, container, false);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+        mAdapter=new EventListAdapter(mActivity,R.layout.list_item_schedule);
+        mAdapter.add(new Event());
+        mAdapter.add(new Event());
+        mAdapter.add(new Event());
+        mAdapter.add(new Event());
+
         // Get the ViewPager and set it's PagerAdapter so that it can display items
         mViewPager = (ViewPager) view.findViewById(R.id.viewpager);
         mViewPager.setAdapter(new SamplePagerAdapter());
@@ -48,11 +66,19 @@ public class EventListFragment extends BaseFragment {
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
-        View v = mActivity.getLayoutInflater().inflate(R.layout.widget_tab_view,mActivity.toolbarContainer, false);
-        mTabLayout=(TabLayout)v.findViewById(R.id.widget_tab_layout);
+        mTabLayout=new TabLayout(mActivity);
+        mTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         mTabLayout.setupWithViewPager(mViewPager);
 
-        mActivity.customizeToolbar(R.layout.toolbar_common,R.drawable.splash_bg, "Event List",true, v);
+        Toolbar t = (Toolbar)mActivity.getLayoutInflater().inflate(R.layout.toolbar_schedule,mActivity.toolbarContainer,false);
+        mDayDropdown = (Spinner) t.findViewById(R.id.toolbar_schedule_dropdown);
+        ArrayAdapter<CharSequence> ddAdapter = ArrayAdapter.createFromResource(mActivity,
+                R.array.days_dropdown_array, android.R.layout.simple_spinner_item);
+
+        ddAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mDayDropdown.setAdapter(ddAdapter);
+
+        mActivity.customizeToolbar(t, R.drawable.splash_bg, "Event List", false, mTabLayout);
         super.onActivityCreated(savedInstanceState);
     }
 
@@ -64,7 +90,7 @@ public class EventListFragment extends BaseFragment {
          */
         @Override
         public int getCount() {
-            return 3;
+            return 5;
         }
 
         /**
@@ -87,11 +113,15 @@ public class EventListFragment extends BaseFragment {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "Dance";
+                    return "Competitions";
                 case 1:
-                    return "Art";
+                    return "Informals";
                 case 2:
-                    return "Theatre";
+                    return "Concerts";
+                case 3:
+                    return "Proshows";
+                case 4:
+                    return "Arts and Workshops";
                 default:
                     return "Genre";
             }
@@ -105,6 +135,7 @@ public class EventListFragment extends BaseFragment {
         public Object instantiateItem(ViewGroup container, int position) {
             // Inflate a new layout from our resources
             ListView view = new ListView(container.getContext());
+            view.setAdapter(mAdapter);
             // Add the newly created View to the ViewPager
             container.addView(view);
 

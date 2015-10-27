@@ -23,4 +23,11 @@
     </string-array>
     <string name="title_activity_registration">RegistrationActivity</string>
     <string name="title_activity_base">BaseActivity</string>
+
+    <string-array name="days_dropdown_array">
+        <item>Day 1</item>
+        <item>Day 2</item>
+        <item>Day 3</item>
+        <item>Day 4</item>
+    </string-array>
 </resources>

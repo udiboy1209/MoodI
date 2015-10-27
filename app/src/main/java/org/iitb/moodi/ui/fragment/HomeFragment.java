@@ -33,6 +33,6 @@ public class HomeFragment extends BaseFragment {
         super.onActivityCreated(savedInstanceState);
 
         View v = mActivity.getLayoutInflater().inflate(R.layout.widget_countdown_clock,mActivity.toolbarContainer,false);
-        mActivity.customizeToolbar(R.color.color_arts, "Mood Indigo '15", v);
+        mActivity.customizeToolbar(R.layout.toolbar_common,R.color.color_arts, "Mood Indigo '15", true, v);
     }
 }
