@@ -16,6 +16,7 @@ import org.iitb.moodi.ui.fragment.HomeFragment;
 import org.iitb.moodi.ui.fragment.NavigationDrawerFragment;
 import org.iitb.moodi.R;
 import org.iitb.moodi.ui.fragment.ScheduleFragment;
+import org.iitb.moodi.ui.fragment.TimelineFragment;
 
 
 public class MainActivity extends AppCompatActivity
@@ -131,6 +132,13 @@ public class MainActivity extends AppCompatActivity
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.container, EventListFragment.newInstance())
+                .commit();
+    }
+
+    public void gotoTimeline(View v){
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.container, TimelineFragment.newInstance())
                 .commit();
     }
 }
