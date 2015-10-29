@@ -52,7 +52,7 @@ public class EventListFragment extends BaseFragment {
         mTabLayout=(TabLayout)v.findViewById(R.id.widget_tab_layout);
         mTabLayout.setupWithViewPager(mViewPager);
 
-        mActivity.customizeToolbar(R.layout.toolbar_common,R.drawable.splash_bg, "Event List",true, v);
+        mActivity.customizeToolbar(R.drawable.splash_bg, "Event List", v);
         super.onActivityCreated(savedInstanceState);
     }
 
