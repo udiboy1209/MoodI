@@ -15,6 +15,7 @@ import org.iitb.moodi.ui.fragment.EventListFragment;
 import org.iitb.moodi.ui.fragment.HomeFragment;
 import org.iitb.moodi.ui.fragment.NavigationDrawerFragment;
 import org.iitb.moodi.R;
+import org.iitb.moodi.ui.fragment.ScheduleFragment;
 
 
 public class MainActivity extends AppCompatActivity
@@ -65,8 +66,10 @@ public class MainActivity extends AppCompatActivity
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
 
-        if(position==0) {
-
+        if(position==1) {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, ScheduleFragment.newInstance())
+                    .commit();
         }
     }
 
@@ -115,8 +118,10 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void customizeToolbar(int resId, String title, View widget){
-        toolbarContainer.removeViewAt(toolbarContainer.getChildCount()-1);
-        toolbarContainer.addView(widget);
+        if(toolbarContainer.getChildCount()>1)
+            toolbarContainer.removeViewAt(toolbarContainer.getChildCount()-1);
+        if(widget!=null)
+            toolbarContainer.addView(widget);
 
         mTitle = title;
         restoreActionBar();
