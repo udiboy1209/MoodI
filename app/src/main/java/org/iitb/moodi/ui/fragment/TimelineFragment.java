@@ -11,9 +11,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.nolanlawson.supersaiyan.SectionedListAdapter;
+import com.nolanlawson.supersaiyan.Sectionizer;
+import com.nolanlawson.supersaiyan.widget.SuperSaiyanScrollView;
+
 import org.iitb.moodi.R;
 import org.iitb.moodi.api.Event;
 import org.iitb.moodi.ui.widget.EventListAdapter;
+
+import java.util.Comparator;
 
 /**
  * Created by udiboy on 23/10/15.
@@ -21,7 +27,8 @@ import org.iitb.moodi.ui.widget.EventListAdapter;
 public class TimelineFragment extends BaseFragment {
     TabLayout mTabLayout;
     ViewPager mViewPager;
-    EventListAdapter mAdapter;
+
+    SectionedListAdapter mAdapter;
 
     public static TimelineFragment newInstance() {
         
@@ -55,10 +62,29 @@ public class TimelineFragment extends BaseFragment {
         mTabLayout.setTabGravity(TabLayout.GRAVITY_CENTER);
         mTabLayout.setupWithViewPager(mViewPager);
 
-        mAdapter = new EventListAdapter(mActivity, R.layout.list_item_timeline);
-        mAdapter.add(new Event());
-        mAdapter.add(new Event());
-        mAdapter.add(new Event());
+        EventListAdapter eventList = new EventListAdapter(mActivity, R.layout.list_item_timeline);
+        eventList.add(new Event());
+        eventList.add(new Event());
+        eventList.add(new Event());
+        mAdapter = SectionedListAdapter.Builder.create(mActivity, eventList)
+                .setSectionizer(new Sectionizer<Event>(){
+                    @Override
+                    public CharSequence toSection(Event input) {
+                        return input.time+"";
+                    }
+                })
+                .sortValues(new Comparator<Event>() {
+                    public int compare(Event lhs, Event rhs) {
+                        if(lhs.time < rhs.time)
+                            return -1;
+                        else if(lhs.time > rhs.time)
+                            return 1;
+                        return 0;
+                    }
+                })
+                .build();
+        mAdapter.setShowSectionTitles(false);
+
 
         mActivity.customizeToolbar(R.drawable.splash_bg, "Event List", mTabLayout);
         super.onActivityCreated(savedInstanceState);
@@ -114,9 +140,11 @@ public class TimelineFragment extends BaseFragment {
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             // Inflate a new layout from our resources
-            ListView view = new ListView(container.getContext());
+            View view = getLayoutInflater(null).inflate(R.layout.page_timeline,container,false);
+            ListView list = (ListView) view.findViewById(R.id.page_timeline_list);
+            SuperSaiyanScrollView scroller = (SuperSaiyanScrollView) view.findViewById(R.id.page_timeline_scroller);
 
-            view.setAdapter(mAdapter);
+            list.setAdapter(mAdapter);
 
             // Add the newly created View to the ViewPager
             container.addView(view);
