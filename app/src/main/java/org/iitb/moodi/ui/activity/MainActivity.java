@@ -11,6 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import org.iitb.moodi.ui.fragment.BaseFragment;
 import org.iitb.moodi.ui.fragment.EventListFragment;
 import org.iitb.moodi.ui.fragment.HomeFragment;
 import org.iitb.moodi.ui.fragment.NavigationDrawerFragment;
@@ -20,7 +21,8 @@ import org.iitb.moodi.ui.fragment.TimelineFragment;
 
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks,
+                   BaseFragment.InteractionListener {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -28,6 +30,8 @@ public class MainActivity extends AppCompatActivity
     private NavigationDrawerFragment mNavigationDrawerFragment;
     public Toolbar toolbar;
     public LinearLayout toolbarContainer;
+
+    private BaseFragment mCurrentFragment;
 
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
@@ -89,6 +93,15 @@ public class MainActivity extends AppCompatActivity
         toolbar.setTitle(mTitle);
     }
 
+    private void switchContent(BaseFragment fragment){
+        mCurrentFragment=fragment;
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.container, fragment)
+                .commit();
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -140,5 +153,10 @@ public class MainActivity extends AppCompatActivity
                 .beginTransaction()
                 .replace(R.id.container, TimelineFragment.newInstance())
                 .commit();
+    }
+
+    @Override
+    public void onFragmentLoaded(BaseFragment fragment) {
+        fragment.customizeToolbarLayout(toolbarContainer);
     }
 }
