@@ -1,5 +1,6 @@
 package org.iitb.moodi.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -60,6 +61,8 @@ public class MainActivity extends AppCompatActivity
         // update the main content by replacing fragments
         if(position==1) {
             switchContent(ScheduleFragment.newInstance());
+        } else if(position==2){
+            startActivity(new Intent(this,MapsActivity.class));
         }
     }
 
@@ -132,5 +135,9 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onFragmentLoaded(BaseFragment fragment) {
         fragment.customizeToolbarLayout(mToolbarContainer);
+    }
+
+    public Toolbar getToolbar() {
+        return mToolbar;
     }
 }

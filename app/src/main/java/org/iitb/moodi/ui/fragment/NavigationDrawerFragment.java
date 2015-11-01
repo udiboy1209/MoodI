@@ -108,7 +108,7 @@ public class NavigationDrawerFragment extends Fragment {
                 android.R.layout.simple_list_item_1,
                 android.R.id.text1,
                 new String[]{
-                        getString(R.string.title_navbar_tab1),"Schedule","Events Registration","Result","Augmented Reality","Contact Us"
+                        getString(R.string.title_navbar_tab1),"Schedule","Map","Result","Augmented Reality","Contact Us"
                 }));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return mDrawerListView;
@@ -266,7 +266,7 @@ public class NavigationDrawerFragment extends Fragment {
     }
 
     private Toolbar getActionBar() {
-        return ((MainActivity) getActivity()).toolbar;
+        return ((MainActivity) getActivity()).getToolbar();
     }
 
     /**
