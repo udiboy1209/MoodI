@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import org.iitb.moodi.R;
+import org.iitb.moodi.ui.widget.ToolbarWidgetLayout;
 
 /**
  * Created by udiboy on 23/10/15.
@@ -27,6 +28,7 @@ public class EventListFragment extends BaseFragment {
         
         EventListFragment fragment = new EventListFragment();
         fragment.setArguments(args);
+        fragment.setTitle("Event List");
         return fragment;
     }
 
@@ -47,13 +49,14 @@ public class EventListFragment extends BaseFragment {
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
+    public void customizeToolbarLayout(ToolbarWidgetLayout toolbarLayout) {
+        super.customizeToolbarLayout(toolbarLayout);
+
         View v = mActivity.getLayoutInflater().inflate(R.layout.widget_tab_view,mActivity.toolbarContainer, false);
         mTabLayout=(TabLayout)v.findViewById(R.id.widget_tab_layout);
         mTabLayout.setupWithViewPager(mViewPager);
 
-        mActivity.customizeToolbar(R.drawable.splash_bg, "Event List", v);
-        super.onActivityCreated(savedInstanceState);
+        toolbarLayout.setWidget(v);
     }
 
     class SamplePagerAdapter extends PagerAdapter {

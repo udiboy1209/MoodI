@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.iitb.moodi.R;
+import org.iitb.moodi.ui.widget.ToolbarWidgetLayout;
 
 /**
  * Created by udiboy on 22/10/15.
@@ -29,10 +30,10 @@ public class HomeFragment extends BaseFragment {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void customizeToolbarLayout(ToolbarWidgetLayout toolbarLayout) {
+        super.customizeToolbarLayout(toolbarLayout);
 
         View v = mActivity.getLayoutInflater().inflate(R.layout.widget_countdown_clock,mActivity.toolbarContainer,false);
-        mActivity.customizeToolbar(R.color.color_arts, "Mood Indigo '15", v);
+        toolbarLayout.setWidget(v);
     }
 }

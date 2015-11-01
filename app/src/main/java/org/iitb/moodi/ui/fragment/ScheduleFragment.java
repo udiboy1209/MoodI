@@ -18,6 +18,7 @@ public class ScheduleFragment extends BaseFragment {
         ScheduleFragment fragment = new ScheduleFragment();
         fragment.mID = R.layout.fragment_schedule;
         fragment.setArguments(args);
+        fragment.setTitle("Schedule");
         return fragment;
     }
 
@@ -26,12 +27,5 @@ public class ScheduleFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_schedule, container, false);
         return v;
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        mActivity.customizeToolbar(R.color.color_arts, "Schedule", null);
     }
 }

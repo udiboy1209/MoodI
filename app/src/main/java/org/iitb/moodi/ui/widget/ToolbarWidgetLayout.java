@@ -61,7 +61,7 @@ public class ToolbarWidgetLayout extends LinearLayout {
     }
 
     public void setWidget(View v){
-        removeView(mWidget);
+        if(mWidget!=null) removeView(mWidget);
         if(v!=null) addView(v);
     }
 

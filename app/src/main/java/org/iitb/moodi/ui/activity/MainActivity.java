@@ -1,7 +1,5 @@
 package org.iitb.moodi.ui.activity;
 
-import android.content.Intent;
-import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -9,7 +7,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
-import android.widget.LinearLayout;
 
 import org.iitb.moodi.ui.fragment.BaseFragment;
 import org.iitb.moodi.ui.fragment.EventListFragment;
@@ -18,6 +15,7 @@ import org.iitb.moodi.ui.fragment.NavigationDrawerFragment;
 import org.iitb.moodi.R;
 import org.iitb.moodi.ui.fragment.ScheduleFragment;
 import org.iitb.moodi.ui.fragment.TimelineFragment;
+import org.iitb.moodi.ui.widget.ToolbarWidgetLayout;
 
 
 public class MainActivity extends AppCompatActivity
@@ -28,15 +26,10 @@ public class MainActivity extends AppCompatActivity
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
-    public Toolbar toolbar;
-    public LinearLayout toolbarContainer;
+    private Toolbar mToolbar;
+    private ToolbarWidgetLayout mToolbarContainer;
 
     private BaseFragment mCurrentFragment;
-
-    /**
-     * Used to store the last screen title. For use in {@link #restoreActionBar()}.
-     */
-    private CharSequence mTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,35 +39,27 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         //collapsingToolbar = (CollapsingToolbarLayout)findViewById(R.id.collapsing_toolbar);
-        toolbarContainer = (LinearLayout) findViewById(R.id.toolbar_container);
-        toolbar = (Toolbar)findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp);
+        mToolbarContainer = (ToolbarWidgetLayout) findViewById(R.id.toolbar_container);
+        mToolbar = mToolbarContainer.getToolbar();
+        setSupportActionBar(mToolbar);
+        mToolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
-        mTitle = getTitle();
 
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.container, HomeFragment.newInstance())
-                .commit();
+        switchContent(HomeFragment.newInstance());
     }
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
-        FragmentManager fragmentManager = getSupportFragmentManager();
-
         if(position==1) {
-            fragmentManager.beginTransaction()
-                    .replace(R.id.container, ScheduleFragment.newInstance())
-                    .commit();
+            switchContent(ScheduleFragment.newInstance());
         }
     }
 
@@ -84,13 +69,9 @@ public class MainActivity extends AppCompatActivity
             case R.layout.fragment_main:
                 //mTitle = "MOOD INDIGO";
                 //findViewById(R.id.countdown_container).setVisibility(View.VISIBLE);
-                //toolbar.setBackgroundResource(R.drawable.toolbar_shadow_gradient);
+                //mToolbar.setBackgroundResource(R.drawable.toolbar_shadow_gradient);
                 break;
         }
-    }
-
-    public void restoreActionBar() {
-        toolbar.setTitle(mTitle);
     }
 
     private void switchContent(BaseFragment fragment){
@@ -110,7 +91,6 @@ public class MainActivity extends AppCompatActivity
             // if the drawer is not showing. Otherwise, let the drawer
             // decide what to show in the action bar.
             getMenuInflater().inflate(R.menu.main, menu);
-            restoreActionBar();
             return true;
         }
         return super.onCreateOptionsMenu(menu);
@@ -131,32 +111,26 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    public void customizeToolbar(int resId, String title, View widget){
-        if(toolbarContainer.getChildCount()>1)
-            toolbarContainer.removeViewAt(toolbarContainer.getChildCount()-1);
+    /*public void customizeToolbar(int resId, String title, View widget){
+        if(mToolbarContainer.getChildCount()>1)
+            mToolbarContainer.removeViewAt(mToolbarContainer.getChildCount()-1);
         if(widget!=null)
-            toolbarContainer.addView(widget);
+            mToolbarContainer.addView(widget);
 
         mTitle = title;
         restoreActionBar();
-    }
+    }*/
 
     public void gotoEventList(View v){
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.container, EventListFragment.newInstance())
-                .commit();
+        switchContent(EventListFragment.newInstance());
     }
 
     public void gotoTimeline(View v){
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.container, TimelineFragment.newInstance())
-                .commit();
+        switchContent(TimelineFragment.newInstance());
     }
 
     @Override
     public void onFragmentLoaded(BaseFragment fragment) {
-        fragment.customizeToolbarLayout(toolbarContainer);
+        fragment.customizeToolbarLayout(mToolbarContainer);
     }
 }

@@ -10,7 +10,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical">
-        <LinearLayout
+        <org.iitb.moodi.ui.widget.ToolbarWidgetLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -23,7 +23,7 @@
                 android:theme="@style/ThemeOverlay.AppCompat.Dark"
                 android:background="@drawable/toolbar_shadow_gradient"/>
             <include layout="@layout/widget_countdown_clock" android:id="@+id/countdown_container" android:visibility="gone"/>
-        </LinearLayout>
+        </org.iitb.moodi.ui.widget.ToolbarWidgetLayout>
 
         <ScrollView android:fillViewport="true"
             android:id="@+id/container"

@@ -18,6 +18,7 @@ import com.nolanlawson.supersaiyan.widget.SuperSaiyanScrollView;
 import org.iitb.moodi.R;
 import org.iitb.moodi.api.Event;
 import org.iitb.moodi.ui.widget.EventListAdapter;
+import org.iitb.moodi.ui.widget.ToolbarWidgetLayout;
 
 import java.util.Comparator;
 
@@ -51,16 +52,6 @@ public class TimelineFragment extends BaseFragment {
         // Get the ViewPager and set it's PagerAdapter so that it can display items
         mViewPager = (ViewPager) view.findViewById(R.id.viewpager);
         mViewPager.setAdapter(new SamplePagerAdapter());
-        // Give the SlidingTabLayout the ViewPager, this must be done AFTER the ViewPager has had
-        // it's PagerAdapter set.
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        mTabLayout=new TabLayout(mActivity);
-        mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
-        mTabLayout.setTabGravity(TabLayout.GRAVITY_CENTER);
-        mTabLayout.setupWithViewPager(mViewPager);
 
         EventListAdapter eventList = new EventListAdapter(mActivity, R.layout.list_item_timeline);
         eventList.add(new Event());
@@ -84,10 +75,18 @@ public class TimelineFragment extends BaseFragment {
                 })
                 .build();
         mAdapter.setShowSectionTitles(false);
+    }
 
+    @Override
+    public void customizeToolbarLayout(ToolbarWidgetLayout toolbarLayout) {
+        super.customizeToolbarLayout(toolbarLayout);
 
-        mActivity.customizeToolbar(R.drawable.splash_bg, "Event List", mTabLayout);
-        super.onActivityCreated(savedInstanceState);
+        mTabLayout=new TabLayout(mActivity);
+        mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+        mTabLayout.setTabGravity(TabLayout.GRAVITY_CENTER);
+        mTabLayout.setupWithViewPager(mViewPager);
+
+        toolbarLayout.setWidget(mTabLayout);
     }
 
     class SamplePagerAdapter extends PagerAdapter {

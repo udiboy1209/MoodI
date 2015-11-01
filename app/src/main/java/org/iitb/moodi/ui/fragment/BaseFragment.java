@@ -7,11 +7,16 @@ import android.widget.LinearLayout;
 
 import org.iitb.moodi.R;
 import org.iitb.moodi.ui.activity.MainActivity;
+import org.iitb.moodi.ui.widget.ToolbarWidgetLayout;
 
 public class BaseFragment  extends Fragment{
     MainActivity mActivity;
     InteractionListener mInteractionListener;
     int mID =0;
+
+    private String mTitle;
+    private int mColorResource;
+    private int mBackgroundResource;
 
     @Override
     public void onAttach(Activity activity) {
@@ -30,8 +35,20 @@ public class BaseFragment  extends Fragment{
             mInteractionListener.onFragmentLoaded(this);
     }
 
-    public void customizeToolbarLayout(LinearLayout toolbarLayout){
+    public void setTitle(String mTitle) {
+        this.mTitle = mTitle;
+    }
 
+    public void setColor(int mColorResource) {
+        this.mColorResource = mColorResource;
+    }
+
+    public void setBackground(int mBackgroundResource) {
+        this.mBackgroundResource = mBackgroundResource;
+    }
+
+    public void customizeToolbarLayout(ToolbarWidgetLayout toolbarLayout){
+        toolbarLayout.getToolbar().setTitle(mTitle);
     }
 
     public void setInteractionListener(InteractionListener interactionListener) {
