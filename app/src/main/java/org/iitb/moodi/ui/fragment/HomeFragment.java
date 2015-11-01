@@ -33,7 +33,7 @@ public class HomeFragment extends BaseFragment {
     public void customizeToolbarLayout(ToolbarWidgetLayout toolbarLayout) {
         super.customizeToolbarLayout(toolbarLayout);
 
-        View v = mActivity.getLayoutInflater().inflate(R.layout.widget_countdown_clock,mActivity.toolbarContainer,false);
+        View v = mActivity.getLayoutInflater().inflate(R.layout.widget_countdown_clock,toolbarLayout,false);
         toolbarLayout.setWidget(v);
     }
 }

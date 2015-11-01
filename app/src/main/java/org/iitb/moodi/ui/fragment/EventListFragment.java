@@ -52,7 +52,7 @@ public class EventListFragment extends BaseFragment {
     public void customizeToolbarLayout(ToolbarWidgetLayout toolbarLayout) {
         super.customizeToolbarLayout(toolbarLayout);
 
-        View v = mActivity.getLayoutInflater().inflate(R.layout.widget_tab_view,mActivity.toolbarContainer, false);
+        View v = mActivity.getLayoutInflater().inflate(R.layout.widget_tab_view,toolbarLayout, false);
         mTabLayout=(TabLayout)v.findViewById(R.id.widget_tab_layout);
         mTabLayout.setupWithViewPager(mViewPager);
 
