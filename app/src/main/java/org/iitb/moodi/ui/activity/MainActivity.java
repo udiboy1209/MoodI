@@ -2,18 +2,18 @@ package org.iitb.moodi.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 
+import org.iitb.moodi.R;
 import org.iitb.moodi.ui.fragment.BaseFragment;
 import org.iitb.moodi.ui.fragment.EventListFragment;
 import org.iitb.moodi.ui.fragment.HomeFragment;
 import org.iitb.moodi.ui.fragment.NavigationDrawerFragment;
-import org.iitb.moodi.R;
 import org.iitb.moodi.ui.fragment.ScheduleFragment;
 import org.iitb.moodi.ui.fragment.TimelineFragment;
 import org.iitb.moodi.ui.widget.ToolbarWidgetLayout;
@@ -79,6 +79,7 @@ public class MainActivity extends AppCompatActivity
 
     private void switchContent(BaseFragment fragment){
         mCurrentFragment=fragment;
+        fragment.setInteractionListener(this);
 
         getSupportFragmentManager()
                 .beginTransaction()

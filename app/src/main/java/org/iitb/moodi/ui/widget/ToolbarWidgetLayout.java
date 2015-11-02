@@ -2,12 +2,7 @@ package org.iitb.moodi.ui.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.drawable.Drawable;
 import android.support.v7.widget.Toolbar;
-import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -39,6 +34,8 @@ public class ToolbarWidgetLayout extends LinearLayout {
                 attrs, R.styleable.ToolbarWidgetLayout, defStyle, 0);
 
         setOrientation(LinearLayout.VERTICAL);
+
+        a.recycle();
     }
 
     @Override
@@ -63,6 +60,8 @@ public class ToolbarWidgetLayout extends LinearLayout {
     public void setWidget(View v){
         if(mWidget!=null) removeView(mWidget);
         if(v!=null) addView(v);
+
+        mWidget=v;
     }
 
     public Toolbar getToolbar(){
