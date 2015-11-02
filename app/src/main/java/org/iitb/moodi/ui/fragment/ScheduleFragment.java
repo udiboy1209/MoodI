@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.iitb.moodi.R;
+import org.iitb.moodi.ui.widget.ToolbarWidgetLayout;
 
 /**
  * Created by udiboy on 22/10/15.
@@ -27,5 +28,12 @@ public class ScheduleFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_schedule, container, false);
         return v;
+    }
+
+    @Override
+    public void customizeToolbarLayout(ToolbarWidgetLayout toolbarLayout) {
+        super.customizeToolbarLayout(toolbarLayout);
+
+        toolbarLayout.setWidget(null);
     }
 }

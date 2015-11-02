@@ -1,13 +1,36 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/splash_bg"
+        android:id="@+id/nav_drawer_img"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#dd305c9f"
+        android:layout_alignBottom="@+id/nav_drawer_img"/>
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/nav_drawer_dp"
+        android:layout_alignBottom="@+id/nav_drawer_name"
+        android:layout_marginBottom="10dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/nav_drawer_name"
+        android:layout_alignBottom="@+id/nav_drawer_img"
+        android:layout_marginBottom="10dp"/>
 
-<ListView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:choiceMode="singleChoice"
-    android:divider="@android:color/transparent" android:dividerHeight="0dp"
-    android:background="#cccc" tools:context=".NavigationDrawerFragment"
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" android:choiceMode="singleChoice"
+        android:divider="@android:color/transparent" android:dividerHeight="0dp"
+        android:layout_below="@+id/nav_drawer_img"
+        android:id="@+id/nav_drawer_list"/>
 
-
-
-    />
-
-
+</RelativeLayout>
 
