@@ -4,14 +4,21 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import org.iitb.moodi.R;
+import org.iitb.moodi.ui.anim.ResizeAnimation;
 
-public class ToolbarWidgetLayout extends LinearLayout {
+public class ToolbarWidgetLayout extends LinearLayout implements View.OnTouchListener{
     private Toolbar mToolbar;
     private View mWidget;
+
+    private int mWidgetHeight;
+
+    private float prevY;
 
     public ToolbarWidgetLayout(Context context) {
         super(context);
@@ -34,6 +41,7 @@ public class ToolbarWidgetLayout extends LinearLayout {
                 attrs, R.styleable.ToolbarWidgetLayout, defStyle, 0);
 
         setOrientation(LinearLayout.VERTICAL);
+        setOnTouchListener(this);
 
         a.recycle();
     }
@@ -55,19 +63,66 @@ public class ToolbarWidgetLayout extends LinearLayout {
                 i--;
             }
         }
-
-        mToolbar.measure(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-        mWidget.measure(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
     }
 
     public void setWidget(View v){
         if(mWidget!=null) removeView(mWidget);
-        if(v!=null) addView(v);
 
         mWidget=v;
+
+        if(mWidget!=null) {
+            addView(mWidget);
+;           mWidget.measure(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT);
+            mWidgetHeight=mWidget.getMeasuredHeight();
+        }
     }
 
     public Toolbar getToolbar(){
         return mToolbar;
+    }
+
+    public void collapse(){
+        ResizeAnimation a = new ResizeAnimation(mWidget, 1);
+        a.setDuration(300);
+
+        if(mWidget.getAnimation()==null){
+            mWidget.startAnimation(a);
+        } else if(mWidget.getAnimation().hasEnded()) {
+            mWidget.startAnimation(a);
+        }
+    }
+
+    public void expand(){
+        ResizeAnimation a = new ResizeAnimation(mWidget, mWidgetHeight);
+        a.setDuration(600);
+
+        if(mWidget.getAnimation()==null){
+            mWidget.startAnimation(a);
+        } else if(mWidget.getAnimation().hasEnded()) {
+            mWidget.startAnimation(a);
+        }
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        Log.d("ToolbarWidget", "onTouch");
+
+        if(event.getAction() == MotionEvent.ACTION_DOWN){
+            prevY=event.getY();
+            Log.d("ToolbarWidget", "prevY:"+prevY);
+            return true;
+        } else if(event.getAction() == MotionEvent.ACTION_MOVE){
+            if(event.getY()-prevY > mToolbar.getHeight()/3){
+                //Scroll Down
+                expand();
+            } else if(prevY-event.getY() > mToolbar.getHeight()/3){
+                //Scroll Up
+                collapse();
+            }
+
+            Log.d("ToolbarWidget", "currY:"+event.getY());
+            return true;
+        }
+        return false;
     }
 }

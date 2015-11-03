@@ -41,11 +41,12 @@ public class ResizeWidgetBehavior extends CoordinatorLayout.Behavior{
 
         ToolbarWidgetLayout dependency = (ToolbarWidgetLayout) coordinatorLayout.getDependencies(child).get(0);
 
-        if(dyConsumed ==0 && dyUnconsumed > 0){
-            //if(dependency.shouldScroll()) {
-                dependency.getLayoutParams().height -= dyUnconsumed;
-                coordinatorLayout.requestLayout();
-            //}
+        if(dyConsumed >0 || dyUnconsumed > 0){
+            Log.d("ResizeWidgetBehavior","run collapse animation");
+            dependency.collapse();
+        } else if (dyUnconsumed < 0) {
+            Log.d("ResizeWidgetBehavior","run expand animation");
+            dependency.expand();
         }
     }
 }
