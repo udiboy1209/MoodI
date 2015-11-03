@@ -55,6 +55,9 @@ public class ToolbarWidgetLayout extends LinearLayout {
                 i--;
             }
         }
+
+        mToolbar.measure(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+        mWidget.measure(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
     }
 
     public void setWidget(View v){
