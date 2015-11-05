@@ -43,10 +43,10 @@ public class ResizeWidgetBehavior extends CoordinatorLayout.Behavior{
 
         if(dyConsumed >0 || dyUnconsumed > 0){
             Log.d("ResizeWidgetBehavior","run collapse animation");
-            dependency.collapse();
+            //dependency.collapse();
         } else if (dyUnconsumed < 0) {
             Log.d("ResizeWidgetBehavior","run expand animation");
-            dependency.expand();
+            //dependency.expand();
         }
     }
 }

@@ -113,11 +113,11 @@ public class ToolbarWidgetLayout extends LinearLayout implements View.OnTouchLis
             return true;
         } else if(event.getAction() == MotionEvent.ACTION_MOVE){
             if(event.getY()-prevY > mToolbar.getHeight()/3){
-                //Scroll Down
-                expand();
+                Log.d("ToolbarWidget","widget expand");
+                //expand();
             } else if(prevY-event.getY() > mToolbar.getHeight()/3){
-                //Scroll Up
-                collapse();
+                Log.d("ToolbarWidget","widget collapse");
+                //collapse();
             }
 
             Log.d("ToolbarWidget", "currY:"+event.getY());
