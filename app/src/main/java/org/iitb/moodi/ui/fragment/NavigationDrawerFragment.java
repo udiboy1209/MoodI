@@ -1,17 +1,14 @@
 package org.iitb.moodi.ui.fragment;
 
-import android.support.v7.app.ActionBarActivity;
 import android.app.Activity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -22,7 +19,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import org.iitb.moodi.R;
 import org.iitb.moodi.ui.activity.MainActivity;
@@ -94,8 +90,10 @@ public class NavigationDrawerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mDrawerListView = (ListView) inflater.inflate(
+        View v = inflater.inflate(
                 R.layout.fragment_navigation_drawer, container, false);
+
+        mDrawerListView = (ListView) v.findViewById(R.id.nav_drawer_list);
         mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -105,13 +103,12 @@ public class NavigationDrawerFragment extends Fragment {
 
         mDrawerListView.setAdapter(new ArrayAdapter<String>(
                 getActivity(),
-                android.R.layout.simple_list_item_1,
-                android.R.id.text1,
+                R.layout.list_item_nav_drawer,
                 new String[]{
-                        getString(R.string.title_navbar_tab1),"Treasure Hunt","Events Registration","Result","Augmented Reality","Contact Us"
+                        getString(R.string.title_navbar_tab1),"Schedule","Map","Result","Augmented Reality","Contact Us"
                 }));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
-        return mDrawerListView;
+        return v;
     }
 
     public boolean isDrawerOpen() {
@@ -266,7 +263,7 @@ public class NavigationDrawerFragment extends Fragment {
     }
 
     private Toolbar getActionBar() {
-        return ((MainActivity) getActivity()).toolbar;
+        return ((MainActivity) getActivity()).getToolbar();
     }
 
     /**
