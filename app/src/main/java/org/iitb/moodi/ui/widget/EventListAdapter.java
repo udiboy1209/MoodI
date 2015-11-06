@@ -8,11 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import org.iitb.moodi.R;
-import org.iitb.moodi.api.Event;
-
-import java.text.DateFormat;
-import java.util.Calendar;
-import java.util.Date;
+import org.iitb.moodi.api.EventsResponse.Genre.Event;
 
 /**
  * Created by udiboy on 26/10/15.
@@ -39,16 +35,16 @@ public class EventListAdapter extends ArrayAdapter<Event>{
         if(name != null) name.setText(e.name);
 
         TextView description = (TextView) v.findViewById(R.id.event_list_item_description);
-        if(description != null) description.setText(e.description);
+        if(description != null) description.setText(e.intro_short);
 
 
         TextView venue = (TextView) v.findViewById(R.id.event_list_item_venue);
-        if(venue != null) venue.setText(e.venue);
+        //if(venue != null) venue.setText(e.venue);
 
-        Date time = new Date(e.time);
+        //Date time = new Date(e.time);
 
-        TextView time_hrs = (TextView) v.findViewById(R.id.event_list_item_time_hrs);
-        if(time_hrs != null) time_hrs.setText(""+time.getHours());
+        //TextView time_hrs = (TextView) v.findViewById(R.id.event_list_item_time_hrs);
+        //if(time_hrs != null) time_hrs.setText(""+time.getHours());
 
         return v;
     }

@@ -1,15 +1,19 @@
 package org.iitb.moodi.ui.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
+import org.iitb.moodi.MoodIndigoClient;
 import org.iitb.moodi.R;
+import org.iitb.moodi.api.EventsResponse;
 import org.iitb.moodi.ui.fragment.BaseFragment;
 import org.iitb.moodi.ui.fragment.EventListFragment;
 import org.iitb.moodi.ui.fragment.HomeFragment;
@@ -18,8 +22,13 @@ import org.iitb.moodi.ui.fragment.ScheduleFragment;
 import org.iitb.moodi.ui.fragment.TimelineFragment;
 import org.iitb.moodi.ui.widget.ToolbarWidgetLayout;
 
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
-public class MainActivity extends AppCompatActivity
+
+public class MainActivity extends BaseActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks,
                    BaseFragment.InteractionListener {
 
@@ -126,7 +135,30 @@ public class MainActivity extends AppCompatActivity
     }*/
 
     public void gotoEventList(View v){
-        switchContent(EventListFragment.newInstance());
+        int id = Integer.valueOf((String)v.getTag());
+        final ProgressDialog dialog = ProgressDialog.show(this, "",
+                "Fetching data. Pleas wait...", true);
+
+        RestAdapter restAdapter = new RestAdapter.Builder()
+                .setEndpoint(API_URL)
+                .build();
+        MoodIndigoClient methods = restAdapter.create(MoodIndigoClient.class);
+        Callback callback = new Callback() {
+            @Override
+            public void success(Object o, Response response) {
+                EventsResponse c = (EventsResponse)o;
+                dialog.dismiss();
+                Log.d("EventFectResponse", c.id+" "+c.genres.length);
+                switchContent(EventListFragment.newInstance(c));
+            }
+            @Override
+            public void failure(RetrofitError retrofitError) {
+                retrofitError.printStackTrace();
+                dialog.dismiss();
+                Toast.makeText(MainActivity.this, "Error fetching data", Toast.LENGTH_LONG).show();
+            }
+        };
+        methods.getEvents(id, callback);
     }
 
     public void gotoTimeline(View v){

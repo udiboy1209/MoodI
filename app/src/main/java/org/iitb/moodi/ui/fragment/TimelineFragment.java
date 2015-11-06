@@ -12,15 +12,10 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.nolanlawson.supersaiyan.SectionedListAdapter;
-import com.nolanlawson.supersaiyan.Sectionizer;
 import com.nolanlawson.supersaiyan.widget.SuperSaiyanScrollView;
 
 import org.iitb.moodi.R;
-import org.iitb.moodi.api.Event;
-import org.iitb.moodi.ui.widget.EventListAdapter;
 import org.iitb.moodi.ui.widget.ToolbarWidgetLayout;
-
-import java.util.Comparator;
 
 /**
  * Created by udiboy on 23/10/15.
@@ -53,28 +48,13 @@ public class TimelineFragment extends BaseFragment {
         mViewPager = (ViewPager) view.findViewById(R.id.viewpager);
         mViewPager.setAdapter(new SamplePagerAdapter());
 
-        EventListAdapter eventList = new EventListAdapter(mActivity, R.layout.list_item_timeline);
+        /*EventListAdapter eventList = new EventListAdapter(mActivity, R.layout.list_item_timeline);
         eventList.add(new Event());
         eventList.add(new Event());
         eventList.add(new Event());
         mAdapter = SectionedListAdapter.Builder.create(mActivity, eventList)
-                .setSectionizer(new Sectionizer<Event>(){
-                    @Override
-                    public CharSequence toSection(Event input) {
-                        return input.time+"";
-                    }
-                })
-                .sortValues(new Comparator<Event>() {
-                    public int compare(Event lhs, Event rhs) {
-                        if(lhs.time < rhs.time)
-                            return -1;
-                        else if(lhs.time > rhs.time)
-                            return 1;
-                        return 0;
-                    }
-                })
                 .build();
-        mAdapter.setShowSectionTitles(false);
+        mAdapter.setShowSectionTitles(false);*/
     }
 
     @Override

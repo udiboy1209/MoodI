@@ -10,10 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import org.iitb.moodi.R;
+import org.iitb.moodi.api.EventsResponse;
+import org.iitb.moodi.ui.widget.EventListAdapter;
 import org.iitb.moodi.ui.widget.ToolbarWidgetLayout;
+
+import java.util.ArrayList;
 
 /**
  * Created by udiboy on 23/10/15.
@@ -21,14 +24,17 @@ import org.iitb.moodi.ui.widget.ToolbarWidgetLayout;
 public class EventListFragment extends BaseFragment {
     TabLayout mTabLayout;
     ViewPager mViewPager;
+    EventsResponse data;
+    ArrayList<EventListAdapter> eventLists;
 
-    public static EventListFragment newInstance() {
+    public static EventListFragment newInstance(EventsResponse data) {
         
         Bundle args = new Bundle();
         
         EventListFragment fragment = new EventListFragment();
         fragment.setArguments(args);
         fragment.setTitle("Event List");
+        fragment.data=data;
         return fragment;
     }
 
@@ -42,6 +48,13 @@ public class EventListFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // Get the ViewPager and set it's PagerAdapter so that it can display items
+        eventLists= new ArrayList<>();
+        for(EventsResponse.Genre genre : data.genres){
+            EventListAdapter adapter = new EventListAdapter(mActivity, R.layout.list_item_timeline);
+            adapter.addAll(genre.events);
+            eventLists.add(adapter);
+        }
+
         mViewPager = (ViewPager) view.findViewById(R.id.viewpager);
         mViewPager.setAdapter(new SamplePagerAdapter());
         // Give the SlidingTabLayout the ViewPager, this must be done AFTER the ViewPager has had
@@ -67,7 +80,7 @@ public class EventListFragment extends BaseFragment {
          */
         @Override
         public int getCount() {
-            return 3;
+            return data.genres.length;
         }
 
         /**
@@ -88,16 +101,7 @@ public class EventListFragment extends BaseFragment {
          */
         @Override
         public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
-                    return "Dance";
-                case 1:
-                    return "Art";
-                case 2:
-                    return "Theatre";
-                default:
-                    return "Genre";
-            }
+            return data.genres[position].name;
         }
 
         /**
@@ -108,6 +112,7 @@ public class EventListFragment extends BaseFragment {
         public Object instantiateItem(ViewGroup container, int position) {
             // Inflate a new layout from our resources
             ListView view = new ListView(container.getContext());
+            view.setAdapter(eventLists.get(position));
             // Add the newly created View to the ViewPager
             container.addView(view);
 

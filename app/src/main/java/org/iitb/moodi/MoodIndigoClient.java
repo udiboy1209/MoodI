@@ -2,6 +2,7 @@ package org.iitb.moodi;
 
 import org.iitb.moodi.api.CityResponse;
 import org.iitb.moodi.api.CollegeResponse;
+import org.iitb.moodi.api.EventsResponse;
 
 import retrofit.Callback;
 import retrofit.http.Field;
@@ -20,4 +21,8 @@ public interface MoodIndigoClient {
     @FormUrlEncoded
     @POST("/api/college")
     void getColleges(@Field("city") String city_id, Callback<CollegeResponse> cb);
+
+    @FormUrlEncoded
+    @POST("/api/eventsdata")
+    void getEvents(@Field("id") int id, Callback<EventsResponse> cb);
 }
