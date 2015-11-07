@@ -27,7 +27,7 @@ public class EventListFragment extends BaseFragment {
     EventsResponse data;
     ArrayList<EventListAdapter> eventLists;
 
-    public static EventListFragment newInstance(EventsResponse data) {
+    public static EventListFragment newInstance(EventsResponse data, int colorRes) {
         
         Bundle args = new Bundle();
         
@@ -35,6 +35,7 @@ public class EventListFragment extends BaseFragment {
         fragment.setArguments(args);
         fragment.setTitle("Event List");
         fragment.data=data;
+        fragment.setColor(colorRes);
         return fragment;
     }
 
@@ -50,7 +51,7 @@ public class EventListFragment extends BaseFragment {
         // Get the ViewPager and set it's PagerAdapter so that it can display items
         eventLists= new ArrayList<>();
         for(EventsResponse.Genre genre : data.genres){
-            EventListAdapter adapter = new EventListAdapter(mActivity, R.layout.list_item_timeline);
+            EventListAdapter adapter = new EventListAdapter(mActivity, R.layout.list_item_event);
             adapter.addAll(genre.events);
             eventLists.add(adapter);
         }

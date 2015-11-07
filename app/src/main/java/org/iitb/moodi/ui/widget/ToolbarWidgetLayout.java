@@ -2,6 +2,10 @@ package org.iitb.moodi.ui.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -44,6 +48,23 @@ public class ToolbarWidgetLayout extends LinearLayout implements View.OnTouchLis
         setOnTouchListener(this);
 
         a.recycle();
+    }
+
+    @Override
+    public void setBackgroundResource(int resid) {
+        if (resid != 0) {
+            Bitmap b = BitmapFactory.decodeResource(getContext().getResources(), resid);
+
+            b = Bitmap.createBitmap(
+                    Bitmap.createScaledBitmap(b,
+                            getWidth(),
+                            b.getWidth() * getHeight() / b.getHeight(),
+                            false),
+                    0,0,getWidth(),getHeight());
+            Drawable d = new BitmapDrawable(getContext().getResources(), b);
+            setBackgroundDrawable(d);
+        }
+
     }
 
     @Override

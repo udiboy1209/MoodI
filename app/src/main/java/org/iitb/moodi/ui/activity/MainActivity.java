@@ -148,9 +148,15 @@ public class MainActivity extends BaseActivity
             public void success(Object o, Response response) {
                 EventsResponse c = (EventsResponse)o;
                 dialog.dismiss();
-                Log.d("EventFectResponse", c.id+" "+c.genres.length);
-                switchContent(EventListFragment.newInstance(c));
+
+                int id = Integer.valueOf(c.id);
+                Log.d("EventFetchResponse", id+" "+c.genres.length);
+                switchContent(EventListFragment.newInstance(c,
+                        getColorResource(Integer.valueOf(c.id))));
+
+                mToolbarContainer.setBackgroundResource(getBackgroundResource(id));
             }
+
             @Override
             public void failure(RetrofitError retrofitError) {
                 retrofitError.printStackTrace();
@@ -159,6 +165,38 @@ public class MainActivity extends BaseActivity
             }
         };
         methods.getEvents(id, callback);
+    }
+
+    public int getColorResource(int id){
+        switch(id){
+            case 1:
+                return R.color.color_compi;
+            case 2:
+                return R.color.color_informals;
+            case 3:
+                return R.color.color_concerts;
+            case 4:
+                return R.color.color_proshows;
+            case 5:
+                return R.color.color_arts;
+        }
+        return R.color.color_compi;
+    }
+
+    public int getBackgroundResource(int id){
+        switch(id){
+            case 1:
+                return R.drawable.compi;
+            case 2:
+                return R.drawable.informals;
+            case 3:
+                return R.drawable.pronites;
+            case 4:
+                return R.drawable.proshows;
+            case 5:
+                return R.drawable.workshops;
+        }
+        return R.color.color_compi;
     }
 
     public void gotoTimeline(View v){

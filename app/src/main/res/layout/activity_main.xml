@@ -15,14 +15,12 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="#0077FF"
             android:id="@+id/toolbar_container">
             <android.support.v7.widget.Toolbar
                 android:layout_width="fill_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:id="@+id/toolbar"
-                android:theme="@style/ThemeOverlay.AppCompat.Dark"
-                android:background="@drawable/toolbar_shadow_gradient"/>
+                android:theme="@style/ThemeOverlay.AppCompat.Dark"/>
             <include layout="@layout/widget_countdown_clock" android:id="@+id/countdown_container" android:visibility="gone"/>
         </org.iitb.moodi.ui.widget.ToolbarWidgetLayout>
 
