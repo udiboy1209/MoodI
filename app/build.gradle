@@ -32,4 +32,5 @@ dependencies {
     compile 'com.nolanlawson:supersaiyan-scrollview:1.2.0@aar'
     compile 'com.github.clans:fab:1.6.1'
     compile 'com.google.android.gms:play-services:7.8.0'
+    compile 'net.steamcrafted:materialiconlib:1.0.6'
 }
