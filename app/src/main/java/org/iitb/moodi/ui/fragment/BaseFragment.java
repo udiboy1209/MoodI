@@ -3,9 +3,7 @@ package org.iitb.moodi.ui.fragment;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.widget.LinearLayout;
 
-import org.iitb.moodi.R;
 import org.iitb.moodi.ui.activity.MainActivity;
 import org.iitb.moodi.ui.widget.ToolbarWidgetLayout;
 
@@ -23,7 +21,7 @@ public class BaseFragment  extends Fragment{
         if(activity instanceof MainActivity)
             mActivity=(MainActivity)activity;
 
-        mActivity.onSectionAttached(mID);
+        //mActivity.onSectionAttached(mID);
         super.onAttach(activity);
     }
 
