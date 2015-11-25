@@ -1,5 +1,6 @@
 package org.iitb.moodi.ui.activity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
@@ -32,11 +33,17 @@ public class RegistrationActivity extends BaseActivity implements AdapterView.On
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
 
+        Bundle extras = getIntent().getExtras();
+        if (extras!=null) {
+            setEditText(extras.getString("name"),R.id.reg_name);
+            setEditText(extras.getString("email"),R.id.reg_email);
+        }
         // Working on Gender Spinner
-        String[] gender_choices = new String[] {"Gender","Male","Female"};
+        String[] gender_choices = new String[] {"gender","male","female"};
         genderSpinner = (Spinner) findViewById(R.id.reg_gender);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, gender_choices);
@@ -130,7 +137,7 @@ public class RegistrationActivity extends BaseActivity implements AdapterView.On
             String dob = ((EditText)findViewById(R.id.reg_dob)).getText().toString();
             String dobregex = "^(?:(?:31(\\/|-|\\.)(?:0?[13578]|1[02]))\\1|(?:(?:29|30)(\\/|-|\\.)(?:0?[1,3-9]|1[0-2])\\2))(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$|^(?:29(\\/|-|\\.)0?2\\3(?:(?:(?:1[6-9]|[2-9]\\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\\d|2[0-8])(\\/|-|\\.)(?:(?:0?[1-9])|(?:1[0-2]))\\4(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$";
             if(!dob.matches(dobregex)) {
-                ((EditText)findViewById(R.id.reg_dob)).setError("Invalid Date of Birth");
+                ((EditText)findViewById(R.id.reg_dob)).setError("Invalid Date of Birth, enter DD-MM-YYYY");
                 check= false;
             }
 
@@ -152,6 +159,28 @@ public class RegistrationActivity extends BaseActivity implements AdapterView.On
     public void saveData(View view) {
         if (!validateData())
             return;
+        Bundle extras = getIntent().getExtras();
+        me.fbid=extras.getString("fbid");
+        me.name=getEditText(R.id.reg_name);
+        me.email=getEditText(R.id.reg_email);
+        me.dob=(getEditText(R.id.reg_dob)).replace('/','-').replace('.','-');
+        me.phone=getEditText(R.id.reg_phone);
+        me.gender=(String)((Spinner)findViewById(R.id.reg_gender)).getSelectedItem();
+        me.year_study = (String)((Spinner)findViewById(R.id.reg_year)).getSelectedItem();
+        int city_number = (int)((Spinner)findViewById(R.id.reg_city)).getSelectedItemId();
+        me.city_id = mCityList[city_number].getId();
+        int college_number = (int)((Spinner)findViewById(R.id.reg_college)).getSelectedItemId();
+        me.clg_id = mCollegeList[college_number].getId();
+
+
+        SharedPreferences.Editor spe = prefs.edit();
+
+        spe.putString("user_json", me.getJSON());
+        Log.d(TAG,me.getJSON());
+        spe.commit();
+
+        setResult(RESULT_OK);
+        finish();
     }
 
     public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {

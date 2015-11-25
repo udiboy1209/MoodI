@@ -43,8 +43,7 @@ public class MainActivity extends BaseActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Intent i = new Intent(getBaseContext(), RegistrationActivity.class);
-        startActivity(i);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
