@@ -26,6 +26,7 @@ import net.steamcrafted.materialiconlib.MaterialDrawableBuilder.IconValue;
 import net.steamcrafted.materialiconlib.MaterialIconView;
 
 import org.iitb.moodi.R;
+import org.iitb.moodi.ui.activity.BaseActivity;
 import org.iitb.moodi.ui.activity.MainActivity;
 
 /**
@@ -281,7 +282,7 @@ public class NavigationDrawerFragment extends Fragment {
     }
 
     private Toolbar getActionBar() {
-        return ((MainActivity) getActivity()).getToolbar();
+        return ((BaseActivity) getActivity()).getToolbar();
     }
 
     /**

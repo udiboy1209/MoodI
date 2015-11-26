@@ -3,12 +3,17 @@ package org.iitb.moodi.ui.activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import org.iitb.moodi.MoodIndigoClient;
@@ -19,7 +24,10 @@ import org.iitb.moodi.ui.fragment.EventListFragment;
 import org.iitb.moodi.ui.fragment.NavigationDrawerFragment;
 import org.iitb.moodi.ui.fragment.ScheduleFragment;
 import org.iitb.moodi.ui.fragment.TimelineFragment;
+import org.iitb.moodi.ui.widget.EventListAdapter;
 import org.iitb.moodi.ui.widget.ToolbarWidgetLayout;
+
+import java.util.ArrayList;
 
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -27,30 +35,30 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class EventsActivity extends BaseActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks,
-        BaseFragment.InteractionListener {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks{
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
-    private Toolbar mToolbar;
-    private ToolbarWidgetLayout mToolbarContainer;
+    private TabLayout mTabLayout;
+    private ViewPager mViewPager;
+    private EventsResponse eventsData;
+    private ArrayList<EventListAdapter> eventLists;
 
-    private BaseFragment mCurrentFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Intent i = new Intent(getBaseContext(), RegistrationActivity.class);
-        startActivity(i);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_events);
 
-        //collapsingToolbar = (CollapsingToolbarLayout)findViewById(R.id.collapsing_toolbar);
-        mToolbarContainer = (ToolbarWidgetLayout) findViewById(R.id.toolbar_container);
-        mToolbar = mToolbarContainer.getToolbar();
+        mToolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         mToolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp);
+
+        mTabLayout = (TabLayout) findViewById(R.id.events_tab_layout);
+        mViewPager = (ViewPager) findViewById(R.id.events_pager);
+
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -60,32 +68,17 @@ public class EventsActivity extends BaseActivity
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
-        //switchContent(HomeFragment.newInstance());
+        loadEventsData(getIntent().getIntExtra("id",0));
     }
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
-        if(position==1) {
+        /*if(position==1) {
             switchContent(ScheduleFragment.newInstance());
         } else if(position==2){
             startActivity(new Intent(this,MapsActivity.class));
-        }
-    }
-
-    public void onSectionAttached(int id) {
-        //findViewById(R.id.countdown_container).setVisibility(View.GONE);
-
-    }
-
-    private void switchContent(BaseFragment fragment){
-        mCurrentFragment=fragment;
-        fragment.setInteractionListener(this);
-
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.container, fragment)
-                .commit();
+        }*/
     }
 
 
@@ -116,20 +109,9 @@ public class EventsActivity extends BaseActivity
         return super.onOptionsItemSelected(item);
     }
 
-    /*public void customizeToolbar(int resId, String title, View widget){
-        if(mToolbarContainer.getChildCount()>1)
-            mToolbarContainer.removeViewAt(mToolbarContainer.getChildCount()-1);
-        if(widget!=null)
-            mToolbarContainer.addView(widget);
-
-        mTitle = title;
-        restoreActionBar();
-    }*/
-
-    public void gotoEventList(View v){
-        int id = Integer.valueOf((String)v.getTag());
+    public void loadEventsData(int id){
         final ProgressDialog dialog = ProgressDialog.show(this, "",
-                "Fetching data. Pleas wait...", true);
+                "Fetching data. Please wait...", true);
 
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(API_URL)
@@ -138,10 +120,20 @@ public class EventsActivity extends BaseActivity
         Callback callback = new Callback() {
             @Override
             public void success(Object o, Response response) {
-                EventsResponse c = (EventsResponse)o;
+                eventsData = (EventsResponse)o;
                 dialog.dismiss();
-                Log.d("EventFectResponse", c.id + " " + c.genres.length);
-                switchContent(EventListFragment.newInstance(c));
+                Log.d("EventFectResponse", eventsData.id + " " + eventsData.genres.length);
+
+                eventLists= new ArrayList<>();
+                for(EventsResponse.Genre genre : eventsData.genres){
+                    EventListAdapter adapter = new EventListAdapter(EventsActivity.this, R.layout.list_item_timeline);
+                    adapter.addAll(genre.events);
+                    eventLists.add(adapter);
+
+                }
+
+                mViewPager.setAdapter(new SamplePagerAdapter());
+                mTabLayout.setupWithViewPager(mViewPager);
             }
             @Override
             public void failure(RetrofitError retrofitError) {
@@ -153,16 +145,68 @@ public class EventsActivity extends BaseActivity
         methods.getEvents(id, callback);
     }
 
-    public void gotoTimeline(View v){
-        switchContent(TimelineFragment.newInstance());
-    }
-
-    @Override
-    public void onFragmentLoaded(BaseFragment fragment) {
-        fragment.customizeToolbarLayout(mToolbarContainer);
-    }
-
     public Toolbar getToolbar() {
         return mToolbar;
+    }
+
+    class SamplePagerAdapter extends PagerAdapter {
+        public static final String TAG = "EventListPagerAdapter";
+
+        /**
+         * @return the number of pages to display
+         */
+        @Override
+        public int getCount() {
+            return eventsData.genres.length;
+        }
+
+        /**
+         * @return true if the value returned from {@link #instantiateItem(ViewGroup, int)} is the
+         * same object as the {@link View} added to the {@link ViewPager}.
+         */
+        @Override
+        public boolean isViewFromObject(View view, Object o) {
+            return o == view;
+        }
+
+        /**
+         * Return the title of the item at {@code position}. This is important as what this method
+         * returns is what is displayed in the {@link TabLayout}.
+         * <p>
+         * Here we construct one using the position value, but for real application the title should
+         * refer to the item's contents.
+         */
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return eventsData.genres[position].name;
+        }
+
+        /**
+         * Instantiate the {@link View} which should be displayed at {@code position}. Here we
+         * inflate a layout from the apps resources and then change the text view to signify the position.
+         */
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            // Inflate a new layout from our resources
+            ListView view = new ListView(container.getContext());
+            view.setAdapter(eventLists.get(position));
+            // Add the newly created View to the ViewPager
+            container.addView(view);
+
+            Log.i(TAG, "instantiateItem() [position: " + position + "]");
+
+            // Return the View
+            return view;
+        }
+
+        /**
+         * Destroy the item from the {@link ViewPager}. In our case this is simply removing the
+         * {@link View}.
+         */
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            container.removeView((View) object);
+            Log.i(TAG, "destroyItem() [position: " + position + "]");
+        }
     }
 }

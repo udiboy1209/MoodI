@@ -29,7 +29,6 @@ public class MainActivity extends BaseActivity
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
-    private Toolbar mToolbar;
 
 
     @Override
@@ -99,8 +98,13 @@ public class MainActivity extends BaseActivity
 
     public void gotoEventList(View v){
         int id = Integer.valueOf((String)v.getTag());
-        final ProgressDialog dialog = ProgressDialog.show(this, "",
-                "Fetching data. Pleas wait...", true);
+        Intent eventlist = new Intent();
+        eventlist.setClass(MainActivity.this, EventsActivity.class);
+        eventlist.putExtra("id",id);
+        startActivity(eventlist);
+
+        /*final ProgressDialog dialog = ProgressDialog.show(this, "",
+                "Fetching data. Please wait...", true);
 
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(API_URL)
@@ -111,8 +115,9 @@ public class MainActivity extends BaseActivity
             public void success(Object o, Response response) {
                 EventsResponse c = (EventsResponse)o;
                 dialog.dismiss();
-                Log.d("EventFectResponse", c.id+" "+c.genres.length);
-                //switchContent(EventListFragment.newInstance(c));
+                Log.d("EventFetchResponse", c.id+" "+c.genres.length);
+
+
             }
             @Override
             public void failure(RetrofitError retrofitError) {
@@ -121,10 +126,6 @@ public class MainActivity extends BaseActivity
                 Toast.makeText(MainActivity.this, "Error fetching data", Toast.LENGTH_LONG).show();
             }
         };
-        methods.getEvents(id, callback);
-    }
-
-    public Toolbar getToolbar() {
-        return mToolbar;
+        methods.getEvents(id, callback);*/
     }
 }
