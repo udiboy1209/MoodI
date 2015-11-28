@@ -17,23 +17,4 @@ public class EventsResponse {
 
     @SerializedName("genre")
     public Genre[] genres;
-
-    public class Genre{
-        @SerializedName("name")
-        public String name;
-
-        @SerializedName("shortname")
-        public String name_short;
-
-        @SerializedName("id")
-        public String  id;
-
-        @SerializedName("intro")
-        public String intro;
-
-        @SerializedName("details")
-        public Event[] events;
-
-
-    }
 }
