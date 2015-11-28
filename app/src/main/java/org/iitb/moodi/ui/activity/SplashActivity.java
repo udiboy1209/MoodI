@@ -53,6 +53,7 @@ public class SplashActivity extends BaseActivity {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 // Check whether user exists!
+                Log.d(TAG,"Login successful!");
                 checkUserExistence();
             }
 
@@ -66,10 +67,9 @@ public class SplashActivity extends BaseActivity {
             }
         });
         if (AccessToken.getCurrentAccessToken()!=null) {
-            Log.d(TAG,AccessToken.getCurrentAccessToken().getToken());
+            Log.d(TAG,"Access token exists, disabling button!");
             loginButton.setVisibility(View.GONE);
-            Log.d(TAG,me.getJSON());
-            Log.d(TAG,prefs.getString("user_json",""));
+            Log.d(TAG,"Stored prefs value is "+prefs.getString("user_json",""));
             checkUserExistence();
         }
     }
@@ -79,11 +79,10 @@ public class SplashActivity extends BaseActivity {
         Log.d("LoginDebug", "ActivityResult");
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode==REGISTRATION_ACTIVITY) {
-            Log.d(TAG,me.getJSON());
-            Log.d(TAG,prefs.getString("user_json", ""));
             me = (new Gson()).fromJson(prefs.getString("user_json",""),User.class);
             Log.d(TAG, me.getJSON());
             // Adding user to the database
+            Log.d(TAG,"Adding user to database");
             addUser();
         }
         else {
@@ -108,9 +107,7 @@ public class SplashActivity extends BaseActivity {
 
                 SharedPreferences.Editor spe = prefs.edit();
                 spe.putString("user_json", me.getJSON());
-                Log.d(TAG, me.getJSON());
                 spe.commit();
-                Log.d(TAG + ", pref", prefs.getString("user_json", ""));
                 Intent i = new Intent(getBaseContext(), MainActivity.class);
                 startActivity(i);
                 finish();
@@ -122,8 +119,6 @@ public class SplashActivity extends BaseActivity {
                 Log.e(TAG, error);
             }
         };
-        Log.d(TAG,AccessToken.getCurrentAccessToken().getToken());
-        Log.d(TAG,me.getJSON());
         methods.addUser(me.fbid, me.city_id, me.clg_id,
                 me.name, me.email, me.phone,
                 me.dob, me.gender, me.year_study,
@@ -144,14 +139,15 @@ public class SplashActivity extends BaseActivity {
                 if (!c.getStatus() && c.getUser().equalsIgnoreCase("Not registered")) {
                     // User hasn't registered for Mood Indigo!
                     // First get his data
+                    Log.d(TAG,"User hasn't registered for Mood Indigo, getting his biodata");
                     getBiodata();
                 }
                 else if (c.getStatus()) {
                     // User entry exists
                     me = (new Gson()).fromJson(c.getUser(),User.class);
-                    Log.d(TAG,me.getJSON());
                     SharedPreferences.Editor spe = prefs.edit();
                     spe.putString("user_json", me.getJSON());
+                    Log.d(TAG,"User has registered! His server data is :-");
                     Log.d(TAG, me.getJSON());
                     spe.commit();
                     Intent i = new Intent(getBaseContext(), MainActivity.class);
@@ -180,6 +176,7 @@ public class SplashActivity extends BaseActivity {
                             JSONObject object,
                             GraphResponse response) {
                         JSONObject userDetails = response.getJSONObject();
+                        Log.d(TAG,"Using Facebook Graph API");
                         Log.d(TAG, userDetails.toString());
                         Intent i = new Intent();
                         i.setClass(getApplicationContext(), RegistrationActivity.class);

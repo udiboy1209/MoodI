@@ -11,14 +11,21 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.squareup.okhttp.Cache;
+import com.squareup.okhttp.OkHttpClient;
+
 import org.iitb.moodi.MoodIndigoClient;
 import org.iitb.moodi.R;
 import org.iitb.moodi.api.EventsResponse;
 import org.iitb.moodi.ui.fragment.NavigationDrawerFragment;
 
+import java.io.File;
+import java.io.IOException;
+
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
+import retrofit.client.OkClient;
 import retrofit.client.Response;
 
 
@@ -33,8 +40,7 @@ public class MainActivity extends BaseActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Intent i = new Intent(getBaseContext(), RegistrationActivity.class);
-        startActivity(i);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -105,9 +111,22 @@ public class MainActivity extends BaseActivity
         eventlist.putExtra("id",id);
         startActivity(eventlist);
 
-        /*final ProgressDialog dialog = ProgressDialog.show(this, "",
+        final ProgressDialog dialog = ProgressDialog.show(this, "",
                 "Fetching data. Please wait...", true);
 
+        /*File httpCacheDirectory = new File(getBaseContext().getCacheDir(), "responses");
+
+        Cache cache = null;
+        try {
+            cache = new Cache(httpCacheDirectory, 10 * 1024 * 1024);
+        } catch (Exception e) {
+            Log.e("OKHttp", "Could not create http cache", e);
+        }
+
+        OkHttpClient okHttpClient = new OkHttpClient();
+        if (cache != null) {
+            okHttpClient.setCache(cache);
+        }*/
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(API_URL)
                 .build();
@@ -128,7 +147,7 @@ public class MainActivity extends BaseActivity
                 Toast.makeText(MainActivity.this, "Error fetching data", Toast.LENGTH_LONG).show();
             }
         };
-        methods.getEvents(id, callback);*/
+        methods.getEvents(id, callback);
     }
 
     public int getColorResource(int id){
