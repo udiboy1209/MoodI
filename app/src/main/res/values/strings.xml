@@ -27,4 +27,7 @@
     <string name="title_activity_registration">RegistrationActivity</string>
     <string name="title_activity_base">BaseActivity</string>
     <string name="title_activity_maps">Map</string>
+    <string name="event_registration_message">For any registration related queries,
+        please drop a mail at rituj@moodi.org or naren@moodi.org. Your mi no should be of the
+        format MI-XYZ-ABC. Note the use of hyphen is necessary.</string>
 </resources>

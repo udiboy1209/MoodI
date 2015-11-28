@@ -1,5 +1,6 @@
 package org.iitb.moodi.ui.activity;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
@@ -7,15 +8,26 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.iitb.moodi.MoodIndigoClient;
 import org.iitb.moodi.R;
+import org.iitb.moodi.api.CityResponse;
 import org.iitb.moodi.api.Event;
+import org.iitb.moodi.api.EventDetailsResponse;
 import org.iitb.moodi.ui.fragment.NavigationDrawerFragment;
+
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 /**
  * Created by udiboy on 28/11/15.
@@ -30,10 +42,13 @@ public class EventDetailsActivity extends BaseActivity
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
     private Event eventDetails;
-
+    int min_reg = 0;
+    int max_reg = 0;
+    private String TAG = "EventDetailsActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_details);
 
@@ -57,6 +72,30 @@ public class EventDetailsActivity extends BaseActivity
 
         mViewPager.setAdapter(new SamplePagerAdapter());
         mTabLayout.setupWithViewPager(mViewPager);
+
+        final ProgressDialog dialog = ProgressDialog.show(this, "",
+                "Fetching data. Please wait...", true);
+
+        RestAdapter restAdapter = new RestAdapter.Builder()
+                .setEndpoint(m_API_URL)
+                .build();
+        MoodIndigoClient methods = restAdapter.create(MoodIndigoClient.class);
+        Callback callback = new Callback() {
+            @Override
+            public void success(Object o, Response response) {
+                EventDetailsResponse c = (EventDetailsResponse) o;
+                min_reg = c.getMin();
+                max_reg = c.getMax();
+                dialog.dismiss();
+            }
+            @Override
+            public void failure(RetrofitError retrofitError) {
+                String error = retrofitError.getMessage();
+                Log.e(TAG, error);
+                dialog.dismiss();
+            }
+        };
+        methods.getEventDetails(eventDetails.id, callback);
     }
 
     @Override
@@ -159,30 +198,44 @@ public class EventDetailsActivity extends BaseActivity
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             // Inflate a new layout from our resources
+            if (position==3) {
+                LayoutInflater inflater = LayoutInflater.from(getBaseContext());
+                View view = inflater.inflate(R.layout.event_registration, null, false);
+                TextView tv = (TextView) view.findViewById(R.id.event_reg_textview);
+                TextView tv2 = (TextView) view.findViewById(R.id.event_reg_mi_no);
+                TextView tv3 = (TextView) view.findViewById(R.id.event_reg_min_participants);
+                tv.setText(R.string.event_registration_message);
+                tv2.setText("Your MI number is "+me.mi_no);
+                tv3.setText("Minimum number of participants is "+min_reg);
+                container.addView(view);
+                Log.i(TAG, "instantiateItem() [position: " + position + "]");
+                return view;
+            }
+            else {
+                TextView view = new TextView(EventDetailsActivity.this);
+                view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT));
+                switch (position) {
+                    case 0:
+                        view.setText(eventDetails.intro);
+                        break;
+                    case 1:
+                        view.setText(eventDetails.rules);
+                        break;
+                    case 2:
+                        view.setText(eventDetails.prizes);
+                        break;
+                    case 3:
+                        view.setText("Fetching registration details..");
 
-            TextView view = new TextView(EventDetailsActivity.this);
-            view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT));
-            switch (position){
-                case 0:
-                    view.setText(eventDetails.intro);
-                    break;
-                case 1:
-                    view.setText(eventDetails.rules);
-                    break;
-                case 2:
-                    view.setText(eventDetails.prizes);
-                    break;
-                case 3:
-                    view.setText(eventDetails.registration);
-                    break;
+                }
+
+                container.addView(view);
+                Log.i(TAG, "instantiateItem() [position: " + position + "]");
+
+                // Return the View
+                return view;
             }
 
-            container.addView(view);
-
-            Log.i(TAG, "instantiateItem() [position: " + position + "]");
-
-            // Return the View
-            return view;
         }
 
         /**

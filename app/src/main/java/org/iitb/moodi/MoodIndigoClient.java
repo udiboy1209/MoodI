@@ -4,6 +4,7 @@ import org.iitb.moodi.api.AddUserResponse;
 import org.iitb.moodi.api.CheckUserResponse;
 import org.iitb.moodi.api.CityResponse;
 import org.iitb.moodi.api.CollegeResponse;
+import org.iitb.moodi.api.EventDetailsResponse;
 import org.iitb.moodi.api.EventsResponse;
 
 import retrofit.Callback;
@@ -21,6 +22,10 @@ public interface MoodIndigoClient {
 
     @GET("/api/city")
     void getCities(Callback<CityResponse> cb);
+
+    @FormUrlEncoded
+    @POST("/api/events")
+    void getEventDetails(@Field("id") String event_id, Callback<EventDetailsResponse> cb);
 
     @FormUrlEncoded
     @POST("/api/college")
