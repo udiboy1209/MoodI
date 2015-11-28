@@ -14,14 +14,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.iitb.moodi.MoodIndigoClient;
 import org.iitb.moodi.R;
 import org.iitb.moodi.api.CityResponse;
 import org.iitb.moodi.api.Event;
 import org.iitb.moodi.api.EventDetailsResponse;
+import org.iitb.moodi.api.EventRegisterResponse;
 import org.iitb.moodi.ui.fragment.NavigationDrawerFragment;
 
 import retrofit.Callback;
@@ -205,8 +209,16 @@ public class EventDetailsActivity extends BaseActivity
                 TextView tv2 = (TextView) view.findViewById(R.id.event_reg_mi_no);
                 TextView tv3 = (TextView) view.findViewById(R.id.event_reg_min_participants);
                 tv.setText(R.string.event_registration_message);
-                tv2.setText("Your MI number is "+me.mi_no);
-                tv3.setText("Minimum number of participants is "+min_reg);
+                tv2.setText("Your MI number is " + me.mi_no);
+                tv3.setText("Minimum number of participants is " + min_reg);
+                LinearLayout holder = (LinearLayout) view.findViewById(R.id.event_reg_edittext_holder);
+                for (int i=0; i<max_reg; i++) {
+                    EditText mi_et = new EditText(EventDetailsActivity.this);
+                    mi_et.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT));
+                    mi_et.setHint("MI-XXX-YYY");
+                    holder.addView(mi_et);
+                }
+                Log.d(TAG,"Scroll view id is "+R.id.event_reg_edittext_holder);
                 container.addView(view);
                 Log.i(TAG, "instantiateItem() [position: " + position + "]");
                 return view;
@@ -247,6 +259,79 @@ public class EventDetailsActivity extends BaseActivity
             container.removeView((View) object);
             Log.i(TAG, "destroyItem() [position: " + position + "]");
         }
+
+    }
+    public boolean validateData() {
+        boolean check = true;
+        String mi_regex = "^MI-[A-Z]{3}-[0-9]{3}$";
+        LinearLayout ll = (LinearLayout) findViewById(R.id.event_reg_edittext_holder);
+        int children = ll.getChildCount();
+        int filledCount = 0;
+        for (int i=0; i < children; i++) {
+            EditText et = (EditText) ll.getChildAt(i);
+            String text = et.getText().toString();
+            if (!text.equalsIgnoreCase("")) {
+                filledCount++;
+                if (!text.matches(mi_regex)) {
+                    et.setError("Please enter valid MI-XXX-YYY number!");
+                    check = false;
+                }
+            }
+        }
+        if (filledCount<min_reg) {
+            check=false;
+            Toast.makeText(getBaseContext(),"A minimum of "+min_reg+" entries needed!", Toast.LENGTH_LONG).show();
+        }
+        return check;
+    }
+
+    public void registerForEvent(View v) {
+        if (!validateData())
+            return;
+        // Check whether user has registered
+
+        // Let's register the user!
+        final ProgressDialog dialog = ProgressDialog.show(this, "",
+                "Registering user...", true);
+
+        RestAdapter restAdapter = new RestAdapter.Builder()
+                .setEndpoint(m_API_URL)
+                .build();
+        MoodIndigoClient methods = restAdapter.create(MoodIndigoClient.class);
+        Callback callback = new Callback() {
+            @Override
+            public void success(Object o, Response response) {
+                EventRegisterResponse c = (EventRegisterResponse) o;
+                if (c.getStatus()) {
+                    Toast.makeText(getBaseContext(),c.getResult(), Toast.LENGTH_LONG).show();
+                }
+                else {
+                    Toast.makeText(getBaseContext(),c.getResult(), Toast.LENGTH_LONG).show();
+                }
+                dialog.dismiss();
+            }
+            @Override
+            public void failure(RetrofitError retrofitError) {
+                String error = retrofitError.getMessage();
+                Log.e(TAG, error);
+                dialog.dismiss();
+            }
+        };
+        LinearLayout ll = (LinearLayout) findViewById(R.id.event_reg_edittext_holder);
+        int children = ll.getChildCount();
+        int filledCount = 0;
+        String reglist = "";
+        for (int i=0; i < children; i++) {
+            EditText et = (EditText) ll.getChildAt(i);
+            String text = et.getText().toString();
+            if (!text.equalsIgnoreCase("")) {
+                reglist+=text+",";
+            }
+        }
+        // remove trailing comma
+        reglist = reglist.substring(0,reglist.length()-1);
+        methods.eventRegister(eventDetails.id, reglist, callback);
+
     }
 }
 
