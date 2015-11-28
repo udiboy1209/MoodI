@@ -71,6 +71,12 @@
             android:name=".ui.activity.MapsActivity"
             android:label="@string/title_activity_maps" >
         </activity>
+        <activity android:name=".ui.activity.EventsActivity" >
+        </activity>
+        <activity android:name=".ui.activity.EventDetailsActivity" >
+        </activity>
+        <activity android:name=".ui.activity.ScheduleActivity" >
+        </activity>
     </application>
 
 </manifest>

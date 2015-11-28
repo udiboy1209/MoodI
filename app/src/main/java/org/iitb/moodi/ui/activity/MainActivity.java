@@ -14,13 +14,7 @@ import android.widget.Toast;
 import org.iitb.moodi.MoodIndigoClient;
 import org.iitb.moodi.R;
 import org.iitb.moodi.api.EventsResponse;
-import org.iitb.moodi.ui.fragment.BaseFragment;
-import org.iitb.moodi.ui.fragment.EventListFragment;
-import org.iitb.moodi.ui.fragment.HomeFragment;
 import org.iitb.moodi.ui.fragment.NavigationDrawerFragment;
-import org.iitb.moodi.ui.fragment.ScheduleFragment;
-import org.iitb.moodi.ui.fragment.TimelineFragment;
-import org.iitb.moodi.ui.widget.ToolbarWidgetLayout;
 
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -29,27 +23,23 @@ import retrofit.client.Response;
 
 
 public class MainActivity extends BaseActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks,
-                   BaseFragment.InteractionListener {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
-    private Toolbar mToolbar;
-    private ToolbarWidgetLayout mToolbarContainer;
 
-    private BaseFragment mCurrentFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
+        Intent i = new Intent(getBaseContext(), RegistrationActivity.class);
+        startActivity(i);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         //collapsingToolbar = (CollapsingToolbarLayout)findViewById(R.id.collapsing_toolbar);
-        mToolbarContainer = (ToolbarWidgetLayout) findViewById(R.id.toolbar_container);
-        mToolbar = mToolbarContainer.getToolbar();
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         mToolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp);
 
@@ -61,40 +51,15 @@ public class MainActivity extends BaseActivity
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
-        switchContent(HomeFragment.newInstance());
+
+        mToolbar.setTitle("Home");
     }
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
-        if(position==1) {
-            switchContent(ScheduleFragment.newInstance());
-        } else if(position==2){
-            startActivity(new Intent(this,MapsActivity.class));
-        }
+
     }
-
-    public void onSectionAttached(int id) {
-        //findViewById(R.id.countdown_container).setVisibility(View.GONE);
-        switch (id) {
-            case R.layout.fragment_main:
-                //mTitle = "MOOD INDIGO";
-                //findViewById(R.id.countdown_container).setVisibility(View.VISIBLE);
-                //mToolbar.setBackgroundResource(R.drawable.toolbar_shadow_gradient);
-                break;
-        }
-    }
-
-    private void switchContent(BaseFragment fragment){
-        mCurrentFragment=fragment;
-        fragment.setInteractionListener(this);
-
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.container, fragment)
-                .commit();
-    }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -135,8 +100,13 @@ public class MainActivity extends BaseActivity
 
     public void gotoEventList(View v){
         int id = Integer.valueOf((String)v.getTag());
-        final ProgressDialog dialog = ProgressDialog.show(this, "",
-                "Fetching data. Pleas wait...", true);
+        Intent eventlist = new Intent();
+        eventlist.setClass(MainActivity.this, EventsActivity.class);
+        eventlist.putExtra("id",id);
+        startActivity(eventlist);
+
+        /*final ProgressDialog dialog = ProgressDialog.show(this, "",
+                "Fetching data. Please wait...", true);
 
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(API_URL)
@@ -147,15 +117,10 @@ public class MainActivity extends BaseActivity
             public void success(Object o, Response response) {
                 EventsResponse c = (EventsResponse)o;
                 dialog.dismiss();
+                Log.d("EventFetchResponse", c.id+" "+c.genres.length);
 
-                int id = Integer.valueOf(c.id);
-                Log.d("EventFetchResponse", id+" "+c.genres.length);
-                switchContent(EventListFragment.newInstance(c,
-                        getColorResource(Integer.valueOf(c.id))));
 
-                mToolbarContainer.setBackgroundResource(getBackgroundResource(id));
             }
-
             @Override
             public void failure(RetrofitError retrofitError) {
                 retrofitError.printStackTrace();
@@ -163,7 +128,7 @@ public class MainActivity extends BaseActivity
                 Toast.makeText(MainActivity.this, "Error fetching data", Toast.LENGTH_LONG).show();
             }
         };
-        methods.getEvents(id, callback);
+        methods.getEvents(id, callback);*/
     }
 
     public int getColorResource(int id){
@@ -196,18 +161,5 @@ public class MainActivity extends BaseActivity
                 return R.drawable.workshops;
         }
         return R.color.color_compi;
-    }
-
-    public void gotoTimeline(View v){
-        switchContent(TimelineFragment.newInstance());
-    }
-
-    @Override
-    public void onFragmentLoaded(BaseFragment fragment) {
-        fragment.customizeToolbarLayout(mToolbarContainer);
-    }
-
-    public Toolbar getToolbar() {
-        return mToolbar;
     }
 }

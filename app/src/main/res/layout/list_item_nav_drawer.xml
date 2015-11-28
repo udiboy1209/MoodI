@@ -1,8 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingLeft="20dp"
-    android:paddingTop="20dp"
-    android:paddingBottom="20dp"
-    android:drawableLeft="@drawable/ic_drawer"/>
+    android:orientation="horizontal"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <net.steamcrafted.materialiconlib.MaterialIconView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:materialIconSize="28dp"
+        android:padding="10dp"
+        android:id="@+id/list_item_nav_icon"/>
+    <TextView
+        android:textSize="20sp"
+        android:layout_gravity="center_vertical"
+        android:paddingLeft="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/list_item_nav_name"/>
+    </LinearLayout>

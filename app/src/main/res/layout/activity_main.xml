@@ -8,31 +8,79 @@
 
     <!-- As the main content view, the view below consumes the entire
          space available using match_parent in both dimensions. -->
-    <android.support.design.widget.CoordinatorLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
-        <org.iitb.moodi.ui.widget.ToolbarWidgetLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:id="@+id/toolbar_container">
-            <android.support.v7.widget.Toolbar
-                android:layout_width="fill_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:id="@+id/toolbar"
-                android:theme="@style/ThemeOverlay.AppCompat.Dark"/>
-            <include layout="@layout/widget_countdown_clock" android:id="@+id/countdown_container" android:visibility="gone"/>
-        </org.iitb.moodi.ui.widget.ToolbarWidgetLayout>
 
-        <android.support.v4.widget.NestedScrollView
-            android:fillViewport="true"
-            android:id="@+id/container"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+            <!-- Collapsible Layout for Last call -->
+        <ImageView
+            android:src="@drawable/small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            android:layout_alignTop="@id/toolbar"
+            android:layout_alignBottom="@+id/countdown_widget"/>
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:background="@drawable/toolbar_shadow_gradient"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="org.iitb.moodi.ui.widget.ResizeWidgetBehavior"
-            app:layout_anchor="@+id/toolbar_container"
-            app:layout_anchorGravity="bottom"/>
-    </android.support.design.widget.CoordinatorLayout>
+            android:layout_height="?attr/actionBarSize"
+            android:layout_alignParentTop="true"
+            style="@style/AppToolbar">
+
+        </android.support.v7.widget.Toolbar>
+
+
+        <include layout="@layout/widget_countdown_clock"
+            android:id="@+id/countdown_widget"
+            android:layout_below="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/genre_list"
+                android:layout_below="@+id/countdown_widget"
+                android:layout_marginBottom="200dp">
+                <TextView
+                    android:text="Competitions"
+                    style="@style/ListItemText"
+                    android:drawableLeft="@drawable/list_icon_compi"
+                    android:tag="1"
+                    android:onClick="gotoEventList"/>
+                <TextView
+                    android:text="Informals"
+                    style="@style/ListItemText"
+                    android:drawableLeft="@drawable/list_icon_informals"
+                    android:tag="2"
+                    android:onClick="gotoEventList"/>
+                <TextView
+                    android:text="Concerts"
+                    style="@style/ListItemText"
+                    android:drawableLeft="@drawable/list_icon_concerts"
+                    android:tag="3"
+                    android:onClick="gotoEventList"/>
+                <TextView
+                    android:text="Proshows"
+                    style="@style/ListItemText"
+                    android:drawableLeft="@drawable/list_icon_proshows"
+                    android:tag="4"
+                    android:onClick="gotoEventList"/>
+                <TextView
+                    android:text="Arts and Workshops"
+                    style="@style/ListItemText"
+                    android:drawableLeft="@drawable/list_icon_arts"
+                    android:tag="5"
+                    android:onClick="gotoEventList"/>
+            </LinearLayout>
+    </RelativeLayout>
+    </ScrollView>
 
     <!-- android:layout_gravity="start" tells DrawerLayout to treat
          this as a sliding drawer on the left side for left-to-right

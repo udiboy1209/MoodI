@@ -8,18 +8,27 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import org.iitb.moodi.R;
-import org.iitb.moodi.api.EventsResponse.Genre.Event;
+import org.iitb.moodi.api.Event;
 
 /**
  * Created by udiboy on 26/10/15.
  */
 public class EventListAdapter extends ArrayAdapter<Event>{
     private int mLayoutID;
+    private View.OnClickListener mOCL;
 
     public EventListAdapter(Context context, int resource) {
         super(context, resource);
 
         mLayoutID = resource;
+        mOCL=null;
+    }
+
+    public EventListAdapter(Context context, int resource, View.OnClickListener ocl) {
+        super(context, resource);
+
+        mLayoutID = resource;
+        mOCL=ocl;
     }
 
     @Override
@@ -30,6 +39,10 @@ public class EventListAdapter extends ArrayAdapter<Event>{
             LayoutInflater vi = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = vi.inflate(mLayoutID, null);
         }
+        v.setTag(position);
+
+        if(mOCL != null)
+            v.setOnClickListener(mOCL);
 
         TextView name = (TextView) v.findViewById(R.id.event_list_item_name);
         if(name != null) name.setText(e.name);

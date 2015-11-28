@@ -1,5 +1,8 @@
 package org.iitb.moodi.api;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -31,33 +34,6 @@ public class EventsResponse {
         @SerializedName("details")
         public Event[] events;
 
-        public class Event{
-            @SerializedName("name")
-            public String name;
 
-            @SerializedName("oneline")
-            public String intro_short;
-
-            @SerializedName("genre")
-            public String genre;
-
-            @SerializedName("genrebaap")
-            public String genrebaap;
-
-            @SerializedName("event_id")
-            public String id;
-
-            @SerializedName("intro")
-            public String intro;
-
-            @SerializedName("rules")
-            public String rules;
-
-            @SerializedName("prizes")
-            public String prizes;
-
-            @SerializedName("registration")
-            public String registration;
-        }
     }
 }

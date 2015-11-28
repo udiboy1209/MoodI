@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.support.v7.widget.Toolbar;
 
 import org.iitb.moodi.R;
 import org.iitb.moodi.api.CityResponse;
@@ -19,6 +20,8 @@ public class BaseActivity extends AppCompatActivity {
     public final String m_API_URL = "http://m.moodi.org";
     SharedPreferences prefs;
     private static final String TAG = "BaseActivity";
+    Toolbar mToolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,4 +37,7 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
+    public Toolbar getToolbar() {
+        return mToolbar;
+    }
 }
