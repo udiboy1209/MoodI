@@ -60,6 +60,8 @@
         </activity>
         <activity android:name=".ui.activity.EventDetailsActivity" >
         </activity>
+        <activity android:name=".ui.activity.ScheduleActivity" >
+        </activity>
     </application>
 
 </manifest>
