@@ -37,7 +37,13 @@ public class Event implements Parcelable {
     @SerializedName("registration")
     public String registration;
 
-    protected Event(Parcel in) {
+    public boolean fav = false;
+
+    public Event(){
+
+    }
+
+    private Event(Parcel in) {
         name = in.readString();
         intro_short = in.readString();
         genre = in.readString();
@@ -47,6 +53,7 @@ public class Event implements Parcelable {
         rules = in.readString();
         prizes = in.readString();
         registration = in.readString();
+        fav= in.readInt()>0;
     }
 
     public static final Creator<Event> CREATOR = new Creator<Event>() {
@@ -77,5 +84,6 @@ public class Event implements Parcelable {
         dest.writeString(rules);
         dest.writeString(prizes);
         dest.writeString(registration);
+        dest.writeInt(fav?1:0);
     }
 }

@@ -1,30 +1,23 @@
 package org.iitb.moodi.api;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by udiboy1209 on 30/6/15.
  */
-public class Genre {
-    public String title;
-    public int color;
+public class Genre{
+    @SerializedName("name")
+    public String name;
 
-    public Genre(String t, int c){
-        title=t;
-        color=c;
-    }
+    @SerializedName("shortname")
+    public String name_short;
 
-    public String getTitle() {
-        return title;
-    }
+    @SerializedName("id")
+    public String  id;
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+    @SerializedName("intro")
+    public String intro;
 
-    public int getColor() {
-        return color;
-    }
-
-    public void setColor(int color) {
-        this.color = color;
-    }
+    @SerializedName("details")
+    public Event[] events;
 }

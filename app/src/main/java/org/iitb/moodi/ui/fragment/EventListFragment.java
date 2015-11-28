@@ -13,6 +13,7 @@ import android.widget.ListView;
 
 import org.iitb.moodi.R;
 import org.iitb.moodi.api.EventsResponse;
+import org.iitb.moodi.api.Genre;
 import org.iitb.moodi.ui.widget.EventListAdapter;
 import org.iitb.moodi.ui.widget.ToolbarWidgetLayout;
 
@@ -50,8 +51,8 @@ public class EventListFragment extends BaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // Get the ViewPager and set it's PagerAdapter so that it can display items
         eventLists= new ArrayList<>();
-        for(EventsResponse.Genre genre : data.genres){
-            EventListAdapter adapter = new EventListAdapter(mActivity, R.layout.list_item_event);
+        for(Genre genre : data.genres){
+            EventListAdapter adapter = new EventListAdapter(mActivity, R.layout.list_item_timeline);
             adapter.addAll(genre.events);
             eventLists.add(adapter);
         }

@@ -20,6 +20,7 @@ import android.widget.Toast;
 import org.iitb.moodi.MoodIndigoClient;
 import org.iitb.moodi.R;
 import org.iitb.moodi.api.EventsResponse;
+import org.iitb.moodi.api.Genre;
 import org.iitb.moodi.ui.fragment.BaseFragment;
 import org.iitb.moodi.ui.fragment.EventDetailsFragment;
 import org.iitb.moodi.ui.fragment.EventListFragment;
@@ -127,7 +128,7 @@ public class EventsActivity extends BaseActivity
                 Log.d("EventFectResponse", eventsData.id + " " + eventsData.genres.length);
 
                 eventLists= new ArrayList<>();
-                for(EventsResponse.Genre genre : eventsData.genres){
+                for(Genre genre : eventsData.genres){
                     EventListAdapter adapter = new EventListAdapter(EventsActivity.this, R.layout.list_item_event, EventsActivity.this);
                     adapter.addAll(genre.events);
                     eventLists.add(adapter);
