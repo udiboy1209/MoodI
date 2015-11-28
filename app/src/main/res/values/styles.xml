@@ -11,9 +11,10 @@
     </style>
 
     <style name="AppToolbar">
-
         <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
         <item name="titleTextColor">#FFF</item>
+        <item name="subtitleTextColor">#EEE</item>
+        <item name="subtitleTextAppearance">@style/TextAppearance.AppCompat.Small</item>
         <item name="android:textColorSecondary">#FFF</item>
     </style>
 

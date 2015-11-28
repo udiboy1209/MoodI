@@ -58,6 +58,8 @@
         </activity>
         <activity android:name=".ui.activity.EventsActivity" >
         </activity>
+        <activity android:name=".ui.activity.EventDetailsActivity" >
+        </activity>
     </application>
 
 </manifest>

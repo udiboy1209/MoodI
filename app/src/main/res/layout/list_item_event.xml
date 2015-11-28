@@ -20,7 +20,9 @@
             android:id="@+id/event_list_item_name"
             android:textColor="#000"
             android:paddingBottom="0dp"
-            android:layout_toLeftOf="@+id/event_list_item_favourite"/>
+            android:layout_toLeftOf="@+id/event_list_item_favourite"
+            android:focusable="false"
+            android:clickable="false"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -29,7 +31,9 @@
             android:layout_below="@+id/event_list_item_name"
             android:textColor="#d3d3d3"
             android:paddingTop="1dp"
-            android:textSize="12sp"/>
+            android:textSize="12sp"
+            android:focusable="false"
+            android:clickable="false"/>
         <net.steamcrafted.materialiconlib.MaterialIconView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -40,6 +44,8 @@
             android:id="@+id/event_list_item_favourite"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:focusable="false"
+            android:clickable="false"/>
     </RelativeLayout>
 </LinearLayout>

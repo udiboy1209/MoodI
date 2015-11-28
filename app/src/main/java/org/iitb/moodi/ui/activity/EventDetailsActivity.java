@@ -1,7 +1,5 @@
 package org.iitb.moodi.ui.activity;
 
-import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
@@ -13,31 +11,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.TextView;
 
-import org.iitb.moodi.MoodIndigoClient;
 import org.iitb.moodi.R;
-import org.iitb.moodi.api.EventsResponse;
-import org.iitb.moodi.ui.fragment.BaseFragment;
-import org.iitb.moodi.ui.fragment.EventDetailsFragment;
-import org.iitb.moodi.ui.fragment.EventListFragment;
+import org.iitb.moodi.api.Event;
 import org.iitb.moodi.ui.fragment.NavigationDrawerFragment;
-import org.iitb.moodi.ui.fragment.ScheduleFragment;
-import org.iitb.moodi.ui.fragment.TimelineFragment;
-import org.iitb.moodi.ui.widget.EventListAdapter;
-import org.iitb.moodi.ui.widget.ToolbarWidgetLayout;
 
-import java.util.ArrayList;
-
-import retrofit.Callback;
-import retrofit.RestAdapter;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
-
-public class EventsActivity extends BaseActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks, View.OnClickListener {
+/**
+ * Created by udiboy on 28/11/15.
+ */
+public class EventDetailsActivity extends BaseActivity
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks{
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -45,14 +29,15 @@ public class EventsActivity extends BaseActivity
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
-    private EventsResponse eventsData;
-    private ArrayList<EventListAdapter> eventLists;
+    private Event eventDetails;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_events);
+        setContentView(R.layout.activity_event_details);
+
+        eventDetails = getIntent().getParcelableExtra("event_details");
 
         mToolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
@@ -70,19 +55,28 @@ public class EventsActivity extends BaseActivity
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
-        loadEventsData(getIntent().getIntExtra("id",0));
-        mToolbar.setTitle("Events");
+        mViewPager.setAdapter(new SamplePagerAdapter());
+        mTabLayout.setupWithViewPager(mViewPager);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        mToolbar.setTitle(eventDetails.name);
+        mToolbar.setSubtitle(eventDetails.intro_short);
     }
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
-        /*if(position==1) {
-            switchContent(ScheduleFragment.newInstance());
-        } else if(position==2){
-            startActivity(new Intent(this,MapsActivity.class));
-        }*/
+    /*if(position==1) {
+        switchContent(ScheduleFragment.newInstance());
+    } else if(position==2){
+        startActivity(new Intent(this,MapsActivity.class));
+    }*/
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -111,66 +105,19 @@ public class EventsActivity extends BaseActivity
         return super.onOptionsItemSelected(item);
     }
 
-    public void loadEventsData(int id){
-        final ProgressDialog dialog = ProgressDialog.show(this, "",
-                "Fetching data. Please wait...", true);
-
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(API_URL)
-                .build();
-        MoodIndigoClient methods = restAdapter.create(MoodIndigoClient.class);
-        Callback callback = new Callback() {
-            @Override
-            public void success(Object o, Response response) {
-                eventsData = (EventsResponse)o;
-                dialog.dismiss();
-                Log.d("EventFectResponse", eventsData.id + " " + eventsData.genres.length);
-
-                eventLists= new ArrayList<>();
-                for(EventsResponse.Genre genre : eventsData.genres){
-                    EventListAdapter adapter = new EventListAdapter(EventsActivity.this, R.layout.list_item_event, EventsActivity.this);
-                    adapter.addAll(genre.events);
-                    eventLists.add(adapter);
-                }
-
-                mViewPager.setAdapter(new SamplePagerAdapter());
-                mTabLayout.setupWithViewPager(mViewPager);
-
-                mToolbar.setTitle(eventsData.name);
-            }
-            @Override
-            public void failure(RetrofitError retrofitError) {
-                retrofitError.printStackTrace();
-                dialog.dismiss();
-                Toast.makeText(EventsActivity.this, "Error fetching data", Toast.LENGTH_LONG).show();
-            }
-        };
-        methods.getEvents(id, callback);
-    }
-
     public Toolbar getToolbar() {
         return mToolbar;
     }
 
-    @Override
-    public void onClick(View view) {
-        int position = (Integer)view.getTag();
-        Log.d("ItemClickListener","Pos:"+position);
-
-        Intent i = new Intent(this, EventDetailsActivity.class);
-        i.putExtra("event_details",eventsData.genres[mViewPager.getCurrentItem()].events[position]);
-        startActivity(i);
-    }
-
     class SamplePagerAdapter extends PagerAdapter {
-        public static final String TAG = "EventListPagerAdapter";
+        public static final String TAG = "EventDetPagerAdapter";
 
         /**
          * @return the number of pages to display
          */
         @Override
         public int getCount() {
-            return eventsData.genres.length;
+            return 4;
         }
 
         /**
@@ -191,7 +138,18 @@ public class EventsActivity extends BaseActivity
          */
         @Override
         public CharSequence getPageTitle(int position) {
-            return eventsData.genres[position].name;
+            switch (position){
+                case 0:
+                    return "About";
+                case 1:
+                    return "Rules";
+                case 2:
+                    return "Prizes";
+                case 3:
+                    return "Register";
+                default:
+                    return "NULL";
+            }
         }
 
         /**
@@ -201,10 +159,24 @@ public class EventsActivity extends BaseActivity
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             // Inflate a new layout from our resources
-            ListView view = new ListView(container.getContext(),null,R.style.EventListView);
-            view.setAdapter(eventLists.get(position));
 
-            // Add the newly created View to the ViewPager
+            TextView view = new TextView(EventDetailsActivity.this);
+            view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT));
+            switch (position){
+                case 0:
+                    view.setText(eventDetails.intro);
+                    break;
+                case 1:
+                    view.setText(eventDetails.rules);
+                    break;
+                case 2:
+                    view.setText(eventDetails.prizes);
+                    break;
+                case 3:
+                    view.setText(eventDetails.registration);
+                    break;
+            }
+
             container.addView(view);
 
             Log.i(TAG, "instantiateItem() [position: " + position + "]");
@@ -224,3 +196,4 @@ public class EventsActivity extends BaseActivity
         }
     }
 }
+
