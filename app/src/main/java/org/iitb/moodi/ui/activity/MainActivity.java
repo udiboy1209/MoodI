@@ -42,7 +42,6 @@ public class MainActivity extends BaseActivity
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         mToolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp);
-        mToolbar.setTitle("Home");
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -51,6 +50,9 @@ public class MainActivity extends BaseActivity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+
+
+        mToolbar.setTitle("Home");
     }
 
     @Override

@@ -9,12 +9,12 @@
     <!-- As the main content view, the view below consumes the entire
          space available using match_parent in both dimensions. -->
 
-    <ScrollView
+    <!--<ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent">-->
         <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
             <!-- Collapsible Layout for Last call -->
             <ImageView
                 android:src="@drawable/small"
@@ -29,7 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:layout_alignParentTop="true"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+                style="@style/AppToolbar">
 
             </android.support.v7.widget.Toolbar>
 
@@ -47,17 +47,22 @@
                 android:id="@+id/events_tab_layout"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/events_tab_icon"/>
+                android:layout_below="@+id/events_tab_icon"
+                app:tabGravity="fill"
+                app:tabMode="scrollable"
+                app:tabSelectedTextColor="#FFF"
+                app:tabTextColor="#7FFF"
+                app:tabIndicatorColor="#FFF"/>
 
             <android.support.v4.view.ViewPager
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:id="@+id/events_pager"
                 android:layout_below="@+id/events_tab_layout">
 
             </android.support.v4.view.ViewPager>
         </RelativeLayout>
-    </ScrollView>
+    <!--</ScrollView>-->
 
     <!-- android:layout_gravity="start" tells DrawerLayout to treat
          this as a sliding drawer on the left side for left-to-right

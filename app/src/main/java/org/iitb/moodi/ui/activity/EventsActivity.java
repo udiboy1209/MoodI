@@ -69,6 +69,7 @@ public class EventsActivity extends BaseActivity
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
         loadEventsData(getIntent().getIntExtra("id",0));
+        mToolbar.setTitle("Event Details");
     }
 
     @Override
@@ -126,14 +127,15 @@ public class EventsActivity extends BaseActivity
 
                 eventLists= new ArrayList<>();
                 for(EventsResponse.Genre genre : eventsData.genres){
-                    EventListAdapter adapter = new EventListAdapter(EventsActivity.this, R.layout.list_item_timeline);
+                    EventListAdapter adapter = new EventListAdapter(EventsActivity.this, R.layout.list_item_event);
                     adapter.addAll(genre.events);
                     eventLists.add(adapter);
-
                 }
 
                 mViewPager.setAdapter(new SamplePagerAdapter());
                 mTabLayout.setupWithViewPager(mViewPager);
+
+                mToolbar.setTitle(eventsData.name);
             }
             @Override
             public void failure(RetrofitError retrofitError) {
@@ -188,7 +190,7 @@ public class EventsActivity extends BaseActivity
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             // Inflate a new layout from our resources
-            ListView view = new ListView(container.getContext());
+            ListView view = new ListView(container.getContext(),null,R.style.EventListView);
             view.setAdapter(eventLists.get(position));
             // Add the newly created View to the ViewPager
             container.addView(view);
