@@ -15,6 +15,8 @@ import org.iitb.moodi.R;
 import org.iitb.moodi.api.Event;
 import org.iitb.moodi.ui.activity.BaseActivity;
 
+import java.util.Objects;
+
 /**
  * Created by udiboy on 26/10/15.
  */
@@ -56,7 +58,21 @@ public class EventListAdapter extends ArrayAdapter<Event> implements View.OnClic
         if(description != null) description.setText(e.intro_short);
 
 
-        TextView venue = (TextView) v.findViewById(R.id.event_list_item_venue);
+        TextView index = (TextView) v.findViewById(R.id.event_list_item_index);
+        if(index!=null) {
+            index.setText(position + 1);
+            if (e.genrebaap.equals("competitions")) {
+                index.setBackgroundResource(R.drawable.list_icon_compi);
+            } else if (e.genrebaap.equals("informals")) {
+                index.setBackgroundResource(R.drawable.list_icon_informals);
+            } else if (e.genrebaap.equals("concerts")) {
+                index.setBackgroundResource(R.drawable.list_icon_concerts);
+            } else if (e.genrebaap.equals("arts")) {
+                index.setBackgroundResource(R.drawable.list_icon_arts);
+            } else if (e.genrebaap.equals("proshows")) {
+                index.setBackgroundResource(R.drawable.list_icon_proshows);
+            }
+        }
         //if(venue != null) venue.setText(e.venue);
 
         MaterialIconView fav = (MaterialIconView) v.findViewById(R.id.event_list_item_favourite);

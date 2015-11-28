@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import org.iitb.moodi.api.Event;
 
+import java.util.ArrayList;
+
 public class DatabaseHandler extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "miDB";
@@ -163,5 +165,33 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
 
         return e;
+    }
+
+    public ArrayList<Event> getEvents(){
+        ArrayList<Event> events = new ArrayList<>();
+
+        String selectQuery = "SELECT  * FROM " + TABLE_EVENTS;
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery,null);
+        if(cursor.moveToFirst()){
+            while(!cursor.isAfterLast()) {
+                Event e = new Event();
+                e.id = cursor.getString(cursor.getColumnIndex(EventsTable.id));
+                e.name = cursor.getString(cursor.getColumnIndex(EventsTable.name));
+                e.intro = cursor.getString(cursor.getColumnIndex(EventsTable.intro));
+                e.intro_short = cursor.getString(cursor.getColumnIndex(EventsTable.intro_short));
+                e.rules = cursor.getString(cursor.getColumnIndex(EventsTable.rules));
+                e.prizes = cursor.getString(cursor.getColumnIndex(EventsTable.prizes));
+                e.registration = cursor.getString(cursor.getColumnIndex(EventsTable.registration));
+                e.genre = cursor.getString(cursor.getColumnIndex(EventsTable.genre));
+                e.genrebaap = cursor.getString(cursor.getColumnIndex(EventsTable.genrebaap));
+                e.fav = cursor.getInt(cursor.getColumnIndex(EventsTable.fav)) > 0;
+
+                events.add(e);
+                cursor.moveToNext();
+            }
+        }
+
+        return events;
     }
 }

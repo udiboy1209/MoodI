@@ -149,36 +149,4 @@ public class MainActivity extends BaseActivity
         };
         methods.getEvents(id, callback);
     }
-
-    public int getColorResource(int id){
-        switch(id){
-            case 1:
-                return R.color.color_compi;
-            case 2:
-                return R.color.color_informals;
-            case 3:
-                return R.color.color_concerts;
-            case 4:
-                return R.color.color_proshows;
-            case 5:
-                return R.color.color_arts;
-        }
-        return R.color.color_compi;
-    }
-
-    public int getBackgroundResource(int id){
-        switch(id){
-            case 1:
-                return R.drawable.compi;
-            case 2:
-                return R.drawable.informals;
-            case 3:
-                return R.drawable.pronites;
-            case 4:
-                return R.drawable.proshows;
-            case 5:
-                return R.drawable.workshops;
-        }
-        return R.color.color_compi;
-    }
 }
