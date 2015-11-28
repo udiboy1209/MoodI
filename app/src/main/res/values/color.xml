@@ -12,4 +12,7 @@
     <color name="color_concerts">#9C27B0</color>
     <color name="color_arts">#F44336</color>
     <color name="schedule">#3f51b5</color>
+
+    <color name="fav_true">#ffbb00</color>
+    <color name="fav_false">#aaa</color>
 </resources>

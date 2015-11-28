@@ -85,6 +85,20 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close(); // Closing database connection
     }
 
+    public void removeEvent(Event e) {
+        if(e==null)
+            return;
+        if(findEvent(e.id)==null)
+            return;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        try {
+            db.delete(TABLE_EVENTS, EventsTable.id + " = ? ", new String[]{e.id});
+        } catch (Exception E){
+            E.printStackTrace();
+        }
+    }
+
     public void updateEvent(Event e){
         if(e==null)
             return;
@@ -100,10 +114,26 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(EventsTable.registration, e.registration);
         values.put(EventsTable.genre, e.genre);
         values.put(EventsTable.genrebaap, e.genrebaap);
-        values.put(EventsTable.fav, e.fav?1:0);
         // Inserting Row
         try {
-            db.update(TABLE_EVENTS, values, " WHERE "+EventsTable.id+" = "+e.id, null);
+            db.update(TABLE_EVENTS, values, EventsTable.id+" = ? ", new String[]{e.id});
+        }catch (Exception E){
+            E.printStackTrace();
+        }
+        db.close(); // Closing database connection
+    }
+
+    public void favEvent(String id, boolean fav){
+        if(id==null)
+            return;
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        //values.put(EventsTable.id, e.id);
+        values.put(EventsTable.fav, fav?1:0);
+        // Inserting Row
+        try {
+            db.update(TABLE_EVENTS, values, EventsTable.id+" = "+id, null);
         }catch (Exception E){
             E.printStackTrace();
         }
