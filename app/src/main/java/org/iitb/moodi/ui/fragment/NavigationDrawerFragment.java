@@ -26,15 +26,18 @@ import net.steamcrafted.materialiconlib.MaterialDrawableBuilder.IconValue;
 import net.steamcrafted.materialiconlib.MaterialIconView;
 
 import org.iitb.moodi.R;
+import org.iitb.moodi.api.User;
 import org.iitb.moodi.ui.activity.BaseActivity;
 import org.iitb.moodi.ui.activity.MainActivity;
+import org.iitb.moodi.ui.widget.CircularDPView;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
  * See the <a href="https://developer.android.com/design/patterns/navigation-drawer.html#Interaction">
  * design guidelines</a> for a complete explanation of the behaviors implemented here.
  */
-public class NavigationDrawerFragment extends Fragment {
+public class NavigationDrawerFragment extends Fragment implements View.OnClickListener {
+    User me;
 
     enum ListData {
         HOME(IconValue.HOME,"Home"), SCHEDULE(IconValue.ALARM,"Schedule"), MAP(IconValue.MAP,"Map");
@@ -85,6 +88,8 @@ public class NavigationDrawerFragment extends Fragment {
 
         // Select either the default item (0) or the last selected item.
         selectItem(mCurrentSelectedPosition);
+
+        me=((BaseActivity)getActivity()).me;
     }
 
     @Override
@@ -99,6 +104,11 @@ public class NavigationDrawerFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(
                 R.layout.fragment_navigation_drawer, container, false);
+
+        ((CircularDPView)v.findViewById(R.id.nav_drawer_dp)).setProfileId(me.fbid);
+        ((TextView)v.findViewById(R.id.nav_drawer_name)).setText(me.name);
+        ((TextView)v.findViewById(R.id.nav_drawer_mi_no)).setText(me.mi_no);
+        v.findViewById(R.id.nav_drawer_btn).setOnClickListener(this);
 
         mDrawerListView = (ListView) v.findViewById(R.id.nav_drawer_list);
         mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -116,6 +126,11 @@ public class NavigationDrawerFragment extends Fragment {
                 }));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return v;
+    }
+
+    @Override
+    public void onClick(View v) {
+        mCallbacks.onNavigationDrawerItemSelected(-1);
     }
 
     public boolean isDrawerOpen() {

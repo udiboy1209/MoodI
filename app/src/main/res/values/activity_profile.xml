@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="profile_welcome_title">
+        Welcome to MI Profile
+    </string>
+    <string name="profile_welcome_msg">
+        The list below displays your event wishlist. While browsing events, whichever ones you star appear here.
+    </string>
+</resources>

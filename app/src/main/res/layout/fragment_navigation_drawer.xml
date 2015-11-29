@@ -7,31 +7,51 @@
         android:layout_height="wrap_content"
         android:src="@drawable/small"
         android:id="@+id/nav_drawer_img"
-        android:layout_alignBottom="@+id/nav_drawer_name"/>
+        android:scaleType="centerCrop"
+        android:layout_above="@+id/nav_drawer_list"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#dd305c9f"
+        android:background="#aa305c9f"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_alignBottom="@+id/nav_drawer_img"/>
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <org.iitb.moodi.ui.widget.CircularDPView
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:id="@+id/nav_drawer_dp"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="150dp"
-        android:layout_marginBottom="20dp"/>
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="10dp"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/nav_drawer_name"
         android:layout_below="@id/nav_drawer_dp"
-        android:layout_marginBottom="30dp"/>
+        android:layout_marginLeft="20dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/nav_drawer_mi_no"
+        android:layout_below="@id/nav_drawer_name"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="10dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#00000000"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/nav_drawer_btn"
+        android:layout_alignBottom="@+id/nav_drawer_img"/>
 
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent" android:choiceMode="singleChoice"
         android:divider="@android:color/transparent" android:dividerHeight="0dp"
-        android:layout_below="@+id/nav_drawer_img"
+        android:layout_below="@+id/nav_drawer_mi_no"
         android:id="@+id/nav_drawer_list"/>
 
 </RelativeLayout>

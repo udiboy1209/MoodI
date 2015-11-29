@@ -112,12 +112,7 @@ public class EventDetailsActivity extends BaseActivity
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-        // update the main content by replacing fragments
-    /*if(position==1) {
-        switchContent(ScheduleFragment.newInstance());
-    } else if(position==2){
-        startActivity(new Intent(this,MapsActivity.class));
-    }*/
+        navigateTo(position);
     }
 
 

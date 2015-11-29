@@ -31,10 +31,10 @@
         android:layout_height="wrap_content"
         android:id="@+id/countdown_hrs"
         android:gravity="center"
-        android:layout_centerHorizontal="true"
+        android:layout_toLeftOf="@+id/dummy"
         android:text="13"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_marginBottom="3dp"
         android:textSize="40sp"
         android:paddingLeft="10dp"
@@ -50,13 +50,17 @@
         android:layout_alignRight="@+id/countdown_hrs"
         android:gravity="center"
         android:textColor="@color/white" />
+    <View android:layout_width="1dp"
+        android:layout_height="1dp"
+        android:id="@+id/dummy"
+        android:layout_centerHorizontal="true"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/countdown_min"
         android:gravity="center"
         android:text="54"
-        android:layout_toRightOf="@+id/countdown_hrs"
+        android:layout_toRightOf="@+id/dummy"
         android:layout_marginBottom="3dp"
         android:textSize="40sp"
         android:paddingLeft="10dp"
@@ -70,6 +74,29 @@
         android:layout_below="@+id/countdown_min"
         android:layout_alignLeft="@+id/countdown_min"
         android:layout_alignRight="@+id/countdown_min"
+        android:gravity="center"
+        android:textColor="@color/white" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/countdown_sec"
+        android:gravity="center"
+        android:text="54"
+        android:layout_toRightOf="@+id/countdown_min"
+        android:layout_marginBottom="3dp"
+        android:textSize="40sp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:textColor="@color/white" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SECS"
+        android:id="@+id/countdown_label_sec"
+        android:layout_below="@+id/countdown_sec"
+        android:layout_alignLeft="@+id/countdown_sec"
+        android:layout_alignRight="@+id/countdown_sec"
         android:gravity="center"
         android:textColor="@color/white" />
 

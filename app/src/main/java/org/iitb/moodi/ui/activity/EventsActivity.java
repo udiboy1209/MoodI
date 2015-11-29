@@ -17,8 +17,11 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import org.iitb.moodi.MoodIndigoClient;
 import org.iitb.moodi.R;
+import org.iitb.moodi.api.Event;
 import org.iitb.moodi.api.EventsResponse;
 import org.iitb.moodi.api.Genre;
 import org.iitb.moodi.ui.fragment.BaseFragment;
@@ -77,12 +80,7 @@ public class EventsActivity extends BaseActivity
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-        // update the main content by replacing fragments
-        /*if(position==1) {
-            switchContent(ScheduleFragment.newInstance());
-        } else if(position==2){
-            startActivity(new Intent(this,MapsActivity.class));
-        }*/
+        navigateTo(position);
     }
 
     @Override
@@ -123,15 +121,24 @@ public class EventsActivity extends BaseActivity
         Callback callback = new Callback() {
             @Override
             public void success(Object o, Response response) {
-                eventsData = (EventsResponse)o;
+                eventsData = (EventsResponse) o;
                 dialog.dismiss();
                 Log.d("EventFectResponse", eventsData.id + " " + eventsData.genres.length);
 
-                eventLists= new ArrayList<>();
-                for(Genre genre : eventsData.genres){
+                eventLists = new ArrayList<>();
+                for (Genre genre : eventsData.genres) {
                     EventListAdapter adapter = new EventListAdapter(EventsActivity.this, R.layout.list_item_event, EventsActivity.this);
                     adapter.addAll(genre.events);
                     eventLists.add(adapter);
+
+                    for(Event e: genre.events) {
+                        Log.d("EventsLoad", "Loading : "+e.name);
+                        if (db.findEvent(e.id) != null) {
+                            e.fav = true;
+                            Log.d("EventsLoad", "Updating : "+e.name);
+                            db.updateEvent(e);
+                        }
+                    }
                 }
 
                 mViewPager.setAdapter(new SamplePagerAdapter());
@@ -139,6 +146,7 @@ public class EventsActivity extends BaseActivity
 
                 mToolbar.setTitle(eventsData.name);
             }
+
             @Override
             public void failure(RetrofitError retrofitError) {
                 retrofitError.printStackTrace();

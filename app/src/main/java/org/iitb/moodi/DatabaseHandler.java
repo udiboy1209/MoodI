@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import org.iitb.moodi.api.Event;
 
+import java.util.ArrayList;
+
 public class DatabaseHandler extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "miDB";
@@ -85,6 +87,20 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close(); // Closing database connection
     }
 
+    public void removeEvent(Event e) {
+        if(e==null)
+            return;
+        if(findEvent(e.id)==null)
+            return;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        try {
+            db.delete(TABLE_EVENTS, EventsTable.id + " = ? ", new String[]{e.id});
+        } catch (Exception E){
+            E.printStackTrace();
+        }
+    }
+
     public void updateEvent(Event e){
         if(e==null)
             return;
@@ -100,10 +116,26 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(EventsTable.registration, e.registration);
         values.put(EventsTable.genre, e.genre);
         values.put(EventsTable.genrebaap, e.genrebaap);
-        values.put(EventsTable.fav, e.fav?1:0);
         // Inserting Row
         try {
-            db.update(TABLE_EVENTS, values, " WHERE "+EventsTable.id+" = "+e.id, null);
+            db.update(TABLE_EVENTS, values, EventsTable.id+" = ? ", new String[]{e.id});
+        }catch (Exception E){
+            E.printStackTrace();
+        }
+        db.close(); // Closing database connection
+    }
+
+    public void favEvent(String id, boolean fav){
+        if(id==null)
+            return;
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        //values.put(EventsTable.id, e.id);
+        values.put(EventsTable.fav, fav?1:0);
+        // Inserting Row
+        try {
+            db.update(TABLE_EVENTS, values, EventsTable.id+" = "+id, null);
         }catch (Exception E){
             E.printStackTrace();
         }
@@ -133,5 +165,33 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
 
         return e;
+    }
+
+    public ArrayList<Event> getEvents(){
+        ArrayList<Event> events = new ArrayList<>();
+
+        String selectQuery = "SELECT  * FROM " + TABLE_EVENTS;
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery,null);
+        if(cursor.moveToFirst()){
+            while(!cursor.isAfterLast()) {
+                Event e = new Event();
+                e.id = cursor.getString(cursor.getColumnIndex(EventsTable.id));
+                e.name = cursor.getString(cursor.getColumnIndex(EventsTable.name));
+                e.intro = cursor.getString(cursor.getColumnIndex(EventsTable.intro));
+                e.intro_short = cursor.getString(cursor.getColumnIndex(EventsTable.intro_short));
+                e.rules = cursor.getString(cursor.getColumnIndex(EventsTable.rules));
+                e.prizes = cursor.getString(cursor.getColumnIndex(EventsTable.prizes));
+                e.registration = cursor.getString(cursor.getColumnIndex(EventsTable.registration));
+                e.genre = cursor.getString(cursor.getColumnIndex(EventsTable.genre));
+                e.genrebaap = cursor.getString(cursor.getColumnIndex(EventsTable.genrebaap));
+                e.fav = cursor.getInt(cursor.getColumnIndex(EventsTable.fav)) > 0;
+
+                events.add(e);
+                cursor.moveToNext();
+            }
+        }
+
+        return events;
     }
 }

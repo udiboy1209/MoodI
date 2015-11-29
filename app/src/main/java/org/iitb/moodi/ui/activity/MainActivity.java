@@ -3,12 +3,14 @@ package org.iitb.moodi.ui.activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.okhttp.Cache;
@@ -21,6 +23,8 @@ import org.iitb.moodi.ui.fragment.NavigationDrawerFragment;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
 
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -36,6 +40,27 @@ public class MainActivity extends BaseActivity
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
+
+    private Runnable timerUpdate = new Runnable() {
+        @Override
+        public void run() {
+            long left = 1450396800000L-System.currentTimeMillis(); // Long is MI TIME!
+            long days = left/(24*60*60000);
+            long hrs = (left/(60*60000)) % 24;
+            long mins = (left/(60000)) % 60;
+            long secs = (left/(1000)) % 60;
+
+            ((TextView)findViewById(R.id.countdown_days)).setText(String.format("%02d",days));
+            ((TextView)findViewById(R.id.countdown_hrs)).setText(String.format("%02d",hrs));
+            ((TextView)findViewById(R.id.countdown_min)).setText(String.format("%02d",mins));
+            ((TextView)findViewById(R.id.countdown_sec)).setText(String.format("%02d",secs));
+
+            long delay = 1000 - System.currentTimeMillis()%1000;
+            timerHandle.postDelayed(timerUpdate,delay);
+        }
+    };
+
+    private Handler timerHandle;
 
 
     @Override
@@ -59,12 +84,15 @@ public class MainActivity extends BaseActivity
 
 
         mToolbar.setTitle("Home");
+
+        timerHandle = new Handler(getMainLooper());
+
+        timerHandle.post(timerUpdate);
     }
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-        // update the main content by replacing fragments
-
+        navigateTo(position);
     }
 
     @Override
@@ -148,37 +176,5 @@ public class MainActivity extends BaseActivity
             }
         };
         methods.getEvents(id, callback);
-    }
-
-    public int getColorResource(int id){
-        switch(id){
-            case 1:
-                return R.color.color_compi;
-            case 2:
-                return R.color.color_informals;
-            case 3:
-                return R.color.color_concerts;
-            case 4:
-                return R.color.color_proshows;
-            case 5:
-                return R.color.color_arts;
-        }
-        return R.color.color_compi;
-    }
-
-    public int getBackgroundResource(int id){
-        switch(id){
-            case 1:
-                return R.drawable.compi;
-            case 2:
-                return R.drawable.informals;
-            case 3:
-                return R.drawable.pronites;
-            case 4:
-                return R.drawable.proshows;
-            case 5:
-                return R.drawable.workshops;
-        }
-        return R.color.color_compi;
     }
 }
