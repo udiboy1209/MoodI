@@ -30,6 +30,7 @@ dependencies {
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'com.squareup.okhttp:okhttp:2.3.0'
     compile 'com.nolanlawson:supersaiyan-scrollview:1.2.0@aar'
+    compile 'com.ogaclejapan.arclayout:library:1.0.1@aar'
     compile 'com.github.clans:fab:1.6.1'
     compile 'com.google.android.gms:play-services:7.8.0'
     compile 'com.facebook.android:facebook-android-sdk:4.7.0'

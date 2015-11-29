@@ -2,10 +2,13 @@ package org.iitb.moodi.ui.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.ShareActionProvider;
 import android.util.Log;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 
 import org.iitb.moodi.BaseApplication;
 import org.iitb.moodi.DatabaseHandler;
@@ -40,6 +43,24 @@ public class BaseActivity extends AppCompatActivity {
             e.printStackTrace();
             me = new User();
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch(id){
+            case R.id.action_faq:
+                String url = "http://faq.moodi.org";
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
+                return true;
+            case R.id.action_share:
+                startActivity(new Intent(this, ShareActivity.class));
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public Toolbar getToolbar() {
