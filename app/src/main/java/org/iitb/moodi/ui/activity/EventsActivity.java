@@ -2,6 +2,7 @@ package org.iitb.moodi.ui.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
@@ -73,7 +74,6 @@ public class EventsActivity extends BaseActivity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
-
         loadEventsData(getIntent().getIntExtra("id",0));
         mToolbar.setTitle("Events");
     }
@@ -143,7 +143,6 @@ public class EventsActivity extends BaseActivity
 
                 mViewPager.setAdapter(new SamplePagerAdapter());
                 mTabLayout.setupWithViewPager(mViewPager);
-
                 mToolbar.setTitle(eventsData.name);
             }
 

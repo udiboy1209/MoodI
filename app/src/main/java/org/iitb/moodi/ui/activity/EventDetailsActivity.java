@@ -1,6 +1,8 @@
 package org.iitb.moodi.ui.activity;
 
 import android.app.ProgressDialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
@@ -49,6 +51,7 @@ public class EventDetailsActivity extends BaseActivity
     int min_reg = 0;
     int max_reg = 0;
     private String TAG = "EventDetailsActivity";
+    int color;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,8 +61,13 @@ public class EventDetailsActivity extends BaseActivity
 
         eventDetails = getIntent().getParcelableExtra("event_details");
 
+        color = getColorFromGenre(eventDetails.genrebaap);
+        Log.d("COLOR", String.valueOf(color));
+
         mToolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(color));
+
         mToolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp);
 
         mTabLayout = (TabLayout) findViewById(R.id.events_tab_layout);
@@ -75,7 +83,9 @@ public class EventDetailsActivity extends BaseActivity
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
         mViewPager.setAdapter(new SamplePagerAdapter());
+
         mTabLayout.setupWithViewPager(mViewPager);
+        mTabLayout.setBackgroundColor(color);
 
         final ProgressDialog dialog = ProgressDialog.show(this, "",
                 "Fetching data. Please wait...", true);

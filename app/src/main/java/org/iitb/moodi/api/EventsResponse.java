@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.iitb.moodi.R;
+
 /**
  * Created by udiboy on 5/11/15.
  */
@@ -17,4 +19,5 @@ public class EventsResponse {
 
     @SerializedName("genre")
     public Genre[] genres;
+
 }

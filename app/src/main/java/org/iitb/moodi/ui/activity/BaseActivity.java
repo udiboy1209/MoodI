@@ -62,6 +62,21 @@ public class BaseActivity extends AppCompatActivity {
         return R.color.color_compi;
     }
 
+    public int getColorFromGenre(String genre){
+        if(genre.equals("competitions"))
+            return getResources().getColor(R.color.color_compi);
+        else if(genre.equals("informals"))
+            return getResources().getColor(R.color.color_informals);
+        else if(genre.equals("concerts"))
+            return getResources().getColor(R.color.color_concerts);
+        else if(genre.equals("proshows"))
+            return getResources().getColor(R.color.color_proshows);
+        else if(genre.equals("arts"))
+            return getResources().getColor(R.color.color_arts);
+        else
+            return getResources().getColor(R.color.color_compi);
+    }
+
     public int getBackgroundResource(int id){
         switch(id){
             case 1:
