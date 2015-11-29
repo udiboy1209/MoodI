@@ -48,31 +48,18 @@ public class MainActivity extends BaseActivity
             long days = left/(24*60*60000);
             long hrs = (left/(60*60000)) % 24;
             long mins = (left/(60000)) % 60;
+            long secs = (left/(1000)) % 60;
 
             ((TextView)findViewById(R.id.countdown_days)).setText(String.format("%02d",days));
             ((TextView)findViewById(R.id.countdown_hrs)).setText(String.format("%02d",hrs));
             ((TextView)findViewById(R.id.countdown_min)).setText(String.format("%02d",mins));
+            ((TextView)findViewById(R.id.countdown_sec)).setText(String.format("%02d",secs));
 
-            long delay = 60000 - System.currentTimeMillis()%60000;
+            long delay = 1000 - System.currentTimeMillis()%1000;
             timerHandle.postDelayed(timerUpdate,delay);
         }
     };
 
-    private Runnable tickTock = new Runnable() {
-        @Override
-        public void run() {
-            if(findViewById(R.id.countdown_tick).getVisibility() == View.VISIBLE) {
-                findViewById(R.id.countdown_tick).setVisibility(View.INVISIBLE);
-                findViewById(R.id.countdown_tock).setVisibility(View.INVISIBLE);
-            } else {
-                findViewById(R.id.countdown_tick).setVisibility(View.VISIBLE);
-                findViewById(R.id.countdown_tock).setVisibility(View.VISIBLE);
-            }
-
-            long delay = 500 - System.currentTimeMillis()%500;
-            timerHandle.postDelayed(tickTock,delay);
-        }
-    };
     private Handler timerHandle;
 
 
@@ -101,7 +88,6 @@ public class MainActivity extends BaseActivity
         timerHandle = new Handler(getMainLooper());
 
         timerHandle.post(timerUpdate);
-        timerHandle.post(tickTock);
     }
 
     @Override
