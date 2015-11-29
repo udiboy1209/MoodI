@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -198,8 +199,14 @@ public class EventDetailsActivity extends BaseActivity
         public Object instantiateItem(ViewGroup container, int position) {
             // Inflate a new layout from our resources
             if (position==3) {
+
                 LayoutInflater inflater = LayoutInflater.from(getBaseContext());
                 View view = inflater.inflate(R.layout.event_registration, null, false);
+
+                if (min_reg==0) {
+                    Button b = (Button) view.findViewById(R.id.event_reg_button);
+                    b.setEnabled(false);
+                }
                 TextView tv = (TextView) view.findViewById(R.id.event_reg_textview);
                 TextView tv2 = (TextView) view.findViewById(R.id.event_reg_mi_no);
                 TextView tv3 = (TextView) view.findViewById(R.id.event_reg_min_participants);

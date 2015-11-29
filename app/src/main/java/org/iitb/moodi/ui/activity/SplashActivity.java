@@ -123,7 +123,7 @@ public class SplashActivity extends BaseActivity {
                 dialog.dismiss();
                 String error = retrofitError.getMessage();
                 Log.e(TAG, error);
-                Toast.makeText(getBaseContext(),"Please check your internet connection", Toast.LENGTH_LONG).show();
+                Toast.makeText(getBaseContext(),"AddUser error. Please check your internet connection", Toast.LENGTH_LONG).show();
             }
         };
         methods.addUser(me.fbid, me.city_id, me.clg_id,
@@ -171,7 +171,7 @@ public class SplashActivity extends BaseActivity {
                 dialog.dismiss();
                 String error = retrofitError.getMessage();
                 Log.e(TAG, error);
-                Toast.makeText(getBaseContext(),"Please check your internet connection", Toast.LENGTH_LONG).show();
+                Toast.makeText(getBaseContext(),"CheckUser error. Please check your internet connection", Toast.LENGTH_LONG).show();
             }
         };
             methods.checkUser(Profile.getCurrentProfile().getId(),

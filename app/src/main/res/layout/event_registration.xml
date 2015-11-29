@@ -49,6 +49,7 @@
             style="?android:buttonBarButtonStyle"
             android:onClick="registerForEvent"
             android:textColor="@color/white"
+            android:id="@+id/event_reg_button"
             />
     </LinearLayout>
 
