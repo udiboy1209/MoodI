@@ -4,6 +4,8 @@ import org.iitb.moodi.api.AddUserResponse;
 import org.iitb.moodi.api.CheckUserResponse;
 import org.iitb.moodi.api.CityResponse;
 import org.iitb.moodi.api.CollegeResponse;
+import org.iitb.moodi.api.EventDetailsResponse;
+import org.iitb.moodi.api.EventRegisterResponse;
 import org.iitb.moodi.api.EventsResponse;
 
 import retrofit.Callback;
@@ -23,6 +25,10 @@ public interface MoodIndigoClient {
     void getCities(Callback<CityResponse> cb);
 
     @FormUrlEncoded
+    @POST("/api/events")
+    void getEventDetails(@Field("id") String event_id, Callback<EventDetailsResponse> cb);
+
+    @FormUrlEncoded
     @POST("/api/college")
     void getColleges(@Field("city") String city_id, Callback<CollegeResponse> cb);
 
@@ -34,6 +40,10 @@ public interface MoodIndigoClient {
     @POST("/api/checkuserindatabase")
     void checkUser(@Field("fbid") String fbid, @Field("access_token") String access_token, Callback<CheckUserResponse> cb);
 
+    @FormUrlEncoded
+    @POST("/api/eventsreg")
+    void eventRegister(@Field("event_id") String event_id, @Field("reglist") String reglist,
+                       Callback<EventRegisterResponse> cb);
     @FormUrlEncoded
     @POST("/api/register")
     void addUser(@Field("fbid") String fbid, @Field("city_id") int city_id,

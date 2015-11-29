@@ -66,7 +66,7 @@ public class SplashActivity extends BaseActivity {
                 Log.e(TAG, exception.getMessage());
             }
         });
-        if (AccessToken.getCurrentAccessToken()!=null) {
+        if (AccessToken.getCurrentAccessToken()!=null && Profile.getCurrentProfile()!=null) {
             Log.d(TAG,"Access token exists, disabling button!");
             loginButton.setVisibility(View.GONE);
             Log.d(TAG,"Stored prefs value is "+prefs.getString("user_json",""));
