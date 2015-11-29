@@ -330,7 +330,7 @@ public class EventDetailsActivity extends BaseActivity
         }
         // remove trailing comma
         reglist = reglist.substring(0,reglist.length()-1);
-        methods.eventRegister(eventDetails.id, reglist, callback);
+        methods.eventRegister(Integer.parseInt(eventDetails.id), eventDetails.name, reglist, callback);
 
     }
 }

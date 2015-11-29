@@ -42,8 +42,9 @@ public interface MoodIndigoClient {
 
     @FormUrlEncoded
     @POST("/api/eventsreg")
-    void eventRegister(@Field("event_id") String event_id, @Field("reglist") String reglist,
-                       Callback<EventRegisterResponse> cb);
+    void eventRegister(@Field("event_id") int event_id, @Field("eventname") String name,
+                       @Field("reglist") String reglist, Callback<EventRegisterResponse> cb);
+
     @FormUrlEncoded
     @POST("/api/register")
     void addUser(@Field("fbid") String fbid, @Field("city_id") int city_id,
