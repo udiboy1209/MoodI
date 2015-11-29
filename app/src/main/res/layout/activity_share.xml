@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ogaclejapan.arclayout.ArcLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/share_arc_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#8002"
+    app:arc_origin="top|right"
+    app:arc_color="#00000000"
+    app:arc_radius="230dp"
+    app:arc_axisRadius="180dp"
+    app:arc_freeAngle="false"
+    app:arc_reverseAngle="false"
+    >
+
+    <ImageButton
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:padding="15dp"
+        android:id="@+id/share_button_facebook"
+        android:background="@drawable/bg_share_fb"
+        android:src="@drawable/share_icon_fb"
+        />
+
+    <ImageButton
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:padding="15dp"
+        android:id="@+id/share_button_twitter"
+        android:background="@drawable/bg_share_twitter"
+        android:src="@drawable/share_icon_twitter"
+        />
+
+    <ImageButton
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:padding="15dp"
+        android:id="@+id/share_button_whatsapp"
+        android:background="@drawable/bg_share_wa"
+        android:src="@drawable/share_icon_wa"
+        />
+   <!-- <com.github.clans.fab.FloatingActionButton
+        android:id="@+id/share_button_facebook"
+        android:onClick="share"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:scaleType="fitCenter"
+        app:arc_origin="center"
+        app:fab_colorNormal="#3b5998"
+        android:src="@drawable/share_icon_fb"
+        />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/share_button_twitter"
+        android:onClick="share"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:arc_origin="center"
+        app:fab_colorNormal="#0084b4"
+        android:src="@drawable/share_icon_twitter"
+        />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/share_button_whatsapp"
+        android:onClick="share"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:arc_origin="center"
+        app:fab_colorNormal="#0cb757"
+        android:src="@drawable/share_icon_wa"
+        />-->
+
+</com.ogaclejapan.arclayout.ArcLayout>

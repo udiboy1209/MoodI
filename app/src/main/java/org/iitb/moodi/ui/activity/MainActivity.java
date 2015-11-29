@@ -109,28 +109,9 @@ public class MainActivity extends BaseActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
 
         return super.onOptionsItemSelected(item);
     }
-
-    /*public void customizeToolbar(int resId, String title, View widget){
-        if(mToolbarContainer.getChildCount()>1)
-            mToolbarContainer.removeViewAt(mToolbarContainer.getChildCount()-1);
-        if(widget!=null)
-            mToolbarContainer.addView(widget);
-
-        mTitle = title;
-        restoreActionBar();
-    }*/
 
     public void gotoEventList(View v){
         int id = Integer.valueOf((String)v.getTag());
