@@ -14,23 +14,30 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:padding="10dp"
         android:background="@drawable/list_item_event_bg">
-        <TextView
+        <in.workarounds.typography.TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/event_list_item_name"
             android:textColor="#000"
+            app:font_name="Roboto"
+            app:font_variant="Regular"
+            android:textSize="16sp"
+            android:layout_marginLeft="15dp"
             android:paddingBottom="0dp"
             android:layout_toLeftOf="@+id/event_list_item_favourite"
             android:focusable="false"
             android:clickable="false"/>
-        <TextView
+        <in.workarounds.typography.TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/event_list_item_description"
             android:layout_toLeftOf="@+id/event_list_item_favourite"
             android:layout_below="@+id/event_list_item_name"
-            android:textColor="#d3d3d3"
-            android:paddingTop="1dp"
+            android:textColor="#8c8c8c"
+            app:font_name="Roboto"
+            app:font_variant="Regular"
+            android:layout_marginLeft="15dp"
+            android:paddingTop="0dp"
             android:textSize="12sp"
             android:focusable="false"
             android:clickable="false"/>

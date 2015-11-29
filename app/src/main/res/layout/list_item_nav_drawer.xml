@@ -12,10 +12,12 @@
         android:padding="10dp"
         android:id="@+id/list_item_nav_icon"/>
     <TextView
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:layout_gravity="center_vertical"
         android:paddingLeft="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/list_item_nav_name"/>
+        android:id="@+id/list_item_nav_name"
+        app:font_name="Roboto"
+        app:font_variant="Medium" />
     </LinearLayout>

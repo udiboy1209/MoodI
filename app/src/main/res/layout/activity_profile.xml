@@ -40,19 +40,28 @@
             android:layout_height="wrap_content"
             android:id="@+id/profile_name"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/profile_dp"/>
+            android:layout_below="@+id/profile_dp"
+            app:font_name="Roboto"
+            app:font_variant="Bold"
+            android:textSize="18sp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/profile_mi_no"
             android:layout_marginBottom="30dp"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/profile_name"/>
+            android:layout_below="@+id/profile_name"
+            app:font_name="Roboto"
+            app:font_variant="Regular"
+            android:textSize="14sp"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/profile_welcome_title"
-            android:textSize="24sp"
+            android:textSize="18sp"
+            app:font_name="Roboto"
+            app:font_variant="Regular"
+            android:textColor="#000"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:layout_marginTop="20dp"
@@ -64,8 +73,12 @@
             android:text="@string/profile_welcome_msg"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
+            android:textSize="14sp"
             android:layout_below="@+id/profile_welcome_title"
-            android:id="@+id/profile_welcome_msg"/>
+            android:id="@+id/profile_welcome_msg"
+            app:font_name="Roboto"
+            app:font_variant="Regular"
+            android:textColor="#8B8787"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

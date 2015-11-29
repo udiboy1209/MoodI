@@ -1,5 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -11,31 +12,40 @@
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:orientation="vertical" >
-        <EditText
+        <in.workarounds.typography.EditText
             android:id="@+id/reg_name"
             android:hint="Name"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            app:font_name="Roboto"
+            app:font_variant="Regular"
+            android:textSize="18sp"/>
 
-        <EditText
+        <in.workarounds.typography.EditText
             android:id="@+id/reg_email"
             android:hint="Email"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            app:font_name="Roboto"
+            app:font_variant="Regular"
+            android:textSize="18sp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="horizontal">
-            <EditText
+            <in.workarounds.typography.EditText
                 android:id="@+id/reg_phone"
                 android:hint="Phone"
                 android:layout_width="0dp"
                 android:layout_weight="3"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                app:font_name="Roboto"
+                app:font_variant="Regular"
+                android:textSize="18sp"/>
             <Spinner
                 android:id="@+id/reg_gender"
                 android:layout_width="0dp"
@@ -64,15 +74,18 @@
             android:layout_height="0dp"
             android:layout_weight="1" />
 
-        <EditText
+        <in.workarounds.typography.EditText
             android:id="@+id/reg_dob"
             android:hint="Date of Birth (DD-MM-YYYY)"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            app:font_name="Roboto"
+            app:font_variant="Regular"
+            android:textSize="18sp"
             android:layout_weight="1" />
     </LinearLayout>
 
-    <Button
+    <in.workarounds.typography.Button
         android:background="@color/action_bar"
         style="?android:buttonBarButtonStyle"
         android:text="Register"
@@ -80,5 +93,8 @@
         android:textColor="@color/white"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        app:font_name="Roboto"
+        app:font_variant="Medium"
+        android:textSize="18sp"/>
 </LinearLayout>

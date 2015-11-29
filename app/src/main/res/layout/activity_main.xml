@@ -48,32 +48,43 @@
                 android:id="@+id/genre_list"
                 android:layout_below="@+id/countdown_widget"
                 android:layout_marginBottom="200dp">
-                <TextView
+                <in.workarounds.typography.TextView
                     android:text="Competitions"
+                    app:font_name="Roboto"
+                    app:font_variant="Regular"
+                    android:textSize="18sp"
                     style="@style/ListItemText"
                     android:drawableLeft="@drawable/list_icon_compi"
                     android:tag="1"
                     android:onClick="gotoEventList"/>
-                <TextView
+                <in.workarounds.typography.TextView
                     android:text="Informals"
+                    app:font_name="Roboto"
+                    app:font_variant="Regular"
                     style="@style/ListItemText"
                     android:drawableLeft="@drawable/list_icon_informals"
                     android:tag="2"
                     android:onClick="gotoEventList"/>
-                <TextView
+                <in.workarounds.typography.TextView
                     android:text="Concerts"
+                    app:font_name="Roboto"
+                    app:font_variant="Regular"
                     style="@style/ListItemText"
                     android:drawableLeft="@drawable/list_icon_concerts"
                     android:tag="3"
                     android:onClick="gotoEventList"/>
-                <TextView
+                <in.workarounds.typography.TextView
                     android:text="Proshows"
+                    app:font_name="Roboto"
+                    app:font_variant="Regular"
                     style="@style/ListItemText"
                     android:drawableLeft="@drawable/list_icon_proshows"
                     android:tag="4"
                     android:onClick="gotoEventList"/>
-                <TextView
+                <in.workarounds.typography.TextView
                     android:text="Arts and Workshops"
+                    app:font_name="Roboto"
+                    app:font_variant="Regular"
                     style="@style/ListItemText"
                     android:drawableLeft="@drawable/list_icon_arts"
                     android:tag="5"
