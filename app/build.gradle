@@ -34,4 +34,5 @@ dependencies {
     compile 'com.google.android.gms:play-services:7.8.0'
     compile 'com.facebook.android:facebook-android-sdk:4.7.0'
     compile 'net.steamcrafted:materialiconlib:1.0.6'
+    compile 'in.workarounds.typography:typography:0.0.2'
 }
