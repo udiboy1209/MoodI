@@ -27,9 +27,9 @@
         </android.support.v7.widget.Toolbar>
 
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
+        <org.iitb.moodi.ui.widget.CircularDPView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:id="@+id/profile_dp"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/toolbar"

@@ -63,8 +63,7 @@ public class MainActivity extends BaseActivity
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-        // update the main content by replacing fragments
-
+        navigateTo(position);
     }
 
     @Override

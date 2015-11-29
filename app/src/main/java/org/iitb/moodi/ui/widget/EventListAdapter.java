@@ -60,7 +60,7 @@ public class EventListAdapter extends ArrayAdapter<Event> implements View.OnClic
 
         TextView index = (TextView) v.findViewById(R.id.event_list_item_index);
         if(index!=null) {
-            index.setText(position + 1);
+            index.setText(""+(position + 1));
             if (e.genrebaap.equals("competitions")) {
                 index.setBackgroundResource(R.drawable.list_icon_compi);
             } else if (e.genrebaap.equals("informals")) {

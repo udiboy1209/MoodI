@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.iitb.moodi.BaseApplication;
@@ -17,6 +18,7 @@ import org.iitb.moodi.MoodIndigoClient;
 import org.iitb.moodi.R;
 import org.iitb.moodi.api.EventsResponse;
 import org.iitb.moodi.ui.fragment.NavigationDrawerFragment;
+import org.iitb.moodi.ui.widget.CircularDPView;
 import org.iitb.moodi.ui.widget.EventListAdapter;
 
 import retrofit.Callback;
@@ -33,7 +35,7 @@ public class ProfileActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_profile);
 
         favEvents = new EventListAdapter(this,R.layout.list_item_fav_event);
         eventList = (LinearLayout) findViewById(R.id.profile_fav_event_list);
@@ -42,7 +44,9 @@ public class ProfileActivity extends BaseActivity {
         setSupportActionBar(mToolbar);
         mToolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp);
 
-        mToolbar.setTitle("MI Profile");
+        ((CircularDPView)findViewById(R.id.profile_dp)).setProfileId(me.fbid);
+        ((TextView)findViewById(R.id.profile_name)).setText(me.name);
+        ((TextView)findViewById(R.id.profile_mi_no)).setText(me.mi_no);
     }
 
     @Override
@@ -50,6 +54,8 @@ public class ProfileActivity extends BaseActivity {
         super.onResume();
         updateData();
         updateList();
+
+        mToolbar.setTitle("MI Profile");
     }
 
     @Override

@@ -1,5 +1,6 @@
 package org.iitb.moodi.ui.activity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -75,5 +76,11 @@ public class BaseActivity extends AppCompatActivity {
                 return R.drawable.workshops;
         }
         return R.color.color_compi;
+    }
+
+    public void navigateTo(int p){
+        if(p==-1){
+            startActivity(new Intent(this,ProfileActivity.class));
+        }
     }
 }
