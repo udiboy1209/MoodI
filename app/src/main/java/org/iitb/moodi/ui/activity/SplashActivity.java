@@ -1,10 +1,12 @@
 package org.iitb.moodi.ui.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -59,6 +61,7 @@ public class SplashActivity extends BaseActivity {
 
             @Override
             public void onCancel() {
+                Toast.makeText(getBaseContext(), "Login cancelled!", Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -92,7 +95,8 @@ public class SplashActivity extends BaseActivity {
 
     public void addUser() {
         // Make sure that User object me has all details required for adding User.
-
+        final ProgressDialog dialog = ProgressDialog.show(this, "",
+                "Adding new user...", true);
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(API_URL)
                 .build();
@@ -100,6 +104,7 @@ public class SplashActivity extends BaseActivity {
         Callback callback = new Callback() {
             @Override
             public void success(Object o, Response response) {
+                dialog.dismiss();
                 AddUserResponse c = (AddUserResponse) o;
                 Log.d(TAG+", reg",c.getStatus()+"");
                 Log.d(TAG+", reg",c.getMINumber());
@@ -115,8 +120,10 @@ public class SplashActivity extends BaseActivity {
             }
             @Override
             public void failure(RetrofitError retrofitError) {
+                dialog.dismiss();
                 String error = retrofitError.getMessage();
                 Log.e(TAG, error);
+                Toast.makeText(getBaseContext(),"Please check your internet connection", Toast.LENGTH_LONG).show();
             }
         };
         methods.addUser(me.fbid, me.city_id, me.clg_id,
@@ -126,6 +133,8 @@ public class SplashActivity extends BaseActivity {
     }
 
     public void checkUserExistence() {
+        final ProgressDialog dialog = ProgressDialog.show(this, "",
+                "Checking existing database...", true);
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(m_API_URL)
                 .build();
@@ -133,6 +142,7 @@ public class SplashActivity extends BaseActivity {
         Callback callback = new Callback() {
             @Override
             public void success(Object o, Response response) {
+                dialog.dismiss();
                 CheckUserResponse c = (CheckUserResponse) o;
                 Log.d(TAG,c.getStatus()+"");
                 Log.d(TAG,c.getUser());
@@ -158,8 +168,10 @@ public class SplashActivity extends BaseActivity {
             }
             @Override
             public void failure(RetrofitError retrofitError) {
+                dialog.dismiss();
                 String error = retrofitError.getMessage();
                 Log.e(TAG, error);
+                Toast.makeText(getBaseContext(),"Please check your internet connection", Toast.LENGTH_LONG).show();
             }
         };
             methods.checkUser(Profile.getCurrentProfile().getId(),
@@ -167,6 +179,8 @@ public class SplashActivity extends BaseActivity {
                               callback);
     }
     public void getBiodata() {
+        final ProgressDialog dialog = ProgressDialog.show(this, "",
+                "Loading facebook data...", true);
         Log.d(TAG,AccessToken.getCurrentAccessToken().getToken());
         GraphRequest request = GraphRequest.newMeRequest(
                 AccessToken.getCurrentAccessToken(),
@@ -175,6 +189,7 @@ public class SplashActivity extends BaseActivity {
                     public void onCompleted(
                             JSONObject object,
                             GraphResponse response) {
+                        dialog.dismiss();
                         JSONObject userDetails = response.getJSONObject();
                         Log.d(TAG,"Using Facebook Graph API");
                         Log.d(TAG, userDetails.toString());
