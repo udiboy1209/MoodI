@@ -55,7 +55,8 @@ public class MainActivity extends BaseActivity
             ((TextView)findViewById(R.id.countdown_min)).setText(String.format("%02d",mins));
             ((TextView)findViewById(R.id.countdown_sec)).setText(String.format("%02d",secs));
 
-            long delay = 1000 - System.currentTimeMillis()%1000;
+            long t=System.currentTimeMillis();
+            long delay = (t/1000 + 1)*1000+10-t;
             timerHandle.postDelayed(timerUpdate,delay);
         }
     };
