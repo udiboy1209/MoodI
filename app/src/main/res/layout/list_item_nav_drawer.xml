@@ -3,21 +3,26 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <net.steamcrafted.materialiconlib.MaterialIconView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:materialIconSize="28dp"
-        android:padding="10dp"
-        android:id="@+id/list_item_nav_icon"/>
-    <TextView
-        android:textSize="18sp"
+        app:materialIconSize="25sp"
+        android:paddingLeft="16dp"
+        android:id="@+id/list_item_nav_icon"
+        app:materialIconColor="#7f7f7f"
+        android:layout_gravity="center_vertical"/>
+    <in.workarounds.typography.TextView
+        android:textSize="20sp"
         android:layout_gravity="center_vertical"
         android:paddingLeft="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/list_item_nav_name"
+        android:textColor="#7f7f7f"
         app:font_name="Roboto"
         app:font_variant="Medium" />
     </LinearLayout>

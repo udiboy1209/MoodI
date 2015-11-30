@@ -17,7 +17,7 @@
         android:layout_height="wrap_content">
             <!-- Collapsible Layout for Last call -->
         <ImageView
-            android:src="@drawable/small"
+            android:src="@drawable/bg_splash"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:scaleType="centerCrop"

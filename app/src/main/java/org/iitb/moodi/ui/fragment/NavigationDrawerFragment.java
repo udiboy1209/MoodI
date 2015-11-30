@@ -71,7 +71,7 @@ public class NavigationDrawerFragment extends Fragment implements View.OnClickLi
     private ListView mDrawerListView;
     private View mFragmentContainerView;
 
-    private int mCurrentSelectedPosition = 0;
+    public static int mCurrentSelectedPosition = 0;
     private boolean mFromSavedInstanceState;
 
     public NavigationDrawerFragment() {
@@ -87,7 +87,7 @@ public class NavigationDrawerFragment extends Fragment implements View.OnClickLi
         }
 
         // Select either the default item (0) or the last selected item.
-        selectItem(mCurrentSelectedPosition);
+        //selectItem(mCurrentSelectedPosition);
 
         me=((BaseActivity)getActivity()).me;
     }

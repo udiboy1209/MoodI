@@ -15,6 +15,7 @@ import org.iitb.moodi.DatabaseHandler;
 import org.iitb.moodi.R;
 import org.iitb.moodi.api.CityResponse;
 import org.iitb.moodi.api.User;
+import org.iitb.moodi.ui.fragment.NavigationDrawerFragment;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -37,7 +38,7 @@ public class BaseActivity extends AppCompatActivity {
         db=BaseApplication.getDB();
         try {
             me=new User(new JSONObject(prefs.getString("user_json","")));
-            Log.d("MyAct", me.getJSON());
+            Log.d("BaseActivity", me.getJSON());
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -132,9 +133,16 @@ public class BaseActivity extends AppCompatActivity {
 
     public void navigateTo(int p){
         if(p==-1){
-            startActivity(new Intent(this,ProfileActivity.class));
+            if(!(this instanceof ProfileActivity))
+                startActivity(new Intent(this,ProfileActivity.class));
+        } else if(p==0){
+            if(!(this instanceof MainActivity)) {
+                //startActivity(new Intent(this, MainActivity.class));
+                finish();
+            }
         } else if(p==1){
-            startActivity(new Intent(this,ScheduleActivity.class));
+            if(!(this instanceof ScheduleActivity))
+                startActivity(new Intent(this,ScheduleActivity.class));
         }
     }
 }
