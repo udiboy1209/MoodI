@@ -2,12 +2,11 @@ package org.iitb.moodi.ui.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.SimpleOnPageChangeListener;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -15,26 +14,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.gson.Gson;
 
 import org.iitb.moodi.MoodIndigoClient;
 import org.iitb.moodi.R;
 import org.iitb.moodi.api.Event;
 import org.iitb.moodi.api.EventsResponse;
 import org.iitb.moodi.api.Genre;
-import org.iitb.moodi.ui.fragment.BaseFragment;
-import org.iitb.moodi.ui.fragment.EventDetailsFragment;
-import org.iitb.moodi.ui.fragment.EventListFragment;
 import org.iitb.moodi.ui.fragment.NavigationDrawerFragment;
-import org.iitb.moodi.ui.fragment.ScheduleFragment;
-import org.iitb.moodi.ui.fragment.TimelineFragment;
 import org.iitb.moodi.ui.widget.EventListAdapter;
-import org.iitb.moodi.ui.widget.ToolbarWidgetLayout;
 
 import java.util.ArrayList;
 
@@ -58,11 +49,15 @@ public class EventsActivity extends BaseActivity
     private ImageView mIconView;
     private float lastScroll;
 
+    private Typeface tabFont;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_events);
+
+        tabFont = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Medium.ttf");
 
         mToolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
@@ -84,6 +79,9 @@ public class EventsActivity extends BaseActivity
         mToolbar.setTitle("Events");
 
         mIconView.setBackgroundResource(getIconResource(getIntent().getIntExtra("id",0)));
+        mTabLayout.setBackgroundResource(getGradient(getIntent().getIntExtra("id",0)));
+
+        ((ImageView)findViewById(R.id.events_img)).setImageResource(getBackgroundResource(getIntent().getIntExtra("id",0)));
     }
 
     @Override
@@ -151,7 +149,10 @@ public class EventsActivity extends BaseActivity
 
                 mViewPager.setAdapter(new SamplePagerAdapter());
                 mViewPager.addOnPageChangeListener(EventsActivity.this);
+
                 mTabLayout.setupWithViewPager(mViewPager);
+                changeTabsFont();
+
                 mToolbar.setTitle(eventsData.name);
 
                 mIconView.setVisibility(View.VISIBLE);
@@ -170,6 +171,21 @@ public class EventsActivity extends BaseActivity
 
     public Toolbar getToolbar() {
         return mToolbar;
+    }
+
+    private void changeTabsFont() {
+        ViewGroup vg = (ViewGroup) mTabLayout.getChildAt(0);
+        int tabsCount = vg.getChildCount();
+        for (int j = 0; j < tabsCount; j++) {
+            ViewGroup vgTab = (ViewGroup) vg.getChildAt(j);
+            int tabChildsCount = vgTab.getChildCount();
+            for (int i = 0; i < tabChildsCount; i++) {
+                View tabViewChild = vgTab.getChildAt(i);
+                if (tabViewChild instanceof TextView) {
+                    ((TextView) tabViewChild).setTypeface(tabFont, Typeface.NORMAL);
+                }
+            }
+        }
     }
 
     @Override
@@ -202,12 +218,12 @@ public class EventsActivity extends BaseActivity
 
     @Override
     public void onPageSelected(int position) {
-        Log.d("EventsActivity","onPageSelected : "+position);
+        //Log.d("EventsActivity","onPageSelected : "+position);
     }
 
     @Override
     public void onPageScrollStateChanged(int state) {
-        Log.d("EventsActivity","onPageScrollStateChanged : "+state);
+        //Log.d("EventsActivity","onPageScrollStateChanged : "+state);
     }
 
     private int getPageIcon(String page){
@@ -241,13 +257,13 @@ public class EventsActivity extends BaseActivity
         } else if(page.equalsIgnoreCase("icebreakers")){
             return R.drawable.icon_informals_ice_breakers;
         } else if(page.equalsIgnoreCase("Lounges")){
-            return R.drawable.icon_informals_ice_breakers;
+            return R.drawable.icon_informals_lounges;
         } else if(page.equalsIgnoreCase("adventurezone")){
-            return R.drawable.icon_informals_ice_breakers;
+            return R.drawable.icon_informals_adventure;
         } else if(page.equalsIgnoreCase("Casinos")){
             return R.drawable.icon_informals_casino;
         } else if(page.equalsIgnoreCase("Lifesizegames")){
-            return R.drawable.icon_informals_ice_breakers;
+            return R.drawable.icon_informals_lifesize_games;
         }
 
         // ARTS ---->
@@ -256,7 +272,7 @@ public class EventsActivity extends BaseActivity
         } else if(page.equalsIgnoreCase("workshops")){
             return R.drawable.icon_arts_workshops;
         } else if(page.equalsIgnoreCase("NightFleaMarket")){
-            return R.drawable.icon_arts_workshops;
+            return R.drawable.icon_arts_night_flea;
         } else if(page.equalsIgnoreCase("music")){
             return R.drawable.icon_arts_music_arena;
         } else if(page.equalsIgnoreCase("iart")){
@@ -267,7 +283,7 @@ public class EventsActivity extends BaseActivity
         else if(page.equalsIgnoreCase("music")){
             return R.drawable.icon_proshows_imf;
         } else if(page.equalsIgnoreCase("humorfest")){
-            return R.drawable.icon_proshows_theatre;
+            return R.drawable.icon_proshows_humorfest;
         } else if(page.equalsIgnoreCase("fringe")){
             return R.drawable.icon_proshows_fringe_fest;
         } else if(page.equalsIgnoreCase("afternites")){
@@ -291,6 +307,22 @@ public class EventsActivity extends BaseActivity
         else {
             return R.drawable.icon_informals_ice_breakers;
         }
+    }
+
+    public int getGradient(int id){
+        switch(id){
+            case 1:
+                return R.drawable.tabs_gradient_compi;
+            case 2:
+                return R.drawable.tabs_gradient_informals;
+            case 3:
+                return R.drawable.tabs_gradient_concerts;
+            case 4:
+                return R.drawable.tabs_gradient_arts;
+            case 5:
+                return R.drawable.tabs_gradient_proshows;
+        }
+        return R.drawable.tabs_gradient_compi;
     }
 
     class SamplePagerAdapter extends PagerAdapter {

@@ -74,19 +74,19 @@
                     android:tag="3"
                     android:onClick="gotoEventList"/>
                 <in.workarounds.typography.TextView
-                    android:text="Proshows"
-                    app:font_name="Roboto"
-                    app:font_variant="Regular"
-                    style="@style/ListItemText"
-                    android:drawableLeft="@drawable/list_icon_proshows"
-                    android:tag="4"
-                    android:onClick="gotoEventList"/>
-                <in.workarounds.typography.TextView
                     android:text="Arts and Workshops"
                     app:font_name="Roboto"
                     app:font_variant="Regular"
                     style="@style/ListItemText"
                     android:drawableLeft="@drawable/list_icon_arts"
+                    android:tag="4"
+                    android:onClick="gotoEventList"/>
+                <in.workarounds.typography.TextView
+                    android:text="Proshows"
+                    app:font_name="Roboto"
+                    app:font_variant="Regular"
+                    style="@style/ListItemText"
+                    android:drawableLeft="@drawable/list_icon_proshows"
                     android:tag="5"
                     android:onClick="gotoEventList"/>
             </LinearLayout>

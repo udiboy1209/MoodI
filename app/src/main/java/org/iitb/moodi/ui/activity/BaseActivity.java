@@ -76,9 +76,9 @@ public class BaseActivity extends AppCompatActivity {
             case 3:
                 return R.color.color_concerts;
             case 4:
-                return R.color.color_proshows;
-            case 5:
                 return R.color.color_arts;
+            case 5:
+                return R.color.color_proshows;
         }
         return R.color.color_compi;
     }
@@ -101,17 +101,17 @@ public class BaseActivity extends AppCompatActivity {
     public int getBackgroundResource(int id){
         switch(id){
             case 1:
-                return R.drawable.compi;
+                return R.drawable.bg_compi;
             case 2:
-                return R.drawable.informals;
+                return R.drawable.bg_informals;
             case 3:
-                return R.drawable.pronites;
+                return R.drawable.bg_concerts;
             case 4:
-                return R.drawable.proshows;
+                return R.drawable.bg_arts;
             case 5:
-                return R.drawable.workshops;
+                return R.drawable.bg_proshows;
         }
-        return R.color.color_compi;
+        return R.drawable.bg_compi;
     }
 
     public int getIconResource(int id){
@@ -123,9 +123,9 @@ public class BaseActivity extends AppCompatActivity {
             case 3:
                 return R.drawable.list_icon_concerts;
             case 4:
-                return R.drawable.list_icon_proshows;
-            case 5:
                 return R.drawable.list_icon_arts;
+            case 5:
+                return R.drawable.list_icon_proshows;
         }
         return R.drawable.list_icon_compi;
     }

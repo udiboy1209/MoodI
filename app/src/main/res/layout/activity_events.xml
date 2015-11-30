@@ -17,12 +17,12 @@
             android:layout_height="match_parent">
             <!-- Collapsible Layout for Last call -->
             <ImageView
-                android:src="@drawable/small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:scaleType="centerCrop"
                 android:layout_alignTop="@+id/toolbar"
-                android:layout_alignBottom="@+id/events_tab_layout"/>
+                android:layout_alignBottom="@+id/events_tab_layout"
+                android:id="@+id/events_img"/>
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:background="@drawable/toolbar_shadow_gradient"

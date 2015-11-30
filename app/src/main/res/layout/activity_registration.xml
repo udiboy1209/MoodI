@@ -85,7 +85,7 @@
             android:layout_weight="1" />
     </LinearLayout>
 
-    <in.workarounds.typography.Button
+    <in.workarounds.typography.TextView
         android:background="@color/action_bar"
         style="?android:buttonBarButtonStyle"
         android:text="Register"
