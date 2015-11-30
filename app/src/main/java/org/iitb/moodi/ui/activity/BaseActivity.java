@@ -114,6 +114,22 @@ public class BaseActivity extends AppCompatActivity {
         return R.color.color_compi;
     }
 
+    public int getIconResource(int id){
+        switch(id){
+            case 1:
+                return R.drawable.list_icon_compi;
+            case 2:
+                return R.drawable.list_icon_informals;
+            case 3:
+                return R.drawable.list_icon_concerts;
+            case 4:
+                return R.drawable.list_icon_proshows;
+            case 5:
+                return R.drawable.list_icon_arts;
+        }
+        return R.drawable.list_icon_compi;
+    }
+
     public void navigateTo(int p){
         if(p==-1){
             startActivity(new Intent(this,ProfileActivity.class));

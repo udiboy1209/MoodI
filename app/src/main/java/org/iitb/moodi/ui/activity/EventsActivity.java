@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.SimpleOnPageChangeListener;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -15,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -42,7 +44,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class EventsActivity extends BaseActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks, View.OnClickListener {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks, View.OnClickListener,ViewPager.OnPageChangeListener {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -52,6 +54,9 @@ public class EventsActivity extends BaseActivity
     private ViewPager mViewPager;
     private EventsResponse eventsData;
     private ArrayList<EventListAdapter> eventLists;
+
+    private ImageView mIconView;
+    private float lastScroll;
 
 
     @Override
@@ -66,6 +71,7 @@ public class EventsActivity extends BaseActivity
         mTabLayout = (TabLayout) findViewById(R.id.events_tab_layout);
         mViewPager = (ViewPager) findViewById(R.id.events_pager);
 
+        mIconView = (ImageView) findViewById(R.id.events_tab_icon);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -76,6 +82,8 @@ public class EventsActivity extends BaseActivity
                 (DrawerLayout) findViewById(R.id.drawer_layout));
         loadEventsData(getIntent().getIntExtra("id",0));
         mToolbar.setTitle("Events");
+
+        mIconView.setBackgroundResource(getIconResource(getIntent().getIntExtra("id",0)));
     }
 
     @Override
@@ -142,8 +150,12 @@ public class EventsActivity extends BaseActivity
                 }
 
                 mViewPager.setAdapter(new SamplePagerAdapter());
+                mViewPager.addOnPageChangeListener(EventsActivity.this);
                 mTabLayout.setupWithViewPager(mViewPager);
                 mToolbar.setTitle(eventsData.name);
+
+                mIconView.setVisibility(View.VISIBLE);
+                mIconView.setImageResource(getPageIcon(eventsData.genres[0].name_short));
             }
 
             @Override
@@ -168,6 +180,117 @@ public class EventsActivity extends BaseActivity
         Intent i = new Intent(this, EventDetailsActivity.class);
         i.putExtra("event_details",eventsData.genres[mViewPager.getCurrentItem()].events[position]);
         startActivity(i);
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        Log.d("EventsActivity","onPageScrolled : "+position+","+positionOffset+","+positionOffsetPixels);
+
+        mIconView.setScaleX(Math.abs(positionOffset-0.5F)*2);
+        mIconView.setScaleY(Math.abs(positionOffset-0.5F)*2);
+
+        if((lastScroll-0.5)<0 && (positionOffset-0.5) > 0){
+            mIconView.setImageResource(getPageIcon(eventsData.genres[position+1].name_short));
+        }
+
+        if((lastScroll-0.5)>0 && (positionOffset-0.5) < 0){
+            mIconView.setImageResource(getPageIcon(eventsData.genres[position].name_short));
+        }
+
+        lastScroll=positionOffset;
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        Log.d("EventsActivity","onPageSelected : "+position);
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+        Log.d("EventsActivity","onPageScrollStateChanged : "+state);
+    }
+
+    private int getPageIcon(String page){
+        // COMPI ---->
+        if(page.equalsIgnoreCase("dance")){
+            return R.drawable.icon_compi_dance;
+        } else if(page.equalsIgnoreCase("dada")){
+            return R.drawable.icon_compi_design;
+        } else if(page.equalsIgnoreCase("dram")){
+            return R.drawable.icon_compi_drama;
+        } else if(page.equalsIgnoreCase("finearts")){
+            return R.drawable.icon_compi_art;
+        } else if(page.equalsIgnoreCase("lifestyle")){
+            return R.drawable.icon_compi_sports;
+        } else if(page.equalsIgnoreCase("lit")){
+            return R.drawable.icon_compi_lit;
+        } else if(page.equalsIgnoreCase("music")){
+            return R.drawable.icon_compi_music;
+        } else if(page.equalsIgnoreCase("speaking")){
+            return R.drawable.icon_compi_speaking_arts;
+        }
+        // INFORMALS ---->
+        else if(page.equalsIgnoreCase("hysteria")){
+            return R.drawable.icon_informals_hysteria;
+        } else if(page.equalsIgnoreCase("StrategyGames")){
+            return R.drawable.icon_informals_whack_out;
+        } else if(page.equalsIgnoreCase("streets")){
+            return R.drawable.icon_informals_streets;
+        } else if(page.equalsIgnoreCase("Audiencecentric")){
+            return R.drawable.icon_informals_ice_breakers;
+        } else if(page.equalsIgnoreCase("icebreakers")){
+            return R.drawable.icon_informals_ice_breakers;
+        } else if(page.equalsIgnoreCase("Lounges")){
+            return R.drawable.icon_informals_ice_breakers;
+        } else if(page.equalsIgnoreCase("adventurezone")){
+            return R.drawable.icon_informals_ice_breakers;
+        } else if(page.equalsIgnoreCase("Casinos")){
+            return R.drawable.icon_informals_casino;
+        } else if(page.equalsIgnoreCase("Lifesizegames")){
+            return R.drawable.icon_informals_ice_breakers;
+        }
+
+        // ARTS ---->
+        else if(page.equalsIgnoreCase("foodfest")){
+            return R.drawable.icon_arts_food_fest;
+        } else if(page.equalsIgnoreCase("workshops")){
+            return R.drawable.icon_arts_workshops;
+        } else if(page.equalsIgnoreCase("NightFleaMarket")){
+            return R.drawable.icon_arts_workshops;
+        } else if(page.equalsIgnoreCase("music")){
+            return R.drawable.icon_arts_music_arena;
+        } else if(page.equalsIgnoreCase("iart")){
+            return R.drawable.icon_arts_interactive_arts;
+        }
+
+        // PROSHOWS ---->
+        else if(page.equalsIgnoreCase("music")){
+            return R.drawable.icon_proshows_imf;
+        } else if(page.equalsIgnoreCase("humorfest")){
+            return R.drawable.icon_proshows_theatre;
+        } else if(page.equalsIgnoreCase("fringe")){
+            return R.drawable.icon_proshows_fringe_fest;
+        } else if(page.equalsIgnoreCase("afternites")){
+            return R.drawable.icon_proshows_afternights;
+        } else if(page.equalsIgnoreCase("Litfest")){
+            return R.drawable.icon_proshows_litfest;
+        } else if(page.equalsIgnoreCase("Theatrefest")){
+            return R.drawable.icon_proshows_theatre;
+        }
+
+        // CONCERTS ---->
+        else if(page.equalsIgnoreCase("edm")){
+            return R.drawable.icon_concerts_edm;
+        } else if(page.equalsIgnoreCase("popular")){
+            return R.drawable.icon_concerts_popular_nite;
+        } else if(page.equalsIgnoreCase("nostalgia")){
+            return R.drawable.icon_concerts_classical;
+        }
+
+
+        else {
+            return R.drawable.icon_informals_ice_breakers;
+        }
     }
 
     class SamplePagerAdapter extends PagerAdapter {

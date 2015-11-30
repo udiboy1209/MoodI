@@ -34,15 +34,18 @@
             </android.support.v7.widget.Toolbar>
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
-                android:src="@drawable/list_icon_compi"
+                android:padding="10dp"
+                android:background="@drawable/list_icon_compi"
                 android:layout_gravity="center"
                 android:layout_below="@+id/toolbar"
                 android:id="@+id/events_tab_icon"
-                android:layout_centerHorizontal="true" />
+                android:layout_centerHorizontal="true"
+                android:scaleType="fitCenter"
+                android:visibility="invisible"/>
             <android.support.design.widget.TabLayout
                 android:id="@+id/events_tab_layout"
                 android:layout_width="fill_parent"
