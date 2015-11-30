@@ -7,6 +7,7 @@ import org.iitb.moodi.api.CollegeResponse;
 import org.iitb.moodi.api.EventDetailsResponse;
 import org.iitb.moodi.api.EventRegisterResponse;
 import org.iitb.moodi.api.EventsResponse;
+import org.iitb.moodi.api.TimelineResponse;
 
 import retrofit.Callback;
 import retrofit.client.Response;
@@ -35,6 +36,9 @@ public interface MoodIndigoClient {
     @FormUrlEncoded
     @POST("/api/eventsdata")
     void getEvents(@Field("id") int id, Callback<EventsResponse> cb);
+
+    @GET("/api/schedule")
+    void getTimeline(Callback<TimelineResponse> cb);
 
     @FormUrlEncoded
     @POST("/api/checkuserindatabase")

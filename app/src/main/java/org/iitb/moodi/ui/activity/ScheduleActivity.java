@@ -23,10 +23,8 @@ public class ScheduleActivity extends BaseActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Intent i = new Intent(getBaseContext(), RegistrationActivity.class);
-        startActivity(i);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_schedule);
 
         //collapsingToolbar = (CollapsingToolbarLayout)findViewById(R.id.collapsing_toolbar);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -84,7 +82,7 @@ public class ScheduleActivity extends BaseActivity
     public void gotoTimeline(View v){
         int id = Integer.valueOf((String)v.getTag());
         Intent timeline = new Intent();
-        //timeline.setClass(ScheduleActivity.this, TimelineActivity.class);
+        timeline.setClass(ScheduleActivity.this, TimelineActivity.class);
         timeline.putExtra("day",id);
         startActivity(timeline);
     }

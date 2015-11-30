@@ -40,7 +40,7 @@
                     android:tag="1">
                     <ImageView
                         style="@style/ScheduleCardImage"
-                        android:src="@drawable/splash_bg"/>
+                        android:src="@drawable/small"/>
                     <Button
                         style="@style/ScheduleCardButton"
                         android:text="Day 1"/>
@@ -51,7 +51,7 @@
                     android:tag="2">
                     <ImageView
                         style="@style/ScheduleCardImage"
-                        android:src="@drawable/splash_bg"/>
+                        android:src="@drawable/small"/>
                     <Button
                         style="@style/ScheduleCardButton"
                         android:text="Day 2"/>
@@ -68,7 +68,7 @@
                     android:tag="3">
                     <ImageView
                         style="@style/ScheduleCardImage"
-                        android:src="@drawable/splash_bg"/>
+                        android:src="@drawable/small"/>
                     <Button
                         style="@style/ScheduleCardButton"
                         android:text="Day 3"/>
@@ -79,7 +79,7 @@
                     android:tag="4">
                     <ImageView
                         style="@style/ScheduleCardImage"
-                        android:src="@drawable/splash_bg"/>
+                        android:src="@drawable/small"/>
                     <Button
                         style="@style/ScheduleCardButton"
                         android:text="Day 4"/>

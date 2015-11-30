@@ -117,6 +117,8 @@ public class BaseActivity extends AppCompatActivity {
     public void navigateTo(int p){
         if(p==-1){
             startActivity(new Intent(this,ProfileActivity.class));
+        } else if(p==1){
+            startActivity(new Intent(this,ScheduleActivity.class));
         }
     }
 }
