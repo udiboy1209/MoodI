@@ -2,25 +2,32 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/event_reg_layout">
+    android:id="@+id/event_reg_layout"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp">
-        <TextView
+        <in.workarounds.typography.TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/event_reg_mi_no"/>
-        <TextView
+            android:id="@+id/event_reg_mi_no"
+            app:font_name="Roboto"
+            app:font_variant="Regular"/>
+        <in.workarounds.typography.TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/event_reg_textview"/>
-        <TextView
+            android:id="@+id/event_reg_textview"
+            app:font_name="Roboto"
+            app:font_variant="Regular"/>
+        <in.workarounds.typography.TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/event_reg_min_participants"/>
+            android:id="@+id/event_reg_min_participants"
+            app:font_name="Roboto"
+            app:font_variant="Regular"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,7 +36,7 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="7"
+            android:layout_weight="1"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp">
             <LinearLayout
@@ -42,13 +49,15 @@
         </ScrollView>
         <Button
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:text="Register"
+            android:padding="20dp"
             android:background="@color/color_compi"
             style="?android:buttonBarButtonStyle"
             android:onClick="registerForEvent"
             android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="26sp"
             android:id="@+id/event_reg_button"
             />
     </LinearLayout>

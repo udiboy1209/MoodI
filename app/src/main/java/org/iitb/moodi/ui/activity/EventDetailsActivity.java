@@ -1,7 +1,6 @@
 package org.iitb.moodi.ui.activity;
 
 import android.app.ProgressDialog;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -9,23 +8,20 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import org.iitb.moodi.MoodIndigoClient;
 import org.iitb.moodi.R;
-import org.iitb.moodi.api.CityResponse;
 import org.iitb.moodi.api.Event;
 import org.iitb.moodi.api.EventDetailsResponse;
 import org.iitb.moodi.api.EventRegisterResponse;
@@ -168,7 +164,10 @@ public class EventDetailsActivity extends BaseActivity
          */
         @Override
         public int getCount() {
-            return 4;
+            if(eventDetails.genrebaap.equals("competitions"))
+                return 4;
+            else
+                return 3;
         }
 
         /**
@@ -216,7 +215,7 @@ public class EventDetailsActivity extends BaseActivity
                 View view = inflater.inflate(R.layout.event_registration, null, false);
 
                 if (min_reg==0) {
-                    Button b = (Button) view.findViewById(R.id.event_reg_button);
+                    TextView b = (TextView) view.findViewById(R.id.event_reg_button);
                     b.setEnabled(false);
                 }
                 TextView tv = (TextView) view.findViewById(R.id.event_reg_textview);
@@ -238,17 +237,17 @@ public class EventDetailsActivity extends BaseActivity
                 return view;
             }
             else {
-                TextView view = new TextView(EventDetailsActivity.this);
-                view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT));
+                LayoutInflater inflater = LayoutInflater.from(getBaseContext());
+                TextView view = (TextView) inflater.inflate(R.layout.event_details_text,container,false);
                 switch (position) {
                     case 0:
-                        view.setText(eventDetails.intro);
+                        view.setText(Html.fromHtml(eventDetails.intro));
                         break;
                     case 1:
-                        view.setText(eventDetails.rules);
+                        view.setText(Html.fromHtml(eventDetails.rules));
                         break;
                     case 2:
-                        view.setText(eventDetails.prizes);
+                        view.setText(Html.fromHtml(eventDetails.prizes));
                         break;
                     case 3:
                         view.setText("Fetching registration details..");
