@@ -15,7 +15,7 @@
             <!-- Collapsible Layout for Last call -->
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
-            android:background="@color/schedule"
+            android:background="@color/colorPrimary"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:layout_alignParentTop="true"

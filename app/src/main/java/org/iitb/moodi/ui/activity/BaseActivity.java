@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.widget.ShareActionProvider;
 import android.util.Log;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import org.iitb.moodi.BaseApplication;
@@ -49,6 +50,12 @@ public class BaseActivity extends AppCompatActivity {
             e.printStackTrace();
             me = new User();
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main,menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override

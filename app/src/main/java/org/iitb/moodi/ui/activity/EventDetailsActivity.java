@@ -1,6 +1,7 @@
 package org.iitb.moodi.ui.activity;
 
 import android.app.ProgressDialog;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -40,7 +41,6 @@ public class EventDetailsActivity extends BaseActivity {
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
-    private NavigationDrawerFragment mNavigationDrawerFragment;
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
     private Event eventDetails;
@@ -49,11 +49,15 @@ public class EventDetailsActivity extends BaseActivity {
     private String TAG = "EventDetailsActivity";
     int color;
 
+    private Typeface tabFont;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_details);
+
+        tabFont = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Medium.ttf");
 
         eventDetails = getIntent().getParcelableExtra("event_details");
 
@@ -75,6 +79,11 @@ public class EventDetailsActivity extends BaseActivity {
 
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.setBackgroundColor(color);
+
+        changeTabsFont();
+
+        if(eventDetails.genrebaap.equals("competitions"))
+            mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
 
         final ProgressDialog dialog = ProgressDialog.show(this, "",
                 "Fetching data. Please wait...", true);
@@ -112,18 +121,6 @@ public class EventDetailsActivity extends BaseActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        if (!mNavigationDrawerFragment.isDrawerOpen()) {
-            // Only show items in the action bar relevant to this screen
-            // if the drawer is not showing. Otherwise, let the drawer
-            // decide what to show in the action bar.
-            getMenuInflater().inflate(R.menu.main, menu);
-            return true;
-        }
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -140,6 +137,21 @@ public class EventDetailsActivity extends BaseActivity {
 
     public Toolbar getToolbar() {
         return mToolbar;
+    }
+
+    private void changeTabsFont() {
+        ViewGroup vg = (ViewGroup) mTabLayout.getChildAt(0);
+        int tabsCount = vg.getChildCount();
+        for (int j = 0; j < tabsCount; j++) {
+            ViewGroup vgTab = (ViewGroup) vg.getChildAt(j);
+            int tabChildsCount = vgTab.getChildCount();
+            for (int i = 0; i < tabChildsCount; i++) {
+                View tabViewChild = vgTab.getChildAt(i);
+                if (tabViewChild instanceof TextView) {
+                    ((TextView) tabViewChild).setTypeface(tabFont, Typeface.NORMAL);
+                }
+            }
+        }
     }
 
     class SamplePagerAdapter extends PagerAdapter {

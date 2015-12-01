@@ -21,8 +21,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/toolbar"
                 android:background="@color/color_compi"
-                app:tabGravity="center"
-                app:tabMode="scrollable"
+                app:tabGravity="fill"
+                app:tabMode="fixed"
                 app:tabSelectedTextColor="#FFF"
                 app:tabTextColor="#7FFF"
                 app:tabIndicatorColor="#FFF"/>

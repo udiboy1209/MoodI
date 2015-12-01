@@ -40,7 +40,6 @@ public class EventsActivity extends BaseActivity
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
-    private NavigationDrawerFragment mNavigationDrawerFragment;
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
     private EventsResponse eventsData;
@@ -73,18 +72,8 @@ public class EventsActivity extends BaseActivity
         mTabLayout.setBackgroundResource(getGradient(getIntent().getIntExtra("id",0)));
 
         ((ImageView)findViewById(R.id.events_img)).setImageResource(getBackgroundResource(getIntent().getIntExtra("id",0)));
-    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        if (!mNavigationDrawerFragment.isDrawerOpen()) {
-            // Only show items in the action bar relevant to this screen
-            // if the drawer is not showing. Otherwise, let the drawer
-            // decide what to show in the action bar.
-            getMenuInflater().inflate(R.menu.main, menu);
-            return true;
-        }
-        return super.onCreateOptionsMenu(menu);
+        loadEventsData(getIntent().getIntExtra("id",0));
     }
 
     @Override
@@ -139,7 +128,7 @@ public class EventsActivity extends BaseActivity
                 mTabLayout.setupWithViewPager(mViewPager);
                 changeTabsFont();
 
-                mToolbar.setTitle(eventsData.name);
+                mToolbar.setTitle(getToolbarTitle(eventsData.name));
 
                 mIconView.setVisibility(View.VISIBLE);
                 mIconView.setImageResource(getPageIcon(eventsData.genres[0].name_short));
@@ -309,6 +298,21 @@ public class EventsActivity extends BaseActivity
                 return R.drawable.tabs_gradient_proshows;
         }
         return R.drawable.tabs_gradient_compi;
+    }
+
+    public String getToolbarTitle(String genre){
+            if(genre.equals("competitions"))
+                return "Competitions";
+            else if(genre.equals("informals"))
+                return "Informals";
+            else if(genre.equals("concerts"))
+                return "Concerts";
+            else if(genre.equals("proshows"))
+                return "Proshows";
+            else if(genre.equals("arts"))
+                return "Arts and Workshops";
+            else
+                return "Competitions";
     }
 
     class SamplePagerAdapter extends PagerAdapter {
