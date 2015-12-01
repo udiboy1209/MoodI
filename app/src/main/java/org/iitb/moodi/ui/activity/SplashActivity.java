@@ -16,6 +16,7 @@ import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.Profile;
+import com.facebook.ProfileTracker;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.gson.Gson;
@@ -42,6 +43,8 @@ public class SplashActivity extends BaseActivity {
     private static final String TAG = "SplashActivity";
     CallbackManager callbackManager;
     public static final int REGISTRATION_ACTIVITY=1;
+    private ProfileTracker mProfileTracker;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +59,15 @@ public class SplashActivity extends BaseActivity {
             public void onSuccess(LoginResult loginResult) {
                 // Check whether user exists!
                 Log.d(TAG,"Login successful!");
-                checkUserExistence();
+                mProfileTracker = new ProfileTracker() {
+                    @Override
+                    protected void onCurrentProfileChanged(Profile profile, Profile profile2) {
+                        Log.v("facebook - profile", profile2.getFirstName());
+                        checkUserExistence();
+                        mProfileTracker.stopTracking();
+                    }
+                };
+                mProfileTracker.startTracking();
             }
 
             @Override
