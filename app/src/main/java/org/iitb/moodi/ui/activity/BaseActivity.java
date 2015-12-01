@@ -143,6 +143,9 @@ public class BaseActivity extends AppCompatActivity {
         } else if(p==1){
             if(!(this instanceof ScheduleActivity))
                 startActivity(new Intent(this,ScheduleActivity.class));
+        } else if(p==3){
+            if(!(this instanceof ContactActivity))
+                startActivity(new Intent(this,ContactActivity.class));
         }
     }
 }

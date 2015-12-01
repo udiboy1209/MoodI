@@ -40,7 +40,8 @@ public class NavigationDrawerFragment extends Fragment implements View.OnClickLi
     User me;
 
     enum ListData {
-        HOME(IconValue.HOME,"Home"), SCHEDULE(IconValue.ALARM,"Schedule"), MAP(IconValue.MAP,"Map");
+        HOME(IconValue.HOME,"Home"), SCHEDULE(IconValue.ALARM,"Schedule"), MAP(IconValue.MAP,"Map"),
+        CONTACT(IconValue.PHONE,"Contact Us");
 
 
         final IconValue icon;
@@ -122,7 +123,7 @@ public class NavigationDrawerFragment extends Fragment implements View.OnClickLi
                 getActivity(),
                 R.layout.list_item_nav_drawer,
                 new ListData[]{
-                        ListData.HOME, ListData.SCHEDULE, ListData.MAP
+                        ListData.HOME, ListData.SCHEDULE, ListData.MAP, ListData.CONTACT
                 }));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return v;

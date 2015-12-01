@@ -1,27 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
     android:paddingTop="5dp"
     android:paddingBottom="5dp"
     android:background="@android:color/transparent">
-    <TextView
+    <in.workarounds.typography.TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/list_icon_compi"
-        android:id="@+id/event_list_item_index"/>
-    <TextView
+        android:id="@+id/event_list_item_index"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:textColor="#FFF"
+        app:font_name="Roboto"
+        app:font_variant="Regular"/>
+    <in.workarounds.typography.TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/event_list_item_index"
-        android:id="@+id/event_list_item_name"/>
-    <TextView
+        android:layout_marginLeft="20dp"
+        android:id="@+id/event_list_item_name"
+        android:textSize="16sp"
+        android:textColor="#3b3b3b"
+        app:font_name="Roboto"
+        app:font_variant="Regular"/>
+    <in.workarounds.typography.TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/event_list_item_index"
+        android:layout_alignLeft="@+id/event_list_item_name"
         android:id="@+id/event_list_item_description"
-        android:layout_below="@+id/event_list_item_name"/>
+        android:layout_below="@+id/event_list_item_name"
+        android:textSize="14sp"
+        android:textColor="#919191"
+        app:font_name="Roboto"
+        app:font_variant="Regular"/>
 </RelativeLayout>

@@ -7,7 +7,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/small"
+        android:src="@drawable/navbar_backdrop"
         android:id="@+id/nav_drawer_img"
         android:scaleType="centerCrop"
         android:layout_above="@+id/nav_drawer_list"/>
