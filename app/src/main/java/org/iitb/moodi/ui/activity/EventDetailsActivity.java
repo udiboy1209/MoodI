@@ -35,8 +35,7 @@ import retrofit.client.Response;
 /**
  * Created by udiboy on 28/11/15.
  */
-public class EventDetailsActivity extends BaseActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks{
+public class EventDetailsActivity extends BaseActivity {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -63,21 +62,14 @@ public class EventDetailsActivity extends BaseActivity
 
         mToolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(color));
+        mToolbar.setBackgroundColor(color);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
 
         mToolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp);
 
         mTabLayout = (TabLayout) findViewById(R.id.events_tab_layout);
         mViewPager = (ViewPager) findViewById(R.id.events_pager);
-
-
-        mNavigationDrawerFragment = (NavigationDrawerFragment)
-                getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
-
-        // Set up the drawer.
-        mNavigationDrawerFragment.setUp(
-                R.id.navigation_drawer,
-                (DrawerLayout) findViewById(R.id.drawer_layout));
 
         mViewPager.setAdapter(new SamplePagerAdapter());
 
@@ -120,12 +112,6 @@ public class EventDetailsActivity extends BaseActivity
     }
 
     @Override
-    public void onNavigationDrawerItemSelected(int position) {
-        navigateTo(position);
-    }
-
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (!mNavigationDrawerFragment.isDrawerOpen()) {
             // Only show items in the action bar relevant to this screen
@@ -145,8 +131,8 @@ public class EventDetailsActivity extends BaseActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == android.R.id.home) {
+            onBackPressed();
         }
 
         return super.onOptionsItemSelected(item);

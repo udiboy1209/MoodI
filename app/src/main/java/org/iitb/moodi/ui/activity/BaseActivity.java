@@ -19,7 +19,11 @@ import org.iitb.moodi.ui.fragment.NavigationDrawerFragment;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 public class BaseActivity extends AppCompatActivity {
+
+    public static ArrayList<BaseActivity> activityStack=new ArrayList<>();
 
     public User me;
     public CityResponse.City[] cities;
@@ -33,6 +37,7 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        activityStack.add(this);
         me = new User();
         prefs=getSharedPreferences(getString(R.string.preferences), MODE_PRIVATE);
         db=BaseApplication.getDB();
@@ -141,9 +146,17 @@ public class BaseActivity extends AppCompatActivity {
                 finish();
             }
         } else if(p==1){
-            if(!(this instanceof ScheduleActivity))
+            String url = "http://moodi.org/accommodation";
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse(url));
+            startActivity(i);
+        } else if(p==2){
+            if(!(this instanceof ContactActivity))
+                startActivity(new Intent(this,MapsActivity.class));
+        } /*else if(p==3){
+            if(!(this instanceof ContactActivity))
                 startActivity(new Intent(this,ScheduleActivity.class));
-        } else if(p==3){
+        }*/ else if(p==3){
             if(!(this instanceof ContactActivity))
                 startActivity(new Intent(this,ContactActivity.class));
         }

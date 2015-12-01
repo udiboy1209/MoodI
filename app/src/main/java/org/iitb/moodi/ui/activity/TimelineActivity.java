@@ -45,8 +45,7 @@ import retrofit.client.Response;
 /**
  * Created by udiboy on 30/11/15.
  */
-public class TimelineActivity extends BaseActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+public class TimelineActivity extends BaseActivity {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -62,23 +61,17 @@ public class TimelineActivity extends BaseActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_events);
+        setContentView(R.layout.activity_timeline);
 
         mToolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
-        mToolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp);
-
-        mTabLayout = (TabLayout) findViewById(R.id.events_tab_layout);
-        mViewPager = (ViewPager) findViewById(R.id.events_pager);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
 
 
-        mNavigationDrawerFragment = (NavigationDrawerFragment)
-                getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
+        mTabLayout = (TabLayout) findViewById(R.id.timeline_tab_layout);
+        mViewPager = (ViewPager) findViewById(R.id.timeline_pager);
 
-        // Set up the drawer.
-        mNavigationDrawerFragment.setUp(
-                R.id.navigation_drawer,
-                (DrawerLayout) findViewById(R.id.drawer_layout));
 
         day=getIntent().getIntExtra("day",0);
         loadTimelineData();
@@ -91,23 +84,6 @@ public class TimelineActivity extends BaseActivity
     }
 
     @Override
-    public void onNavigationDrawerItemSelected(int position) {
-        navigateTo(position);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        if (!mNavigationDrawerFragment.isDrawerOpen()) {
-            // Only show items in the action bar relevant to this screen
-            // if the drawer is not showing. Otherwise, let the drawer
-            // decide what to show in the action bar.
-            getMenuInflater().inflate(R.menu.main, menu);
-            return true;
-        }
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -115,8 +91,8 @@ public class TimelineActivity extends BaseActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == android.R.id.home) {
+            onBackPressed();
         }
 
         return super.onOptionsItemSelected(item);
@@ -144,7 +120,7 @@ public class TimelineActivity extends BaseActivity
                 "Fetching data. Please wait...", true);
 
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(API_URL)
+                .setEndpoint(m_API_URL)
                 .build();
         MoodIndigoClient methods = restAdapter.create(MoodIndigoClient.class);
         Callback callback = new Callback() {
@@ -162,8 +138,7 @@ public class TimelineActivity extends BaseActivity
                         if(e.dept.equals(dept) && e.day.equals(day+""));
                             ta.add(e);
                     }
-
-
+                    eventLists.add(ta);
                 }
 
                 mViewPager.setAdapter(new SamplePagerAdapter());

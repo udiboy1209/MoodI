@@ -35,7 +35,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class EventsActivity extends BaseActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks, View.OnClickListener,ViewPager.OnPageChangeListener {
+        implements View.OnClickListener,ViewPager.OnPageChangeListener {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -61,32 +61,18 @@ public class EventsActivity extends BaseActivity
 
         mToolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
-        mToolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
 
         mTabLayout = (TabLayout) findViewById(R.id.events_tab_layout);
         mViewPager = (ViewPager) findViewById(R.id.events_pager);
 
         mIconView = (ImageView) findViewById(R.id.events_tab_icon);
 
-        mNavigationDrawerFragment = (NavigationDrawerFragment)
-                getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
-
-        // Set up the drawer.
-        mNavigationDrawerFragment.setUp(
-                R.id.navigation_drawer,
-                (DrawerLayout) findViewById(R.id.drawer_layout));
-        loadEventsData(getIntent().getIntExtra("id",0));
-        mToolbar.setTitle("Events");
-
         mIconView.setBackgroundResource(getIconResource(getIntent().getIntExtra("id",0)));
         mTabLayout.setBackgroundResource(getGradient(getIntent().getIntExtra("id",0)));
 
         ((ImageView)findViewById(R.id.events_img)).setImageResource(getBackgroundResource(getIntent().getIntExtra("id",0)));
-    }
-
-    @Override
-    public void onNavigationDrawerItemSelected(int position) {
-        navigateTo(position);
     }
 
     @Override
@@ -109,8 +95,8 @@ public class EventsActivity extends BaseActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == android.R.id.home) {
+            onBackPressed();
         }
 
         return super.onOptionsItemSelected(item);

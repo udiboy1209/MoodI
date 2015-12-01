@@ -1,8 +1,12 @@
 package org.iitb.moodi.ui.activity;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionMenu;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -12,13 +16,29 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.iitb.moodi.MoodIndigoClient;
 import org.iitb.moodi.R;
+import org.iitb.moodi.api.EventDetailsResponse;
+import org.iitb.moodi.api.VenueResponse;
+import org.iitb.moodi.api.VenueResponse.Venue;
 
-public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
+import java.util.ArrayList;
+import java.util.List;
 
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+
+public class MapsActivity extends BaseActivity implements OnMapReadyCallback {
+
+    private static final String TAG = "MapsActivity";
     private GoogleMap mMap;
     private FloatingActionMenu mFilterMenu;
     private Toolbar mToolbar;
+
+    ProgressDialog dialog=null;
+    private ArrayList<Venue> venues = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,11 +51,31 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         mFilterMenu = (FloatingActionMenu)findViewById(R.id.map_filter_menu);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
 
         setSupportActionBar(mToolbar);
+
+        dialog = ProgressDialog.show(this, "",
+                "Loading Map...", true);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
         mToolbar.setTitle("Map");
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
     /**
      * Manipulates the map once available.
@@ -50,9 +90,35 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        LatLng iitb = new LatLng(19.1334302,72.9132679);
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(iitb,15.5F));
+
+        dialog.setMessage("Fetching Data...");
+
+        RestAdapter restAdapter = new RestAdapter.Builder()
+                .setEndpoint(m_API_URL)
+                .build();
+        MoodIndigoClient methods = restAdapter.create(MoodIndigoClient.class);
+        Callback callback = new Callback() {
+            @Override
+            public void success(Object o, Response response) {
+                VenueResponse vr = (VenueResponse) o;
+                for (Venue v : vr.venues){
+                    venues.add(v);
+                    Log.d(TAG, v.venue_name+" : "+v.location);
+                    mMap.addMarker(new MarkerOptions().position(new LatLng(v.getLat(),v.getLng())));
+                }
+                dialog.dismiss();
+            }
+            @Override
+            public void failure(RetrofitError retrofitError) {
+                String error = retrofitError.getMessage();
+                Log.e(TAG, error);
+                dialog.dismiss();
+                Toast.makeText(getBaseContext(), "Can't fetch data! Check internet connection", Toast.LENGTH_LONG).show();
+                finish();
+            }
+        };
+        methods.getVenues(callback);
     }
 }

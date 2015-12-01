@@ -42,7 +42,7 @@ public class TimelineResponse {
         @SerializedName("Venue")
         public String venue_id;
 
-        @SerializedName("Day")
+        @SerializedName("day")
         public String day;
 
         public Date getStart() {
