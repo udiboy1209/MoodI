@@ -1,5 +1,7 @@
 package org.iitb.moodi.ui.activity;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -56,10 +58,17 @@ public class ContactActivity extends BaseActivity {
     }
 
     public void call(View v){
-
+        String uri = "tel:" + ((TextView)v).getText();
+        Intent intent = new Intent(Intent.ACTION_DIAL);
+        intent.setData(Uri.parse(uri));
+        startActivity(intent);
     }
 
     public void email(View v){
+        String email = (String) ((TextView)v).getText();
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.putExtra(Intent.EXTRA_EMAIL, email);
 
+        startActivity(Intent.createChooser(intent, "Send Email"));
     }
 }

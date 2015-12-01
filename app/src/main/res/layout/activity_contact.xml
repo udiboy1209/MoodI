@@ -45,6 +45,8 @@
                 android:text="rituj@moodi.org"/>
         </LinearLayout>
     </LinearLayout>
+
+
     <in.workarounds.typography.TextView style="@style/ContactHeader"
         android:text="Hospitality and PR"/>
     <LinearLayout style="@style/ContactRow">
@@ -77,6 +79,326 @@
             <in.workarounds.typography.TextView
                 style="@style/ContactEmail"
                 android:text="udyut@moodi.org"/>
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <in.workarounds.typography.TextView style="@style/ContactHeader"
+        android:text="Creatives and Assistance"/>
+    <LinearLayout style="@style/ContactRow">
+        <de.hdodenhof.circleimageview.CircleImageView
+            style="@style/ContactDP"
+            android:src="@drawable/contact_us_creatives1"/>
+        <LinearLayout style="@style/ContactCol">
+            <in.workarounds.typography.TextView
+                style="@style/ContactName"
+                android:text="Harshit Manocha"/>
+            <in.workarounds.typography.TextView
+                style="@style/ContactNo"
+                android:text="+91-7506134790"/>
+            <in.workarounds.typography.TextView
+                style="@style/ContactEmail"
+                android:text="harshit@moodi.org"/>
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout style="@style/ContactRow">
+        <de.hdodenhof.circleimageview.CircleImageView
+            style="@style/ContactDP"
+            android:src="@drawable/contact_us_creatives2"/>
+        <LinearLayout style="@style/ContactCol">
+            <in.workarounds.typography.TextView
+                style="@style/ContactName"
+                android:text="Pratik Lodha"/>
+            <in.workarounds.typography.TextView
+                style="@style/ContactNo"
+                android:text="+91-9619369767"/>
+            <in.workarounds.typography.TextView
+                style="@style/ContactEmail"
+                android:text="pratik@moodi.org"/>
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout style="@style/ContactRow">
+        <de.hdodenhof.circleimageview.CircleImageView
+            style="@style/ContactDP"
+            android:src="@drawable/contact_us_creatives3"/>
+        <LinearLayout style="@style/ContactCol">
+            <in.workarounds.typography.TextView
+                style="@style/ContactName"
+                android:text="Rohit Gogoi"/>
+            <in.workarounds.typography.TextView
+                style="@style/ContactNo"
+                android:text="+91-9892275168"/>
+            <in.workarounds.typography.TextView
+                style="@style/ContactEmail"
+                android:text="rohit@moodi.org"/>
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <in.workarounds.typography.TextView style="@style/ContactHeader"
+        android:text="Food and Beverage"/>
+    <LinearLayout style="@style/ContactRow">
+        <de.hdodenhof.circleimageview.CircleImageView
+            style="@style/ContactDP"
+            android:src="@drawable/contact_us_food1"/>
+        <LinearLayout style="@style/ContactCol">
+            <in.workarounds.typography.TextView
+                style="@style/ContactName"
+                android:text="Shivam Varshney"/>
+            <in.workarounds.typography.TextView
+                style="@style/ContactNo"
+                android:text="+91-9869551101"/>
+            <in.workarounds.typography.TextView
+                style="@style/ContactEmail"
+                android:text="shivam@moodi.org"/>
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <in.workarounds.typography.TextView style="@style/ContactHeader"
+        android:text="Horizons and Workshops"/>
+    <LinearLayout style="@style/ContactRow">
+        <de.hdodenhof.circleimageview.CircleImageView
+            style="@style/ContactDP"
+            android:src="@drawable/contact_us_horizon2"/>
+        <LinearLayout style="@style/ContactCol">
+            <in.workarounds.typography.TextView
+                style="@style/ContactName"
+                android:text="Anmol Sureka"/>
+            <in.workarounds.typography.TextView
+                style="@style/ContactNo"
+                android:text="+91-9967679334"/>
+            <in.workarounds.typography.TextView
+                style="@style/ContactEmail"
+                android:text="anmol@moodi.org"/>
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout style="@style/ContactRow">
+        <de.hdodenhof.circleimageview.CircleImageView
+            style="@style/ContactDP"
+            android:src="@drawable/contact_us_horizon1"/>
+        <LinearLayout style="@style/ContactCol">
+            <in.workarounds.typography.TextView
+                style="@style/ContactName"
+                android:text="Ankush Thakkar"/>
+            <in.workarounds.typography.TextView
+                style="@style/ContactNo"
+                android:text="+91-9619625459"/>
+            <in.workarounds.typography.TextView
+                style="@style/ContactEmail"
+                android:text="ankush@moodi.org"/>
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout style="@style/ContactRow">
+        <de.hdodenhof.circleimageview.CircleImageView
+            style="@style/ContactDP"
+            android:src="@drawable/contact_us_horizon3"/>
+        <LinearLayout style="@style/ContactCol">
+            <in.workarounds.typography.TextView
+                style="@style/ContactName"
+                android:text="Suhani Gupta"/>
+            <in.workarounds.typography.TextView
+                style="@style/ContactNo"
+                android:text="+91-9967309129"/>
+            <in.workarounds.typography.TextView
+                style="@style/ContactEmail"
+                android:text="suhani@moodi.org"/>
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <in.workarounds.typography.TextView style="@style/ContactHeader"
+        android:text="Informals"/>
+    <LinearLayout style="@style/ContactRow">
+        <de.hdodenhof.circleimageview.CircleImageView
+            style="@style/ContactDP"
+            android:src="@drawable/contact_us_informal1"/>
+        <LinearLayout style="@style/ContactCol">
+            <in.workarounds.typography.TextView
+                style="@style/ContactName"
+                android:text="Dhruv Patel"/>
+            <in.workarounds.typography.TextView
+                style="@style/ContactNo"
+                android:text="+91-9987140814"/>
+            <in.workarounds.typography.TextView
+                style="@style/ContactEmail"
+                android:text="dhruv@moodi.org"/>
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout style="@style/ContactRow">
+        <de.hdodenhof.circleimageview.CircleImageView
+            style="@style/ContactDP"
+            android:src="@drawable/contact_us_informal2"/>
+        <LinearLayout style="@style/ContactCol">
+            <in.workarounds.typography.TextView
+                style="@style/ContactName"
+                android:text="Rucha Walawalkar"/>
+            <in.workarounds.typography.TextView
+                style="@style/ContactNo"
+                android:text="+91-9969969501"/>
+            <in.workarounds.typography.TextView
+                style="@style/ContactEmail"
+                android:text="rucha@moodi.org"/>
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <in.workarounds.typography.TextView style="@style/ContactHeader"
+        android:text="Marketing"/>
+    <LinearLayout style="@style/ContactRow">
+        <de.hdodenhof.circleimageview.CircleImageView
+            style="@style/ContactDP"
+            android:src="@drawable/contact_us_market1"/>
+        <LinearLayout style="@style/ContactCol">
+            <in.workarounds.typography.TextView
+                style="@style/ContactName"
+                android:text="Akhil Dhoot"/>
+            <in.workarounds.typography.TextView
+                style="@style/ContactNo"
+                android:text="+91-8655344948"/>
+            <in.workarounds.typography.TextView
+                style="@style/ContactEmail"
+                android:text="akhil@moodi.org"/>
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout style="@style/ContactRow">
+        <de.hdodenhof.circleimageview.CircleImageView
+            style="@style/ContactDP"
+            android:src="@drawable/contact_us_market2"/>
+        <LinearLayout style="@style/ContactCol">
+            <in.workarounds.typography.TextView
+                style="@style/ContactName"
+                android:text="Pallav Chaudhary"/>
+            <in.workarounds.typography.TextView
+                style="@style/ContactNo"
+                android:text="+91-9967352948"/>
+            <in.workarounds.typography.TextView
+                style="@style/ContactEmail"
+                android:text="pallav@moodi.org"/>
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout style="@style/ContactRow">
+        <de.hdodenhof.circleimageview.CircleImageView
+            style="@style/ContactDP"
+            android:src="@drawable/contact_us_market3"/>
+        <LinearLayout style="@style/ContactCol">
+            <in.workarounds.typography.TextView
+                style="@style/ContactName"
+                android:text="Rutuj Shah"/>
+            <in.workarounds.typography.TextView
+                style="@style/ContactNo"
+                android:text="+91-9967352956"/>
+            <in.workarounds.typography.TextView
+                style="@style/ContactEmail"
+                android:text="rutuj@moodi.org"/>
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <in.workarounds.typography.TextView style="@style/ContactHeader"
+        android:text="Media and Accounts"/>
+    <LinearLayout style="@style/ContactRow">
+        <de.hdodenhof.circleimageview.CircleImageView
+            style="@style/ContactDP"
+            android:src="@drawable/contact_us_media1"/>
+        <LinearLayout style="@style/ContactCol">
+            <in.workarounds.typography.TextView
+                style="@style/ContactName"
+                android:text="Manali Waghmare"/>
+            <in.workarounds.typography.TextView
+                style="@style/ContactNo"
+                android:text="+91-9967380821"/>
+            <in.workarounds.typography.TextView
+                style="@style/ContactEmail"
+                android:text="manali@moodi.org"/>
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout style="@style/ContactRow">
+        <de.hdodenhof.circleimageview.CircleImageView
+            style="@style/ContactDP"
+            android:src="@drawable/contact_us_media2"/>
+        <LinearLayout style="@style/ContactCol">
+            <in.workarounds.typography.TextView
+                style="@style/ContactName"
+                android:text="Nishit Dedhia"/>
+            <in.workarounds.typography.TextView
+                style="@style/ContactNo"
+                android:text="+91-9867904366"/>
+            <in.workarounds.typography.TextView
+                style="@style/ContactEmail"
+                android:text="pallav@moodi.org"/>
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <in.workarounds.typography.TextView style="@style/ContactHeader"
+        android:text="Pronites"/>
+    <LinearLayout style="@style/ContactRow">
+        <de.hdodenhof.circleimageview.CircleImageView
+            style="@style/ContactDP"
+            android:src="@drawable/contact_us_pronite2"/>
+        <LinearLayout style="@style/ContactCol">
+            <in.workarounds.typography.TextView
+                style="@style/ContactName"
+                android:text="Yash Sakhlecha"/>
+            <in.workarounds.typography.TextView
+                style="@style/ContactNo"
+                android:text="+91-7738784781"/>
+            <in.workarounds.typography.TextView
+                style="@style/ContactEmail"
+                android:text="yash@moodi.org"/>
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout style="@style/ContactRow">
+        <de.hdodenhof.circleimageview.CircleImageView
+            style="@style/ContactDP"
+            android:src="@drawable/contact_us_pronite1"/>
+        <LinearLayout style="@style/ContactCol">
+            <in.workarounds.typography.TextView
+                style="@style/ContactName"
+                android:text="Mehul Fadnavis"/>
+            <in.workarounds.typography.TextView
+                style="@style/ContactNo"
+                android:text="+91-9595007304"/>
+            <in.workarounds.typography.TextView
+                style="@style/ContactEmail"
+                android:text="mehul@moodi.org"/>
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <in.workarounds.typography.TextView style="@style/ContactHeader"
+        android:text="Overall Coordinators"/>
+    <LinearLayout style="@style/ContactRow">
+        <de.hdodenhof.circleimageview.CircleImageView
+            style="@style/ContactDP"
+            android:src="@drawable/contact_us_ocs1"/>
+        <LinearLayout style="@style/ContactCol">
+            <in.workarounds.typography.TextView
+                style="@style/ContactName"
+                android:text="Aman Chaudhary"/>
+            <in.workarounds.typography.TextView
+                style="@style/ContactNo"
+                android:text="+91-9769501715"/>
+            <in.workarounds.typography.TextView
+                style="@style/ContactEmail"
+                android:text="aman@moodi.org"/>
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout style="@style/ContactRow">
+        <de.hdodenhof.circleimageview.CircleImageView
+            style="@style/ContactDP"
+            android:src="@drawable/contact_us_ocs2"/>
+        <LinearLayout style="@style/ContactCol">
+            <in.workarounds.typography.TextView
+                style="@style/ContactName"
+                android:text="Deep Shah"/>
+            <in.workarounds.typography.TextView
+                style="@style/ContactNo"
+                android:text="+91-9820403636"/>
+            <in.workarounds.typography.TextView
+                style="@style/ContactEmail"
+                android:text="deep@moodi.org"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
