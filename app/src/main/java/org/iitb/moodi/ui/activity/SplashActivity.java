@@ -59,15 +59,19 @@ public class SplashActivity extends BaseActivity {
             public void onSuccess(LoginResult loginResult) {
                 // Check whether user exists!
                 Log.d(TAG,"Login successful!");
-                mProfileTracker = new ProfileTracker() {
-                    @Override
-                    protected void onCurrentProfileChanged(Profile profile, Profile profile2) {
-                        Log.v("facebook - profile", profile2.getFirstName());
-                        checkUserExistence();
-                        mProfileTracker.stopTracking();
-                    }
-                };
-                mProfileTracker.startTracking();
+                if(Profile.getCurrentProfile()==null) {
+                    mProfileTracker = new ProfileTracker() {
+                        @Override
+                        protected void onCurrentProfileChanged(Profile profile, Profile profile2) {
+                            Log.v("facebook - profile", profile2.getFirstName());
+                            checkUserExistence();
+                            mProfileTracker.stopTracking();
+                        }
+                    };
+                    mProfileTracker.startTracking();
+                } else {
+                    checkUserExistence();
+                }
             }
 
             @Override

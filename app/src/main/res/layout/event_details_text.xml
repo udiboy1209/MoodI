@@ -5,4 +5,5 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:font_name="Roboto"
-    app:font_variant="Regular" />
+    app:font_variant="Regular"
+    android:lineSpacingMultiplier="1.5"/>

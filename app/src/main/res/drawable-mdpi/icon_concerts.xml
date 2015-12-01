@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/list_icon_concerts">
+    </item>
+    <item android:drawable="@drawable/icon_concerts_img" android:bottom="23dp" android:top="23dp" android:right="23dp" android:left="23dp">
+    </item>
+</layer-list>

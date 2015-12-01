@@ -70,8 +70,6 @@ public class EventDetailsActivity extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
 
-        mToolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp);
-
         mTabLayout = (TabLayout) findViewById(R.id.events_tab_layout);
         mViewPager = (ViewPager) findViewById(R.id.events_pager);
 
@@ -82,8 +80,10 @@ public class EventDetailsActivity extends BaseActivity {
 
         changeTabsFont();
 
-        if(eventDetails.genrebaap.equals("competitions"))
+        if(eventDetails.genrebaap.equals("competitions")) {
             mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+            mTabLayout.setTabGravity(TabLayout.GRAVITY_CENTER);
+        }
 
         final ProgressDialog dialog = ProgressDialog.show(this, "",
                 "Fetching data. Please wait...", true);
@@ -223,6 +223,9 @@ public class EventDetailsActivity extends BaseActivity {
                 tv.setText(R.string.event_registration_message);
                 tv2.setText("Your MI number is " + me.mi_no);
                 tv3.setText("Minimum number of participants is " + min_reg);
+                tv.setLineSpacing(0,1.5f);
+                tv2.setLineSpacing(0,1.5f);
+                tv3.setLineSpacing(0,1.5f);
                 LinearLayout holder = (LinearLayout) view.findViewById(R.id.event_reg_edittext_holder);
                 for (int i=0; i<max_reg; i++) {
                     EditText mi_et = new EditText(EventDetailsActivity.this);
