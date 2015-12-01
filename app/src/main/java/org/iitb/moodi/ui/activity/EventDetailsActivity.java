@@ -105,7 +105,8 @@ public class EventDetailsActivity extends BaseActivity {
                 String error = retrofitError.getMessage();
                 Log.e(TAG, error);
                 dialog.dismiss();
-                Toast.makeText(getBaseContext(), "Can't fetch data! Check internet connection", Toast.LENGTH_LONG).show();
+                showErrorDialog("Can't fetch data, Please check your internet connection");
+                //Toast.makeText(getBaseContext(), "Can't fetch data! Check internet connection", Toast.LENGTH_LONG).show();
                 finish();
             }
         };
@@ -325,6 +326,7 @@ public class EventDetailsActivity extends BaseActivity {
             public void failure(RetrofitError retrofitError) {
                 String error = retrofitError.getMessage();
                 Log.e(TAG, error);
+                showErrorDialog("Can't connect to server, Please check your internet connection");
                 dialog.dismiss();
             }
         };

@@ -138,7 +138,9 @@ public class EventsActivity extends BaseActivity
             public void failure(RetrofitError retrofitError) {
                 retrofitError.printStackTrace();
                 dialog.dismiss();
-                Toast.makeText(EventsActivity.this, "Error fetching data", Toast.LENGTH_LONG).show();
+                //Toast.makeText(EventsActivity.this, "Error fetching data", Toast.LENGTH_LONG).show();
+                showErrorDialog("Can't fetch data, Please check your internet connection");
+
             }
         };
         methods.getEvents(id, callback);

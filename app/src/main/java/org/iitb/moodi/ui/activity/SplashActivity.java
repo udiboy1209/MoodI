@@ -66,7 +66,7 @@ public class SplashActivity extends BaseActivity {
 
             @Override
             public void onError(FacebookException exception) {
-                Log.e(TAG, exception.getMessage());
+                exception.printStackTrace();
             }
         });
         if (AccessToken.getCurrentAccessToken()!=null && Profile.getCurrentProfile()!=null) {
@@ -123,7 +123,8 @@ public class SplashActivity extends BaseActivity {
                 dialog.dismiss();
                 String error = retrofitError.getMessage();
                 Log.e(TAG, error);
-                Toast.makeText(getBaseContext(),"AddUser error. Please check your internet connection", Toast.LENGTH_LONG).show();
+                showErrorDialog("Could not login. Please check your internet connection");
+                //Toast.makeText(getBaseContext(),"AddUser error. Please check your internet connection", Toast.LENGTH_LONG).show();
             }
         };
         methods.addUser(me.fbid, me.city_id, me.clg_id,
@@ -171,7 +172,8 @@ public class SplashActivity extends BaseActivity {
                 dialog.dismiss();
                 String error = retrofitError.getMessage();
                 Log.e(TAG, error);
-                Toast.makeText(getBaseContext(),"CheckUser error. Please check your internet connection", Toast.LENGTH_LONG).show();
+                showErrorDialog("Could not login. Please check your internet connection");
+                //Toast.makeText(getBaseContext(),"CheckUser error. Please check your internet connection", Toast.LENGTH_LONG).show();
             }
         };
             methods.checkUser(Profile.getCurrentProfile().getId(),

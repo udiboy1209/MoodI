@@ -3,6 +3,7 @@ package org.iitb.moodi.ui.activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.ShareActionProvider;
@@ -167,5 +168,9 @@ public class BaseActivity extends AppCompatActivity {
             if(!(this instanceof ContactActivity))
                 startActivity(new Intent(this,ContactActivity.class));
         }
+    }
+
+    public void showErrorDialog(String content){
+        new AlertDialog.Builder(this).setTitle("Internet Error").setMessage(content).show();
     }
 }
