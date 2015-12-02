@@ -127,6 +127,7 @@ public class SplashActivity extends BaseActivity {
 
                 SharedPreferences.Editor spe = prefs.edit();
                 spe.putString("user_json", me.getJSON());
+                spe.putBoolean("user_exists",true);
                 spe.commit();
                 Intent i = new Intent(getBaseContext(), MainActivity.class);
                 startActivity(i);
@@ -151,49 +152,58 @@ public class SplashActivity extends BaseActivity {
     public void checkUserExistence() {
         final ProgressDialog dialog = ProgressDialog.show(this, "",
                 "Checking existing database...", true);
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(m_API_URL)
-                .build();
-        MoodIndigoClient methods = restAdapter.create(MoodIndigoClient.class);
-        Callback callback = new Callback() {
-            @Override
-            public void success(Object o, Response response) {
-                dialog.dismiss();
-                CheckUserResponse c = (CheckUserResponse) o;
-                Log.d(TAG,c.getStatus()+"");
-                Log.d(TAG,c.getUser());
-                if (!c.getStatus() && c.getUser().equalsIgnoreCase("Not registered")) {
-                    // User hasn't registered for Mood Indigo!
-                    // First get his data
-                    Log.d(TAG,"User hasn't registered for Mood Indigo, getting his biodata");
-                    getBiodata();
-                }
-                else if (c.getStatus()) {
-                    // User entry exists
-                    me = (new Gson()).fromJson(c.getUser(),User.class);
-                    SharedPreferences.Editor spe = prefs.edit();
-                    spe.putString("user_json", me.getJSON());
-                    Log.d(TAG,"User has registered! His server data is :-");
-                    Log.d(TAG, me.getJSON());
-                    spe.commit();
-                    Intent i = new Intent(getBaseContext(), MainActivity.class);
-                    startActivity(i);
-                    finish();
 
+        if(prefs.contains("user_exists")) {
+            dialog.dismiss();
+            Intent i = new Intent(getBaseContext(), MainActivity.class);
+            startActivity(i);
+            finish();
+        } else {
+            RestAdapter restAdapter = new RestAdapter.Builder()
+                    .setEndpoint(m_API_URL)
+                    .build();
+            MoodIndigoClient methods = restAdapter.create(MoodIndigoClient.class);
+            Callback callback = new Callback() {
+                @Override
+                public void success(Object o, Response response) {
+                    dialog.dismiss();
+                    CheckUserResponse c = (CheckUserResponse) o;
+                    Log.d(TAG, c.getStatus() + "");
+                    Log.d(TAG, c.getUser());
+                    if (!c.getStatus() && c.getUser().equalsIgnoreCase("Not registered")) {
+                        // User hasn't registered for Mood Indigo!
+                        // First get his data
+                        Log.d(TAG, "User hasn't registered for Mood Indigo, getting his biodata");
+                        getBiodata();
+                    } else if (c.getStatus()) {
+                        // User entry exists
+                        me = (new Gson()).fromJson(c.getUser(), User.class);
+                        SharedPreferences.Editor spe = prefs.edit();
+                        spe.putString("user_json", me.getJSON());
+                        spe.putBoolean("user_exists",true);
+                        Log.d(TAG, "User has registered! His server data is :-");
+                        Log.d(TAG, me.getJSON());
+                        spe.commit();
+                        Intent i = new Intent(getBaseContext(), MainActivity.class);
+                        startActivity(i);
+                        finish();
+
+                    }
                 }
-            }
-            @Override
-            public void failure(RetrofitError retrofitError) {
-                dialog.dismiss();
-                String error = retrofitError.getMessage();
-                Log.e(TAG, error);
-                showErrorDialog("Could not login. Please check your internet connection");
-                //Toast.makeText(getBaseContext(),"CheckUser error. Please check your internet connection", Toast.LENGTH_LONG).show();
-            }
-        };
+
+                @Override
+                public void failure(RetrofitError retrofitError) {
+                    dialog.dismiss();
+                    String error = retrofitError.getMessage();
+                    Log.e(TAG, error);
+                    showErrorDialog("Could not login. Please check your internet connection");
+                    //Toast.makeText(getBaseContext(),"CheckUser error. Please check your internet connection", Toast.LENGTH_LONG).show();
+                }
+            };
             methods.checkUser(Profile.getCurrentProfile().getId(),
-                              AccessToken.getCurrentAccessToken().getToken(),
-                              callback);
+                    AccessToken.getCurrentAccessToken().getToken(),
+                    callback);
+        }
     }
     public void getBiodata() {
         final ProgressDialog dialog = ProgressDialog.show(this, "",

@@ -161,12 +161,12 @@ public class BaseActivity extends AppCompatActivity {
         } else if(p==2){
             if(!(this instanceof ContactActivity))
                 startActivity(new Intent(this,MapsActivity.class));
-        } /*else if(p==3){
-            if(!(this instanceof ContactActivity))
-                startActivity(new Intent(this,ScheduleActivity.class));
-        }*/ else if(p==3){
+        } else if(p==3){
             if(!(this instanceof ContactActivity))
                 startActivity(new Intent(this,ContactActivity.class));
+        } else if(p==4){
+            if(!(this instanceof ContactActivity))
+                startActivity(new Intent(this,ScheduleActivity.class));
         }
     }
 

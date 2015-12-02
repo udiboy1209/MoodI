@@ -37,7 +37,7 @@ public class ShareActivity extends BaseActivity{
 
                 ShareLinkContent link = new ShareLinkContent.Builder()
                         .setContentUrl(Uri.parse(url))
-                        .setContentTitle("Download the Mood Indigo app and escape to hawaii")
+                        .setContentTitle(content)
                         .setContentDescription(content)
                         .build();
                 ShareDialog.show(this,link);
