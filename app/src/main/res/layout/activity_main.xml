@@ -52,8 +52,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:id="@+id/genre_list"
-                android:layout_below="@+id/countdown_widget"
-                android:layout_marginBottom="200dp">
+                android:layout_below="@+id/countdown_widget">
                 <LinearLayout
                     style="@style/ListItem"
                     android:tag="1">

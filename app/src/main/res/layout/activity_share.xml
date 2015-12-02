@@ -12,6 +12,7 @@
     app:arc_axisRadius="180dp"
     app:arc_freeAngle="false"
     app:arc_reverseAngle="false"
+    android:onClick="close"
     >
 
     <ImageButton

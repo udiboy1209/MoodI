@@ -11,9 +11,18 @@ android {
         versionCode 1
         versionName "1.0"
     }
+    signingConfigs {
+        release{
+            storeFile file("releasekey.keystore")
+            storePassword "MaiHunSuperUser"
+            keyAlias "moodi"
+            keyPassword "hawaiianmood"
+        }
+    }
     buildTypes {
         release {
-            minifyEnabled false
+            signingConfig signingConfigs.release
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }

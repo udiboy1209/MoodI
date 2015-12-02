@@ -17,7 +17,7 @@
         android:layout_width="fill_parent"
         android:layout_height="?attr/actionBarSize"
         android:id="@+id/toolbar"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark"
+        style="@style/AppToolbar"
         android:background="@color/colorPrimary"/>
 
     <com.github.clans.fab.FloatingActionMenu

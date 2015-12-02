@@ -19,6 +19,12 @@
                 android:layout_alignTop="@+id/toolbar"
                 android:layout_alignBottom="@+id/events_tab_layout"
                 android:id="@+id/events_img"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#33000000"
+                android:layout_alignTop="@id/toolbar"
+                android:layout_alignBottom="@+id/events_tab_layout"/>
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:background="@drawable/toolbar_shadow_gradient"
