@@ -3,6 +3,9 @@ package org.iitb.moodi.ui.activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Build;
+import android.support.annotation.ColorRes;
+import android.support.annotation.DrawableRes;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +14,7 @@ import android.util.Log;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.WindowManager;
 
 import org.iitb.moodi.BaseApplication;
 import org.iitb.moodi.DatabaseHandler;
@@ -36,6 +40,11 @@ public class BaseActivity extends AppCompatActivity {
     private static final String TAG = "BaseActivity";
     Toolbar mToolbar;
 
+    @DrawableRes
+    protected int mColorPrimary=R.color.colorPrimary;
+    @ColorRes
+    protected int mColorPrimaryDark=R.color.colorSecondary;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +60,21 @@ public class BaseActivity extends AppCompatActivity {
             e.printStackTrace();
             me = new User();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if(Build.VERSION.SDK_INT >= 21 ) {
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            getWindow().setStatusBarColor(getResources().getColor(mColorPrimaryDark));
+        } else if(Build.VERSION.SDK_INT >= 19 ){
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
+
+        if(mToolbar!=null) mToolbar.setBackgroundResource(mColorPrimary);
     }
 
     @Override
@@ -99,17 +123,32 @@ public class BaseActivity extends AppCompatActivity {
 
     public int getColorFromGenre(String genre){
         if(genre.equals("competitions"))
-            return getResources().getColor(R.color.color_compi);
+            return R.color.color_compi;
         else if(genre.equals("informals"))
-            return getResources().getColor(R.color.color_informals);
+            return R.color.color_informals;
         else if(genre.equals("concerts"))
-            return getResources().getColor(R.color.color_concerts);
+            return R.color.color_concerts;
         else if(genre.equals("proshows"))
-            return getResources().getColor(R.color.color_proshows);
+            return R.color.color_proshows;
         else if(genre.equals("arts"))
-            return getResources().getColor(R.color.color_arts);
+            return R.color.color_arts;
         else
-            return getResources().getColor(R.color.color_compi);
+            return R.color.color_compi;
+    }
+
+    public int getColorDarkFromGenre(String genre){
+        if(genre.equals("competitions"))
+            return R.color.color_compiDark;
+        else if(genre.equals("informals"))
+            return R.color.color_informalsDark;
+        else if(genre.equals("concerts"))
+            return R.color.color_concertsDark;
+        else if(genre.equals("proshows"))
+            return R.color.color_proshowsDark;
+        else if(genre.equals("arts"))
+            return R.color.color_artsDark;
+        else
+            return R.color.color_compiDark;
     }
 
     public int getBackgroundResource(int id){

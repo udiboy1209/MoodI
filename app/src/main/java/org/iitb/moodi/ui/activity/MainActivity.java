@@ -89,6 +89,9 @@ public class MainActivity extends BaseActivity
         timerHandle = new Handler(getMainLooper());
 
         timerHandle.post(timerUpdate);
+
+        mColorPrimary=R.drawable.toolbar_shadow_gradient;
+        mColorPrimaryDark=R.color.colorDark;
     }
 
     @Override

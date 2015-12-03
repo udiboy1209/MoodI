@@ -74,6 +74,9 @@ public class EventsActivity extends BaseActivity
         ((ImageView)findViewById(R.id.events_img)).setImageResource(getBackgroundResource(getIntent().getIntExtra("id",0)));
 
         loadEventsData(getIntent().getIntExtra("id",0));
+
+        mColorPrimary=R.drawable.toolbar_shadow_gradient;
+        mColorPrimaryDark=R.color.colorDark;
     }
 
     @Override

@@ -38,6 +38,9 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         ((CircularDPView)findViewById(R.id.profile_dp)).setProfileId(me.fbid);
         ((TextView)findViewById(R.id.profile_name)).setText(me.name);
         ((TextView)findViewById(R.id.profile_mi_no)).setText(me.mi_no);
+
+        mColorPrimary=R.drawable.toolbar_shadow_gradient;
+        mColorPrimaryDark=R.color.colorDark;
     }
 
     @Override

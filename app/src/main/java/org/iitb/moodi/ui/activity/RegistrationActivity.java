@@ -2,6 +2,7 @@ package org.iitb.moodi.ui.activity;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.Menu;
@@ -36,6 +37,8 @@ public class RegistrationActivity extends BaseActivity implements AdapterView.On
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
+
+        mToolbar=(Toolbar) findViewById(R.id.toolbar);
 
         Bundle extras = getIntent().getExtras();
         if (extras!=null) {
@@ -77,6 +80,12 @@ public class RegistrationActivity extends BaseActivity implements AdapterView.On
         collegeSpinner.setEnabled(false);
 
         setCities();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mToolbar.setTitle("Register");
     }
 
     @Override

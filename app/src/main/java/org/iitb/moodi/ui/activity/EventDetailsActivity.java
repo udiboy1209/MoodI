@@ -48,7 +48,6 @@ public class EventDetailsActivity extends BaseActivity {
     int min_reg = 0;
     int max_reg = 0;
     private String TAG = "EventDetailsActivity";
-    int color;
 
     private Typeface tabFont;
 
@@ -62,12 +61,9 @@ public class EventDetailsActivity extends BaseActivity {
 
         eventDetails = getIntent().getParcelableExtra("event_details");
 
-        color = getColorFromGenre(eventDetails.genrebaap);
-        Log.d("COLOR", String.valueOf(color));
 
         mToolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
-        mToolbar.setBackgroundColor(color);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
 
@@ -77,7 +73,11 @@ public class EventDetailsActivity extends BaseActivity {
         mViewPager.setAdapter(new SamplePagerAdapter());
 
         mTabLayout.setupWithViewPager(mViewPager);
-        mTabLayout.setBackgroundColor(color);
+
+        mColorPrimary=getColorFromGenre(eventDetails.genrebaap);
+        mColorPrimaryDark=getColorDarkFromGenre(eventDetails.genrebaap);
+
+        mTabLayout.setBackgroundResource(mColorPrimary);
 
         changeTabsFont();
 

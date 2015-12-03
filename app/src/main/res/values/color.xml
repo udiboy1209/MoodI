@@ -7,13 +7,19 @@
     <color name="action_bar">#3f51b5</color>
 
     <color name="color_compi">#4CAF50</color>
+    <color name="color_compiDark">#429338</color>
     <color name="color_informals">#2196F3</color>
+    <color name="color_informalsDark">#2176B3</color>
     <color name="color_proshows">#FFC107</color>
+    <color name="color_proshowsDark">#EFB103</color>
     <color name="color_concerts">#9C27B0</color>
+    <color name="color_concertsDark">#8C0790</color>
     <color name="color_arts">#F44336</color>
+    <color name="color_artsDark">#D42725</color>
 
     <color name="colorPrimary">#3f51b5</color>
     <color name="colorSecondary">#303f9f</color>
+    <color name="colorDark">#333</color>
 
     <color name="fav_true">#ffbb00</color>
     <color name="fav_false">#aaa</color>
