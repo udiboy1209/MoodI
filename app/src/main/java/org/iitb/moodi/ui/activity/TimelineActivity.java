@@ -9,6 +9,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -23,17 +24,22 @@ import android.widget.Toast;
 
 import org.iitb.moodi.MoodIndigoClient;
 import org.iitb.moodi.R;
+import org.iitb.moodi.Util;
 import org.iitb.moodi.api.Event;
 import org.iitb.moodi.api.EventsResponse;
 import org.iitb.moodi.api.Genre;
 import org.iitb.moodi.api.TimelineResponse;
 import org.iitb.moodi.ui.fragment.NavigationDrawerFragment;
 import org.iitb.moodi.ui.widget.EventListAdapter;
+import org.w3c.dom.Text;
 
+import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -127,22 +133,26 @@ public class TimelineActivity extends BaseActivity {
             @Override
             public void success(Object o, Response response) {
                 timelineData = (TimelineResponse) o;
-                dialog.dismiss();
 
                 eventLists = new ArrayList<>();
+
+                ArrayList<TimelineResponse.EventTime> sortedEvents = Util.mergeSort(new ArrayList<>(Arrays.asList(timelineData.events)));
 
                 for(int i=0; i<5; i++){
                     String dept = getDept(i);
                     TimelineAdapter ta = new TimelineAdapter(TimelineActivity.this, R.layout.list_item_timeline);
-                    for(TimelineResponse.EventTime e : timelineData.events){
-                        if(e.dept.equals(dept) && e.day.equals(day+""));
+                    for(TimelineResponse.EventTime e : sortedEvents){
+                        if(e.dept.equals(dept) && e.day.equals(day+"")) {
                             ta.add(e);
+                        }
                     }
                     eventLists.add(ta);
                 }
 
                 mViewPager.setAdapter(new SamplePagerAdapter());
                 mTabLayout.setupWithViewPager(mViewPager);
+
+                dialog.dismiss();
             }
 
             @Override
@@ -171,16 +181,32 @@ public class TimelineActivity extends BaseActivity {
             View v = convertView;
             if (v == null) {
                 LayoutInflater vi = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                v = vi.inflate(R.layout.list_item_timeline, null);
+                v = vi.inflate(R.layout.list_item_timeline, parent, false);
             }
 
             int sec=getSectionForPosition(position);
-            if(sec == getPositionForSection(sec)){
-                v.findViewById(R.id.event_list_item_time_hrs).setVisibility(View.VISIBLE);
+            if(position == getPositionForSection(sec)){
+                TextView timehrs = (TextView) v.findViewById(R.id.event_list_item_time_hrs);
+                int hrs=e.getStartHrs();
+                int ampmtime = hrs>12?hrs-12:hrs;
+                String ampm = hrs>12?"pm":"am";
+                timehrs.setText(Html.fromHtml(ampmtime+"<br>"+ampm));
+                timehrs.setVisibility(View.VISIBLE);
+            } else {
+                TextView timehrs = (TextView) v.findViewById(R.id.event_list_item_time_hrs);
+                timehrs.setVisibility(View.INVISIBLE);
             }
+
+
+            DateFormat timeFormat = new SimpleDateFormat("h:mm a",Locale.ENGLISH);
+            TextView time = (TextView) findViewById(R.id.event_list_item_time);
+            if(time!=null) time.setText(timeFormat.format(e.getStart())+" - " + timeFormat.format(e.getEnd()));
 
             TextView name = (TextView) v.findViewById(R.id.event_list_item_name);
             if(name != null) name.setText(e.name);
+
+            TextView venue = (TextView) v.findViewById(R.id.event_list_item_venue);
+            if(venue != null) venue.setText(e.venue_name);
 
             TextView description = (TextView) v.findViewById(R.id.event_list_item_description);
             if(description != null) description.setText(e.intro);
@@ -190,14 +216,18 @@ public class TimelineActivity extends BaseActivity {
 
         @Override
         public Integer[] getSections() {
-            Integer[] secs={9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,0};
-            return secs;
+            return new Integer[]{9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,0};
         }
 
         @Override
         public int getPositionForSection(int sectionIndex) {
+            if(sectionIndex>=getSections().length)
+                return getCount()-1;
+
+            Log.d("getPositionForSection","secIndex:"+sectionIndex);
+            int section = getSections()[sectionIndex];
             for (int i = 0; i < getCount(); i++) {
-                if(getSections()[sectionIndex]>=getItem(i).getStart().getHours())
+                if(section>=getItem(i).getStartHrs())
                     return i;
             }
             return getCount()-1;
@@ -206,7 +236,8 @@ public class TimelineActivity extends BaseActivity {
         @Override
         public int getSectionForPosition(int position) {
             Integer[] secs = getSections();
-            int hr = getItem(position).getStart().getHours();
+            int hr = getItem(position).getStartHrs();
+            Log.d("getSectionForPosition","hr:"+hr);
             for(int i=0; i<secs.length; i++){
                 if(secs[i]==hr)
                     return i;

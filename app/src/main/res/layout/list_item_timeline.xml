@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@android:color/transparent">
@@ -8,7 +9,7 @@
         android:layout_height="match_parent"
         android:layout_width="3dp"
         android:layout_marginLeft="30dp" />
-    <TextView
+    <in.workarounds.typography.TextView
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:id="@+id/event_list_item_time_hrs"
@@ -17,7 +18,11 @@
         android:layout_centerVertical="true"
         android:background="@drawable/list_icon_timeline"
         android:gravity="center"
-        android:visibility="invisible" />
+        android:visibility="invisible"
+        android:textColor="#FFF"
+        android:textSize="16sp"
+        app:font_name="Roboto"
+        app:font_variant="Medium"/>
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -29,26 +34,52 @@
         android:layout_marginRight="10dp"
         android:padding="10dp"
         android:layout_centerVertical="true">
-        <TextView
+        <in.workarounds.typography.TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/event_list_item_name"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp" />
-        <TextView
+            android:layout_marginTop="5dp"
+            android:textColor="#FFF"
+            android:textSize="16sp"
+            app:font_name="Roboto"
+            app:font_variant="Medium"
+            android:paddingBottom="0dp"/>
+        <in.workarounds.typography.TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/event_list_item_description"
-            android:layout_marginTop="4dp"
             android:layout_below="@+id/event_list_item_name"
-            android:layout_alignLeft="@+id/event_list_item_name" />
+            android:layout_alignLeft="@+id/event_list_item_name"
+            android:layout_toLeftOf="@+id/event_list_item_time"
+            android:textColor="#FFF"
+            android:textSize="12sp"
+            android:lines="1"
+            android:ellipsize="end"
+            app:font_name="Roboto"
+            app:font_variant="Regular"/>
 
-        <TextView
+        <in.workarounds.typography.TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/event_list_item_venue"
+            android:layout_above="@+id/event_list_item_time"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp"
+            android:textColor="#FFF"
+            android:textSize="10sp"
+            app:font_name="Roboto"
+            app:font_variant="Italic" />
+        <in.workarounds.typography.TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/event_list_item_time"
             android:layout_alignBottom="@+id/event_list_item_description"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp" />
+            android:layout_marginRight="5dp"
+            android:textColor="#FFF"
+            android:textSize="10sp"
+            app:font_name="Roboto"
+            app:font_variant="Italic" />
     </RelativeLayout>
 </RelativeLayout>

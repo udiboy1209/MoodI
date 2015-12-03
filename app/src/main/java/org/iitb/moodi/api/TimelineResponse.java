@@ -19,8 +19,6 @@ public class TimelineResponse {
     public EventTime[] events;
 
     public class EventTime{
-        final DateFormat format = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH);
-
         @SerializedName("ID")
         public String id;
 
@@ -45,22 +43,36 @@ public class TimelineResponse {
         @SerializedName("day")
         public String day;
 
+        @SerializedName("venue_name")
+        public String venue_name;
+
         public Date getStart() {
             try {
-                return format.parse(start);
+                DateFormat format = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH);
+                if(start!=null) return format.parse(start);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
             return null;
         }
 
+        public int getStartHrs(){
+            String[] times = start.split(":");
+            return Integer.valueOf(times[0]);
+        }
+
         public Date getEnd() {
             try {
-                return format.parse(end);
+                DateFormat format = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH);
+                if(end!=null) return format.parse(end);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
             return null;
+        }
+
+        public int compareTo(EventTime eventTime) {
+            return getStart().compareTo(eventTime.getStart());
         }
     }
 }
