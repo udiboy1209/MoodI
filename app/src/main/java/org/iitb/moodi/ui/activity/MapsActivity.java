@@ -1,6 +1,8 @@
 package org.iitb.moodi.ui.activity;
 
 import android.app.ProgressDialog;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -13,11 +15,16 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import net.steamcrafted.materialiconlib.MaterialDrawableBuilder;
+
 import org.iitb.moodi.MoodIndigoClient;
 import org.iitb.moodi.R;
+import org.iitb.moodi.Util;
 import org.iitb.moodi.api.EventDetailsResponse;
 import org.iitb.moodi.api.VenueResponse;
 import org.iitb.moodi.api.VenueResponse.Venue;
@@ -31,6 +38,11 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class MapsActivity extends BaseActivity implements OnMapReadyCallback {
+
+    private static final int TYPE_ACCO=1;
+    private static final int TYPE_AID=2;
+    private static final int TYPE_FOOD=3;
+    private static final int TYPE_EVENTS=4;
 
     private static final String TAG = "MapsActivity";
     private GoogleMap mMap;
@@ -90,8 +102,8 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        LatLng iitb = new LatLng(19.1334302,72.9132679);
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(iitb,15.5F));
+        LatLng iitb = new LatLng(19.13124,72.91649);
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(iitb,15.3F));
 
         dialog.setMessage("Fetching Data...");
 
@@ -106,7 +118,10 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback {
                 for (Venue v : vr.venues){
                     venues.add(v);
                     Log.d(TAG, v.venue_name+" : "+v.location);
-                    mMap.addMarker(new MarkerOptions().position(new LatLng(v.getLat(),v.getLng())));
+                    mMap.addMarker(new MarkerOptions()
+                            .position(new LatLng(v.getLat(),v.getLng()))
+                            .title(v.venue_name)
+                            .icon(getIcon(v.venue_id)));
                 }
                 dialog.dismiss();
             }
@@ -115,10 +130,62 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback {
                 String error = retrofitError.getMessage();
                 Log.e(TAG, error);
                 dialog.dismiss();
-                Toast.makeText(getBaseContext(), "Can't fetch data! Check internet connection", Toast.LENGTH_LONG).show();
+                showErrorDialog("Can't fetch data. Please check your internet connection!");
                 finish();
             }
         };
         methods.getVenues(callback);
+    }
+
+    private BitmapDescriptor getIcon(String venue_id) {
+        int venueType = getVenueType(venue_id);
+        switch(venueType){
+            case TYPE_ACCO:
+                return BitmapDescriptorFactory.fromBitmap(
+                        Util.drawableToBitmap(MaterialDrawableBuilder
+                                .with(this)
+                                .setIcon(MaterialDrawableBuilder.IconValue.HOTEL)
+                                .setColor(getResources().getColor(R.color.color_compi))
+                                .setSizeDp(30)
+                                .build()));
+            case TYPE_AID:
+                return BitmapDescriptorFactory.fromBitmap(
+                        Util.drawableToBitmap(MaterialDrawableBuilder
+                                .with(this)
+                                .setIcon(MaterialDrawableBuilder.IconValue.HOSPITAL)
+                                .setColor(getResources().getColor(R.color.color_concerts))
+                                .setSizeDp(30)
+                                .build()));
+            case TYPE_FOOD:
+                return BitmapDescriptorFactory.fromBitmap(
+                        Util.drawableToBitmap(MaterialDrawableBuilder
+                                .with(this)
+                                .setIcon(MaterialDrawableBuilder.IconValue.FOOD)
+                                .setColor(getResources().getColor(R.color.color_arts))
+                                .setSizeDp(30)
+                                .build()));
+            case TYPE_EVENTS:
+            default:
+                return BitmapDescriptorFactory.fromBitmap(
+                        Util.drawableToBitmap(MaterialDrawableBuilder
+                                .with(this)
+                                .setIcon(MaterialDrawableBuilder.IconValue.TICKET)
+                                .setColor(getResources().getColor(R.color.color_informals))
+                                .setSizeDp(30)
+                                .build()));
+
+        }
+    }
+
+    private int getVenueType(String venue_id) {
+        int id = Integer.valueOf(venue_id);
+        switch (id){
+            default:
+                return TYPE_EVENTS;
+        }
+    }
+
+    public void filterEvents(){
+
     }
 }

@@ -1,5 +1,7 @@
 package org.iitb.moodi.ui.activity;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -210,6 +212,15 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public void showErrorDialog(String content){
-        new AlertDialog.Builder(this).setTitle("Internet Error").setMessage(content).show();
+        new AlertDialog.Builder(this).setTitle("Internet Error").setMessage(content)
+                .setCancelable(false)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                        dialog.dismiss();
+                    }
+                })
+                .show();
     }
 }

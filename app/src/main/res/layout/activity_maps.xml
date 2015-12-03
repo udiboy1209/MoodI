@@ -26,33 +26,55 @@
         android:id="@+id/map_filter_menu"
         android:layout_marginBottom="20dp"
         android:layout_marginRight="20dp"
+        android:padding="10dp"
         android:layout_gravity="bottom|end"
-        fab:menu_colorNormal="#3f51b5"
-        android:visibility="gone">
+        fab:menu_icon="@drawable/ic_filter"
+        fab:menu_colorNormal="@color/colorPrimary"
+        fab:menu_colorPressed="@color/colorSecondary">
         <com.github.clans.fab.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/map_filter_acco"
+            android:src="@drawable/ic_hotel"
+            android:padding="10dp"
+            android:onClick="filterMap"
             fab:fab_size="mini"
-            fab:fab_colorNormal="#3f51b5"/>
+            fab:fab_colorNormal="@color/colorPrimary"
+            fab:fab_colorPressed="@color/colorSecondary"
+            fab:fab_label="Accomodation"/>
         <com.github.clans.fab.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/map_filter_food"
+            android:src="@drawable/ic_food"
+            android:padding="10dp"
+            android:onClick="filterMap"
             fab:fab_size="mini"
-            fab:fab_colorNormal="#3f51b5"/>
+            fab:fab_colorNormal="@color/colorPrimary"
+            fab:fab_colorPressed="@color/colorSecondary"
+            fab:fab_label="Food and Beverages"/>
         <com.github.clans.fab.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/map_filter_aid"
+            android:src="@drawable/ic_hospital"
+            android:padding="10dp"
+            android:onClick="filterMap"
             fab:fab_size="mini"
-            fab:fab_colorNormal="#3f51b5"/>
+            fab:fab_colorNormal="@color/colorPrimary"
+            fab:fab_colorPressed="@color/colorSecondary"
+            fab:fab_label="First Aid"/>
         <com.github.clans.fab.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/map_filter_events"
+            android:src="@drawable/ic_ticket"
+            android:padding="10dp"
+            android:onClick="filterMap"
             fab:fab_size="mini"
-            fab:fab_colorNormal="#3f51b5"/>
+            fab:fab_colorNormal="@color/colorPrimary"
+            fab:fab_colorPressed="@color/colorSecondary"
+            fab:fab_label="Events"/>
     </com.github.clans.fab.FloatingActionMenu>
 
 </android.support.design.widget.CoordinatorLayout>
