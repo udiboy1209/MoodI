@@ -25,7 +25,8 @@
                 app:tabMode="fixed"
                 app:tabSelectedTextColor="#FFF"
                 app:tabTextColor="#7FFF"
-                app:tabIndicatorColor="#FFF"/>
+                app:tabIndicatorColor="#FFF"
+                app:tabMinWidth="70dp"/>
 
             <android.support.v4.view.ViewPager
                 android:layout_width="match_parent"

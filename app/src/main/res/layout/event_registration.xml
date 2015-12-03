@@ -4,12 +4,20 @@
     android:layout_height="match_parent"
     android:id="@+id/event_reg_layout"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp">
+        android:layout_marginRight="15dp"
+        android:id="@+id/event_reg_edittext_holder">
         <in.workarounds.typography.TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -28,24 +36,8 @@
             android:id="@+id/event_reg_min_participants"
             app:font_name="Roboto"
             app:font_variant="Regular"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:id="@+id/event_reg_edittext_holder">
 
-            </LinearLayout>
+     </LinearLayout>
         </ScrollView>
         <Button
             android:layout_width="match_parent"
@@ -61,5 +53,3 @@
             android:id="@+id/event_reg_button"
             />
     </LinearLayout>
-
-</LinearLayout>

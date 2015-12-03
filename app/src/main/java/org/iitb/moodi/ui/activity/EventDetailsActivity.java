@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -166,7 +167,7 @@ public class EventDetailsActivity extends BaseActivity {
             if(eventDetails.genrebaap.equals("competitions"))
                 return 4;
             else
-                return 3;
+                return 1;
         }
 
         /**
@@ -233,14 +234,16 @@ public class EventDetailsActivity extends BaseActivity {
                     mi_et.setHint("MI-XXX-YYY");
                     holder.addView(mi_et);
                 }
-                Log.d(TAG,"Scroll view id is "+R.id.event_reg_edittext_holder);
+                //Log.d(TAG,"Scroll view id is "+R.id.event_reg_edittext_holder);
                 container.addView(view);
                 Log.i(TAG, "instantiateItem() [position: " + position + "]");
                 return view;
             }
             else {
                 LayoutInflater inflater = LayoutInflater.from(getBaseContext());
-                TextView view = (TextView) inflater.inflate(R.layout.event_details_text,container,false);
+                ScrollView v = new ScrollView(EventDetailsActivity.this);
+                v.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                TextView view = (TextView)inflater.inflate(R.layout.event_details_text,v,false);
                 switch (position) {
                     case 0:
                         view.setText(Html.fromHtml(eventDetails.intro));
@@ -251,16 +254,14 @@ public class EventDetailsActivity extends BaseActivity {
                     case 2:
                         view.setText(Html.fromHtml(eventDetails.prizes));
                         break;
-                    case 3:
-                        view.setText("Fetching registration details..");
-
                 }
 
-                container.addView(view);
+                v.addView(view);
+                container.addView(v);
                 Log.i(TAG, "instantiateItem() [position: " + position + "]");
 
                 // Return the View
-                return view;
+                return v;
             }
 
         }
