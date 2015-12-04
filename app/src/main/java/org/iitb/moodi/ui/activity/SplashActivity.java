@@ -17,6 +17,7 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.Profile;
 import com.facebook.ProfileTracker;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.gson.Gson;
@@ -51,6 +52,47 @@ public class SplashActivity extends BaseActivity {
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
         setContentView(R.layout.activity_splash);
+
+        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                // Check whether user exists!
+                Log.d(TAG,"Login successful!");
+                if(Profile.getCurrentProfile()==null) {
+                    mProfileTracker = new ProfileTracker() {
+                        @Override
+                        protected void onCurrentProfileChanged(Profile profile, Profile profile2) {
+                            Log.v("facebook - profile", profile2.getFirstName());
+                            checkUserExistence();
+                            mProfileTracker.stopTracking();
+                        }
+                    };
+                    mProfileTracker.startTracking();
+                } else {
+                    checkUserExistence();
+                }
+            }
+
+            @Override
+            public void onCancel() {
+                Toast.makeText(getBaseContext(), "Login cancelled!", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onError(FacebookException exception) {
+                exception.printStackTrace();
+            }
+        });
+
+        findViewById(R.id.fb_login_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LoginManager.getInstance().logInWithReadPermissions(SplashActivity.this, Arrays.asList("email"));
+            }
+        });
+
+
+/*
         LoginButton loginButton = (LoginButton) findViewById(R.id.fb_login_button);
 
         loginButton.setReadPermissions(Arrays.asList("email"));
@@ -83,10 +125,10 @@ public class SplashActivity extends BaseActivity {
             public void onError(FacebookException exception) {
                 exception.printStackTrace();
             }
-        });
+        });*/
         if (AccessToken.getCurrentAccessToken()!=null && Profile.getCurrentProfile()!=null) {
             Log.d(TAG,"Access token exists, disabling button!");
-            loginButton.setVisibility(View.GONE);
+            findViewById(R.id.fb_login_button).setVisibility(View.GONE);
             Log.d(TAG,"Stored prefs value is "+prefs.getString("user_json",""));
             checkUserExistence();
         }

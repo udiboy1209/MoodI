@@ -18,6 +18,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
 
+import com.facebook.Profile;
+import com.facebook.login.LoginManager;
+import com.google.android.gms.fitness.data.Session;
+
 import org.iitb.moodi.BaseApplication;
 import org.iitb.moodi.DatabaseHandler;
 import org.iitb.moodi.R;
@@ -65,6 +69,12 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        activityStack.remove(this);
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
 
@@ -98,6 +108,14 @@ public class BaseActivity extends AppCompatActivity {
                 return true;
             case R.id.action_share:
                 startActivity(new Intent(this, ShareActivity.class));
+                return true;
+            case R.id.action_logout:
+                LoginManager.getInstance().logOut();
+                prefs.edit().remove("user_json").remove("user_exists").commit();
+                BaseApplication.getDB().clear();
+                for(BaseActivity a : activityStack)
+                    a.finish();
+                startActivity(new Intent(this, SplashActivity.class));
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -200,14 +218,17 @@ public class BaseActivity extends AppCompatActivity {
             i.setData(Uri.parse(url));
             startActivity(i);
         } else if(p==2){
-            if(!(this instanceof ContactActivity))
+            if(!(this instanceof MapsActivity))
                 startActivity(new Intent(this,MapsActivity.class));
         } else if(p==3){
             if(!(this instanceof ContactActivity))
                 startActivity(new Intent(this,ContactActivity.class));
         } else if(p==4){
-            if(!(this instanceof ContactActivity))
+            if(!(this instanceof ScheduleActivity))
                 startActivity(new Intent(this,ScheduleActivity.class));
+        } else if(p==5){
+            if(!(this instanceof ProfileActivity))
+                startActivity(new Intent(this,ProfileActivity.class));
         }
     }
 

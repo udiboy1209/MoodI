@@ -60,6 +60,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+
+    public void clear() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        try {
+            db.delete(TABLE_EVENTS,null,null);
+        } catch (Exception E){
+            E.printStackTrace();
+        }
+        db.close();
+    }
+
     public void addEvent(Event e){
         if(e==null)
             return;
@@ -99,6 +110,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         } catch (Exception E){
             E.printStackTrace();
         }
+        db.close();
     }
 
     public void updateEvent(Event e){
@@ -163,7 +175,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             e.genrebaap=cursor.getString(cursor.getColumnIndex(EventsTable.genrebaap));
             e.fav=cursor.getInt(cursor.getColumnIndex(EventsTable.fav))>0;
         }
-
+        db.close();
         return e;
     }
 
@@ -191,7 +203,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 cursor.moveToNext();
             }
         }
-
+        db.close();
         return events;
     }
 }
