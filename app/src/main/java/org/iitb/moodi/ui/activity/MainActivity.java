@@ -44,7 +44,7 @@ public class MainActivity extends BaseActivity
     private Runnable timerUpdate = new Runnable() {
         @Override
         public void run() {
-            long left = 1450396800000L-System.currentTimeMillis(); // Long is MI TIME!
+            long left = 1450409400000L-System.currentTimeMillis(); // Long is MI TIME!
             long days = left/(24*60*60000);
             long hrs = (left/(60*60000)) % 24;
             long mins = (left/(60000)) % 60;

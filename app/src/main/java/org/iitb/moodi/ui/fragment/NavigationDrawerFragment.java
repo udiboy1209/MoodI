@@ -123,7 +123,7 @@ public class NavigationDrawerFragment extends Fragment implements View.OnClickLi
                 getActivity(),
                 R.layout.list_item_nav_drawer,
                 new ListData[]{
-                        ListData.HOME, ListData.ACCO, ListData.MAP, ListData.CONTACT
+                        ListData.HOME, ListData.ACCO, ListData.MAP, ListData.CONTACT, ListData.SCHEDULE
                 }));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return v;

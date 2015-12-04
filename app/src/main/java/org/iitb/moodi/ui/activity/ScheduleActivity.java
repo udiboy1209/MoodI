@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 
 import org.iitb.moodi.R;
 import org.iitb.moodi.ui.fragment.NavigationDrawerFragment;
@@ -38,6 +39,10 @@ public class ScheduleActivity extends BaseActivity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+
+        if(System.currentTimeMillis() > 1449408600000L){
+            ((ImageView)findViewById(R.id.do_not_reveal)).setImageResource(R.drawable.schedule_day2);
+        }
     }
 
     @Override
@@ -49,7 +54,7 @@ public class ScheduleActivity extends BaseActivity
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
-
+        navigateTo(position);
     }
 
     @Override

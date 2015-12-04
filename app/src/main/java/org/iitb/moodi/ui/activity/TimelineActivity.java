@@ -78,6 +78,7 @@ public class TimelineActivity extends BaseActivity {
         mTabLayout = (TabLayout) findViewById(R.id.timeline_tab_layout);
         mViewPager = (ViewPager) findViewById(R.id.timeline_pager);
 
+        mTabLayout.setBackgroundResource(mColorPrimary);
 
         day=getIntent().getIntExtra("day",0);
         loadTimelineData();
@@ -178,11 +179,9 @@ public class TimelineActivity extends BaseActivity {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             TimelineResponse.EventTime e = getItem(position);
-            View v = convertView;
-            if (v == null) {
-                LayoutInflater vi = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                v = vi.inflate(R.layout.list_item_timeline, parent, false);
-            }
+            LayoutInflater vi = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View v = vi.inflate(R.layout.list_item_timeline, parent, false);
+
 
             int sec=getSectionForPosition(position);
             if(position == getPositionForSection(sec)){

@@ -37,13 +37,15 @@
                 <LinearLayout
                     style="@style/ScheduleCard"
                     android:background="@color/color_arts"
-                    android:tag="1">
+                    android:tag="1"
+                    android:layout_marginRight="0dp">
                     <ImageView
                         style="@style/ScheduleCardImage"
-                        android:src="@drawable/small"/>
+                        android:src="@drawable/schedule_day1"/>
                     <Button
                         style="@style/ScheduleCardButton"
-                        android:text="Day 1"/>
+                        android:text="Day 1"
+                        android:tag="1"/>
                 </LinearLayout>
                 <LinearLayout
                     style="@style/ScheduleCard"
@@ -51,10 +53,12 @@
                     android:tag="2">
                     <ImageView
                         style="@style/ScheduleCardImage"
-                        android:src="@drawable/small"/>
+                        android:id="@+id/do_not_reveal"
+                        android:src="@drawable/do_not_reveal"/>
                     <Button
                         style="@style/ScheduleCardButton"
-                        android:text="Day 2"/>
+                        android:text="Day 2"
+                        android:tag="2"/>
                 </LinearLayout>
             </LinearLayout>
             <LinearLayout
@@ -65,24 +69,29 @@
                 <LinearLayout
                     style="@style/ScheduleCard"
                     android:background="@color/color_informals"
-                    android:tag="3">
+                    android:tag="3"
+                    android:layout_marginRight="0dp"
+                    android:layout_marginTop="0dp">
                     <ImageView
                         style="@style/ScheduleCardImage"
-                        android:src="@drawable/small"/>
+                        android:src="@drawable/schedule_day3"/>
                     <Button
                         style="@style/ScheduleCardButton"
-                        android:text="Day 3"/>
+                        android:text="Day 3"
+                        android:tag="3"/>
                 </LinearLayout>
                 <LinearLayout
                     style="@style/ScheduleCard"
                     android:background="@color/blue"
-                    android:tag="4">
+                    android:tag="4"
+                    android:layout_marginTop="0dp">
                     <ImageView
                         style="@style/ScheduleCardImage"
-                        android:src="@drawable/small"/>
+                        android:src="@drawable/schedule_day4"/>
                     <Button
                         style="@style/ScheduleCardButton"
-                        android:text="Day 4"/>
+                        android:text="Day 4"
+                        android:tag="4"/>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
