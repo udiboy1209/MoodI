@@ -43,4 +43,10 @@
             <item name="android:backgroundDimEnabled">false</item>
         </style>
 
+    <style name="FastScroll">
+        <item name="android:fastScrollOverlayPosition">atThumb</item>
+        <item name="android:fastScrollThumbDrawable">@drawable/bg_timeline_scroll</item>
+        <item name="android:fastScrollTextColor">#FFF</item>
+    </style>
+
 </resources>

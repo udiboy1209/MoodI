@@ -3,6 +3,7 @@ package org.iitb.moodi.ui.activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
@@ -144,6 +145,8 @@ public class TimelineActivity extends BaseActivity {
                     TimelineAdapter ta = new TimelineAdapter(TimelineActivity.this, R.layout.list_item_timeline);
                     for(TimelineResponse.EventTime e : sortedEvents){
                         if(e.dept.equals(dept) && e.day.equals(day+"")) {
+                            Log.d("EventDebug","Start hr:"+e.getStartHrs());
+                            Log.d("EventDebug",e.name+" Start time:"+e.getStart().getHours()+":"+e.getStart().getMinutes());
                             ta.add(e);
                         }
                     }
@@ -178,44 +181,75 @@ public class TimelineActivity extends BaseActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
+            View v = convertView;
             TimelineResponse.EventTime e = getItem(position);
-            LayoutInflater vi = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View v = vi.inflate(R.layout.list_item_timeline, parent, false);
+            if(v==null) {
+                LayoutInflater vi = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                v = vi.inflate(R.layout.list_item_timeline, parent, false);
+            }
 
 
             int sec=getSectionForPosition(position);
             if(position == getPositionForSection(sec)){
+                Log.d("TimelineDebug",position+" : section position");
                 TextView timehrs = (TextView) v.findViewById(R.id.event_list_item_time_hrs);
+                TextView ampmtv = (TextView) v.findViewById(R.id.event_list_item_time_ampm);
                 int hrs=e.getStartHrs();
                 int ampmtime = hrs>12?hrs-12:hrs;
                 String ampm = hrs>12?"pm":"am";
-                timehrs.setText(Html.fromHtml(ampmtime+"<br>"+ampm));
-                timehrs.setVisibility(View.VISIBLE);
+                timehrs.setText(String.format("%02d",ampmtime));
+                ampmtv.setText(ampm);
+                v.findViewById(R.id.event_list_item_section_label).setVisibility(View.VISIBLE);
             } else {
-                TextView timehrs = (TextView) v.findViewById(R.id.event_list_item_time_hrs);
-                timehrs.setVisibility(View.INVISIBLE);
+                Log.d("TimelineDebug",position+" : normal position");
+                v.findViewById(R.id.event_list_item_section_label).setVisibility(View.INVISIBLE);
             }
 
 
-            DateFormat timeFormat = new SimpleDateFormat("h:mm a",Locale.ENGLISH);
-            TextView time = (TextView) findViewById(R.id.event_list_item_time);
-            if(time!=null) time.setText(timeFormat.format(e.getStart())+" - " + timeFormat.format(e.getEnd()));
+            TextView time = (TextView) v.findViewById(R.id.event_list_item_time);
+            if(time!=null) time.setText(
+                    String.format("%02d:%02d - %02d:%02d",
+                            e.getStart().getHours(),
+                            e.getStart().getMinutes(),
+                            e.getEnd().getHours(),
+                            e.getEnd().getMinutes()));
+            else Log.d("TimelineDebug","time is null");
 
             TextView name = (TextView) v.findViewById(R.id.event_list_item_name);
             if(name != null) name.setText(e.name);
+            else Log.d("TimelineDebug","name is null");
 
             TextView venue = (TextView) v.findViewById(R.id.event_list_item_venue);
             if(venue != null) venue.setText(e.venue_name);
+            else Log.d("TimelineDebug","venue is null");
 
             TextView description = (TextView) v.findViewById(R.id.event_list_item_description);
             if(description != null) description.setText(e.intro);
+            else Log.d("TimelineDebug","description is null");
 
             return v;
         }
 
         @Override
-        public Integer[] getSections() {
-            return new Integer[]{9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,0};
+        public String[] getSections() {
+            return new String[]{
+                    "08",
+                    "09",
+                    "10",
+                    "11",
+                    "12",
+                    "13",
+                    "14",
+                    "15",
+                    "16",
+                    "17",
+                    "18",
+                    "19",
+                    "20",
+                    "21",
+                    "22",
+                    "23",
+                    "00"};
         }
 
         @Override
@@ -224,9 +258,10 @@ public class TimelineActivity extends BaseActivity {
                 return getCount()-1;
 
             Log.d("getPositionForSection","secIndex:"+sectionIndex);
-            int section = getSections()[sectionIndex];
+            int section = hrFromSec(getSections()[sectionIndex]);
+            Log.d("getPositionForSection","sec:"+section);
             for (int i = 0; i < getCount(); i++) {
-                if(section>=getItem(i).getStartHrs())
+                if(section<=getItem(i).getStart().getHours())
                     return i;
             }
             return getCount()-1;
@@ -234,15 +269,20 @@ public class TimelineActivity extends BaseActivity {
 
         @Override
         public int getSectionForPosition(int position) {
-            Integer[] secs = getSections();
+            String[] secs = getSections();
             int hr = getItem(position).getStartHrs();
             Log.d("getSectionForPosition","hr:"+hr);
             for(int i=0; i<secs.length; i++){
-                if(secs[i]==hr)
+                if(hrFromSec(secs[i])==hr)
                     return i;
             }
 
             return secs.length-1;
+        }
+
+        public int hrFromSec(String sec){
+            int hr=Integer.valueOf(sec);
+            return hr;
         }
     }
 
@@ -301,6 +341,8 @@ public class TimelineActivity extends BaseActivity {
             ListView view = new ListView(container.getContext(),null,R.style.EventListView);
             view.setAdapter(eventLists.get(position));
             view.setFastScrollEnabled(true);
+            view.setDividerHeight(0);
+            if( Build.VERSION.SDK_INT>=21) view.setFastScrollStyle(R.style.FastScroll);
 
             // Add the newly created View to the ViewPager
             container.addView(view);
