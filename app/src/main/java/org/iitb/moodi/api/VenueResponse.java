@@ -17,6 +17,8 @@ public class VenueResponse {
         public String venue_name;
         @SerializedName("venue_id")
         public String venue_id;
+        @SerializedName("venue_type")
+        public String venue_type;
         @SerializedName("location")
         public String location;
 

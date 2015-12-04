@@ -75,6 +75,16 @@
             fab:fab_colorNormal="@color/colorPrimary"
             fab:fab_colorPressed="@color/colorSecondary"
             fab:fab_label="Events"/>
+        <com.github.clans.fab.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/map_filter_clear"
+            android:padding="10dp"
+            android:onClick="filterMap"
+            fab:fab_size="mini"
+            fab:fab_colorNormal="@color/colorPrimary"
+            fab:fab_colorPressed="@color/colorSecondary"
+            fab:fab_label="Clear Filter"/>
     </com.github.clans.fab.FloatingActionMenu>
 
 </android.support.design.widget.CoordinatorLayout>

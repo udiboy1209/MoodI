@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionMenu;
@@ -18,6 +19,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import net.steamcrafted.materialiconlib.MaterialDrawableBuilder;
@@ -48,6 +50,8 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback {
     private GoogleMap mMap;
     private FloatingActionMenu mFilterMenu;
     private Toolbar mToolbar;
+
+    ArrayList<Marker> markers=new ArrayList<>();
 
     ProgressDialog dialog=null;
     private ArrayList<Venue> venues = new ArrayList<>();
@@ -118,10 +122,12 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback {
                 for (Venue v : vr.venues){
                     venues.add(v);
                     Log.d(TAG, v.venue_name+" : "+v.location);
-                    mMap.addMarker(new MarkerOptions()
+                    Marker m = mMap.addMarker(new MarkerOptions()
                             .position(new LatLng(v.getLat(),v.getLng()))
                             .title(v.venue_name)
-                            .icon(getIcon(v.venue_id)));
+                            .icon(getIcon(v.venue_id))
+                            .snippet(v.venue_type!=null?v.venue_type:TYPE_EVENTS+""));
+                    markers.add(m);
                 }
                 dialog.dismiss();
             }
@@ -185,7 +191,48 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback {
         }
     }
 
-    public void filterEvents(){
+    public void filterMap(View v){
+        switch(v.getId()){
+            case R.id.map_filter_acco:
+                for(Marker m : markers){
+                    if(m.getSnippet().equals(TYPE_ACCO+""))
+                        m.setVisible(true);
+                    else
+                        m.setVisible(false);
+                }
+                break;
+            case R.id.map_filter_food:
+                for(Marker m : markers){
+                    if(m.getSnippet().equals(TYPE_FOOD+""))
+                        m.setVisible(true);
+                    else
+                        m.setVisible(false);
+                }
+                break;
+            case R.id.map_filter_aid:
+                for(Marker m : markers){
+                    if(m.getSnippet().equals(TYPE_AID+""))
+                        m.setVisible(true);
+                    else
+                        m.setVisible(false);
+                }
+                break;
+            case R.id.map_filter_events:
+                for(Marker m : markers){
+                    if(m.getSnippet().equals(TYPE_EVENTS+""))
+                        m.setVisible(true);
+                    else
+                        m.setVisible(false);
+                }
+                break;
 
+            case R.id.map_filter_clear:
+                for(Marker m : markers){
+                    m.setVisible(true);
+                }
+                break;
+        }
+
+        mFilterMenu.close(true);
     }
 }

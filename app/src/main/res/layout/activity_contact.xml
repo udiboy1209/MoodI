@@ -27,7 +27,7 @@
                     android:text="Ashish Kumar"/>
                 <in.workarounds.typography.TextView
                     style="@style/ContactNo"
-                    android:text="+91-9833321095"/>
+                    android:text="+91-7738385276"/>
                 <in.workarounds.typography.TextView
                     style="@style/ContactEmail"
                     android:text="ashish@moodi.org"/>
@@ -43,7 +43,7 @@
                     android:text="Sahil Suman"/>
                 <in.workarounds.typography.TextView
                     style="@style/ContactNo"
-                    android:text="+91-7506122739"/>
+                    android:text="+91-9967267823"/>
                 <in.workarounds.typography.TextView
                     style="@style/ContactEmail"
                     android:text="sahil@moodi.org"/>
