@@ -6,8 +6,9 @@
     android:background="@android:color/transparent">
     <ImageView android:id="@+id/list_item_schedule_line"
         android:src="@drawable/timeline_line"
-        android:layout_height="match_parent"
-        android:layout_width="3dp"
+        android:background="#1e88e5"
+        android:layout_height="wrap_content"
+        android:layout_width="2dp"
         android:layout_marginLeft="30dp"
         android:scaleType="centerCrop"
         android:layout_alignParentBottom="true"
@@ -60,14 +61,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/event_list_item_name"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
             android:textColor="#FFF"
             android:textSize="16sp"
             app:font_name="Roboto"
             app:font_variant="Medium"
             android:paddingBottom="0dp"
-            android:text="Machau Event"/>
+            android:text="Machau Event "
+            android:layout_toLeftOf="@+id/event_list_item_venue"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
         <in.workarounds.typography.TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
