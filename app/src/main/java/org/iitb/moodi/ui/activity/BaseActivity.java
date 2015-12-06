@@ -213,22 +213,29 @@ public class BaseActivity extends AppCompatActivity {
                 finish();
             }
         } else if(p==1){
+            if(!(this instanceof MapsActivity))
+                startActivity(new Intent(this,MapsActivity.class));
+        } else if(p==2){
+            if(!(this instanceof ScheduleActivity))
+                startActivity(new Intent(this,ScheduleActivity.class));
+        } else if(p==3){
+            //RESULT
+            //if(!(this instanceof ProfileActivity))
+                //startActivity(new Intent(this,ProfileActivity.class));
+        } else if(p==4){
+            if(!(this instanceof ProfileActivity))
+                startActivity(new Intent(this,ProfileActivity.class));
+        } else if(p==5){
+            if(!(this instanceof ContactActivity))
+                startActivity(new Intent(this,ContactActivity.class));
+        } else if(p==6){
             String url = "http://moodi.org/accommodation";
             Intent i = new Intent(Intent.ACTION_VIEW);
             i.setData(Uri.parse(url));
             startActivity(i);
-        } else if(p==2){
-            if(!(this instanceof MapsActivity))
-                startActivity(new Intent(this,MapsActivity.class));
-        } else if(p==3){
-            if(!(this instanceof ContactActivity))
-                startActivity(new Intent(this,ContactActivity.class));
-        } else if(p==4){
-            if(!(this instanceof ScheduleActivity))
-                startActivity(new Intent(this,ScheduleActivity.class));
-        } else if(p==5){
-            if(!(this instanceof ProfileActivity))
-                startActivity(new Intent(this,ProfileActivity.class));
+        } else if(p==7){
+            if(!(this instanceof AboutActivity))
+                startActivity(new Intent(this,AboutActivity.class));
         }
     }
 
