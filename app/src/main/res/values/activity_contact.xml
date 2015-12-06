@@ -25,7 +25,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="font_name">Roboto</item>
-        <item name="font_variant">Medium</item>
+        <item name="font_variant">Regular</item>
         <item name="android:gravity">center</item>
         <item name="android:textColor">#3f3f3f</item>
         <item name="android:textSize">18sp</item>

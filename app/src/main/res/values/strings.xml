@@ -31,4 +31,7 @@
         please drop a mail at rituj@moodi.org or naren@moodi.org. Your mi no should be of the
         format MI-XYZ-ABC. Note the use of hyphen is necessary.</string>
 
+    <string name="results_note"><b>Note:</b> In case you can\'t find the event you are searching for,
+    the results might not have been uploaded yet. Please check again later.</string>
+
 </resources>

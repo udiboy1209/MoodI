@@ -7,6 +7,7 @@ import org.iitb.moodi.api.CollegeResponse;
 import org.iitb.moodi.api.EventDetailsResponse;
 import org.iitb.moodi.api.EventRegisterResponse;
 import org.iitb.moodi.api.EventsResponse;
+import org.iitb.moodi.api.ResultResponse;
 import org.iitb.moodi.api.TimelineResponse;
 import org.iitb.moodi.api.VenueResponse;
 
@@ -43,6 +44,9 @@ public interface MoodIndigoClient {
 
     @GET("/api/venue")
     void getVenues(Callback<VenueResponse> cb);
+
+    @GET("/api/results")
+    void getResults(Callback<ResultResponse> cb);
 
     @FormUrlEncoded
     @POST("/api/checkuserindatabase")

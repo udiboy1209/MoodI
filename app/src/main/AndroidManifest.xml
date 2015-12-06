@@ -80,6 +80,10 @@
         </activity>
         <activity android:name=".ui.activity.ContactActivity" >
         </activity>
+        <activity android:name=".ui.activity.ResultActivity" >
+        </activity>
+        <activity android:name=".ui.activity.AboutActivity" >
+        </activity>
         <activity android:name=".ui.activity.ShareActivity"
             android:theme="@style/Theme.Transparent">
         </activity>

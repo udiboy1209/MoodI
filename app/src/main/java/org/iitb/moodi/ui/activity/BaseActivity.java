@@ -1,34 +1,28 @@
 package org.iitb.moodi.ui.activity;
 
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.ShareActionProvider;
-import android.util.Log;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
 
-import com.facebook.Profile;
 import com.facebook.login.LoginManager;
-import com.google.android.gms.fitness.data.Session;
 
 import org.iitb.moodi.BaseApplication;
 import org.iitb.moodi.DatabaseHandler;
 import org.iitb.moodi.R;
 import org.iitb.moodi.api.CityResponse;
 import org.iitb.moodi.api.User;
-import org.iitb.moodi.ui.fragment.NavigationDrawerFragment;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -219,9 +213,8 @@ public class BaseActivity extends AppCompatActivity {
             if(!(this instanceof ScheduleActivity))
                 startActivity(new Intent(this,ScheduleActivity.class));
         } else if(p==3){
-            //RESULT
-            //if(!(this instanceof ProfileActivity))
-                //startActivity(new Intent(this,ProfileActivity.class));
+           if(!(this instanceof ResultActivity))
+                startActivity(new Intent(this,ResultActivity.class));
         } else if(p==4){
             if(!(this instanceof ProfileActivity))
                 startActivity(new Intent(this,ProfileActivity.class));
