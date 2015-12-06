@@ -7,6 +7,7 @@ import org.iitb.moodi.api.CollegeResponse;
 import org.iitb.moodi.api.EventDetailsResponse;
 import org.iitb.moodi.api.EventRegisterResponse;
 import org.iitb.moodi.api.EventsResponse;
+import org.iitb.moodi.api.FriendFinderRespone;
 import org.iitb.moodi.api.ResultResponse;
 import org.iitb.moodi.api.TimelineResponse;
 import org.iitb.moodi.api.VenueResponse;
@@ -65,4 +66,11 @@ public interface MoodIndigoClient {
                  @Field("dob") String dob, @Field("gender") String gender,
                  @Field("year_study") String year_study, @Field("access_token") String access_token,
                  Callback<AddUserResponse> cb);
+
+    @FormUrlEncoded
+    @POST("/api/ff")
+    void locationUpdate(@Field("mino") String mi_no, @Field("fbid") String fbid, @Field("name") String name,
+                        @Field("lat_lon") String location, @Field("send_result") boolean sendResult,
+                        Callback<FriendFinderRespone> cb);
 }
+

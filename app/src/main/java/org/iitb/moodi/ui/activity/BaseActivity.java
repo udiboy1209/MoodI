@@ -20,6 +20,7 @@ import com.facebook.login.LoginManager;
 
 import org.iitb.moodi.BaseApplication;
 import org.iitb.moodi.DatabaseHandler;
+import org.iitb.moodi.LocationTrackerService;
 import org.iitb.moodi.R;
 import org.iitb.moodi.api.CityResponse;
 import org.iitb.moodi.api.User;
@@ -102,6 +103,20 @@ public class BaseActivity extends AppCompatActivity {
                 return true;
             case R.id.action_share:
                 startActivity(new Intent(this, ShareActivity.class));
+                return true;
+            case R.id.action_ff:
+                if(LocationTrackerService.RUNNING)
+                    stopService(new Intent(this, LocationTrackerService.class));
+                else
+                    new AlertDialog.Builder(this)
+                            .setTitle("Friend-Finder already switched off")
+                            .setMessage("Friend-Finder was already switched off. You may switch it on from the Maps page.")
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener(){
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            }).show();
                 return true;
             case R.id.action_logout:
                 LoginManager.getInstance().logOut();

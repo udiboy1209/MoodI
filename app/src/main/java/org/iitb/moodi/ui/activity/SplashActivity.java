@@ -19,9 +19,7 @@ import com.facebook.Profile;
 import com.facebook.ProfileTracker;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
 import com.google.gson.Gson;
-
 
 import org.iitb.moodi.MoodIndigoClient;
 import org.iitb.moodi.R;
@@ -37,7 +35,6 @@ import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
-import retrofit.mime.TypedByteArray;
 
 public class SplashActivity extends BaseActivity {
 
@@ -90,42 +87,6 @@ public class SplashActivity extends BaseActivity {
                 LoginManager.getInstance().logInWithReadPermissions(SplashActivity.this, Arrays.asList("email"));
             }
         });
-
-
-/*
-        LoginButton loginButton = (LoginButton) findViewById(R.id.fb_login_button);
-
-        loginButton.setReadPermissions(Arrays.asList("email"));
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                // Check whether user exists!
-                Log.d(TAG,"Login successful!");
-                if(Profile.getCurrentProfile()==null) {
-                    mProfileTracker = new ProfileTracker() {
-                        @Override
-                        protected void onCurrentProfileChanged(Profile profile, Profile profile2) {
-                            Log.v("facebook - profile", profile2.getFirstName());
-                            checkUserExistence();
-                            mProfileTracker.stopTracking();
-                        }
-                    };
-                    mProfileTracker.startTracking();
-                } else {
-                    checkUserExistence();
-                }
-            }
-
-            @Override
-            public void onCancel() {
-                Toast.makeText(getBaseContext(), "Login cancelled!", Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onError(FacebookException exception) {
-                exception.printStackTrace();
-            }
-        });*/
         if (AccessToken.getCurrentAccessToken()!=null && Profile.getCurrentProfile()!=null) {
             Log.d(TAG,"Access token exists, disabling button!");
             findViewById(R.id.fb_login_button).setVisibility(View.GONE);

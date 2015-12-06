@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="org.iitb.moodi" >
+    package="org.iitb.moodi">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -13,30 +13,30 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
+        android:name=".BaseApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme"
-        tools:replace="android:icon"
         android:largeHeap="true"
-        android:name=".BaseApplication">
-
-        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
-
-        <activity android:name="com.facebook.FacebookActivity"
-            android:configChanges=
-                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:label="@string/app_name" />
+        android:theme="@style/AppTheme"
+        tools:replace="android:icon">
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
 
         <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
             android:name=".ui.activity.MainActivity"
-            android:label="@string/app_name" >
-        </activity>
+            android:label="@string/app_name"/>
         <activity
             android:name=".ui.activity.SplashActivity"
             android:label="@string/app_name">
-            <!--android:theme="@android:style/Theme.NoTitleBar" -->
+
+            <!-- android:theme="@android:style/Theme.NoTitleBar" -->
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -46,12 +46,10 @@
         </activity>
         <activity
             android:name=".ui.activity.RegistrationActivity"
-            android:label="@string/title_activity_registration" >
-        </activity>
+            android:label="@string/title_activity_registration"/>
         <activity
             android:name=".ui.activity.BaseActivity"
-            android:label="@string/title_activity_base" >
-        </activity>
+            android:label="@string/title_activity_base"/>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -66,27 +64,21 @@
 
         <activity
             android:name=".ui.activity.MapsActivity"
-            android:label="@string/title_activity_maps" >
-        </activity>
-        <activity android:name=".ui.activity.EventsActivity" >
-        </activity>
-        <activity android:name=".ui.activity.EventDetailsActivity" >
-        </activity>
-        <activity android:name=".ui.activity.ScheduleActivity" >
-        </activity>
-        <activity android:name=".ui.activity.TimelineActivity" >
-        </activity>
-        <activity android:name=".ui.activity.ProfileActivity" >
-        </activity>
-        <activity android:name=".ui.activity.ContactActivity" >
-        </activity>
-        <activity android:name=".ui.activity.ResultActivity" >
-        </activity>
-        <activity android:name=".ui.activity.AboutActivity" >
-        </activity>
-        <activity android:name=".ui.activity.ShareActivity"
-            android:theme="@style/Theme.Transparent">
-        </activity>
+            android:label="@string/title_activity_maps"/>
+        <activity android:name=".ui.activity.EventsActivity"/>
+        <activity android:name=".ui.activity.EventDetailsActivity"/>
+        <activity android:name=".ui.activity.ScheduleActivity"/>
+        <activity android:name=".ui.activity.TimelineActivity"/>
+        <activity android:name=".ui.activity.ProfileActivity"/>
+        <activity android:name=".ui.activity.ContactActivity"/>
+        <activity android:name=".ui.activity.ResultActivity"/>
+        <activity android:name=".ui.activity.AboutActivity"/>
+        <activity
+            android:name=".ui.activity.ShareActivity"
+            android:theme="@style/Theme.Transparent"/>
+
+        <service android:name=".LocationTrackerService" android:enabled="true" android:exported="false"/>
+
     </application>
 
 </manifest>
