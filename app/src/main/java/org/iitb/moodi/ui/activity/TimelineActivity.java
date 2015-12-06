@@ -113,11 +113,7 @@ public class TimelineActivity extends BaseActivity {
             case 1:
                 return "informals";
             case 2:
-                return "concerts";
-            case 3:
                 return "proshows";
-            case 4:
-                return "arts";
             default:
                 return "udirox";
         }
@@ -140,7 +136,7 @@ public class TimelineActivity extends BaseActivity {
 
                 ArrayList<TimelineResponse.EventTime> sortedEvents = Util.mergeSort(new ArrayList<>(Arrays.asList(timelineData.events)));
 
-                for(int i=0; i<5; i++){
+                for(int i=0; i<3; i++){
                     String dept = getDept(i);
                     TimelineAdapter ta = new TimelineAdapter(TimelineActivity.this, R.layout.list_item_timeline);
                     for(TimelineResponse.EventTime e : sortedEvents){
@@ -294,7 +290,7 @@ public class TimelineActivity extends BaseActivity {
          */
         @Override
         public int getCount() {
-            return 5;
+            return 3;
         }
 
         /**
@@ -321,11 +317,7 @@ public class TimelineActivity extends BaseActivity {
                 case 1:
                     return "Informals";
                 case 2:
-                    return "Concerts";
-                case 3:
-                    return "Proshows";
-                case 4:
-                    return "Arts and Workshops";
+                    return "Horizons";
                 default:
                     return "udirox";
             }
