@@ -18,38 +18,38 @@
         android:orientation="vertical" android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <in.workarounds.typography.TextView style="@style/ContactHeader"
+        <in.workarounds.typography.TextView style="@style/AboutHeader"
             android:text="Developed By"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp">
-            <LinearLayout style="@style/ContactRow"
+            <LinearLayout style="@style/AboutRow"
                 android:layout_marginRight="10dp">
                 <de.hdodenhof.circleimageview.CircleImageView
-                    style="@style/ContactDP"
+                    style="@style/AboutDP"
                     android:src="@drawable/dev_dp_udiboy"/>
-                <LinearLayout style="@style/ContactCol">
+                <LinearLayout style="@style/AboutCol">
                     <in.workarounds.typography.TextView
-                        style="@style/ContactName"
+                        style="@style/AboutName"
                         android:text="Meet Udeshi"/>
 
                     <in.workarounds.typography.TextView
-                        style="@style/ContactEmail"
+                        style="@style/AboutEmail"
                         android:text="mudeshi1209@gmail.com"/>
                 </LinearLayout>
             </LinearLayout>
-            <LinearLayout style="@style/ContactRow">
+            <LinearLayout style="@style/AboutRow">
                 <de.hdodenhof.circleimageview.CircleImageView
-                    style="@style/ContactDP"
+                    style="@style/AboutDP"
                     android:src="@drawable/dev_dp_dude"/>
-                <LinearLayout style="@style/ContactCol">
+                <LinearLayout style="@style/AboutCol">
                     <in.workarounds.typography.TextView
-                        style="@style/ContactName"
+                        style="@style/AboutName"
                         android:text="Kalpesh Krishna"/>
 
                     <in.workarounds.typography.TextView
-                        style="@style/ContactEmail"
+                        style="@style/AboutEmail"
                         android:text="kalpeshk2011@gmail.com"/>
                 </LinearLayout>
             </LinearLayout>
@@ -58,18 +58,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp">
-            <LinearLayout style="@style/ContactRow"
+            <LinearLayout style="@style/AboutRow"
                 android:layout_marginRight="10dp">
                 <de.hdodenhof.circleimageview.CircleImageView
-                    style="@style/ContactDP"
+                    style="@style/AboutDP"
                     android:src="@drawable/contact_us_creatives2"/>
-                <LinearLayout style="@style/ContactCol">
+                <LinearLayout style="@style/AboutCol">
                     <in.workarounds.typography.TextView
-                        style="@style/ContactName"
+                        style="@style/AboutName"
                         android:text="Pratik Lodha"/>
 
                     <in.workarounds.typography.TextView
-                        style="@style/ContactEmail"
+                        style="@style/AboutEmail"
                         android:text="pratik@moodi.org"/>
                 </LinearLayout>
             </LinearLayout>
@@ -77,38 +77,38 @@
 
 
 
-        <in.workarounds.typography.TextView style="@style/ContactHeader"
+        <in.workarounds.typography.TextView style="@style/AboutHeader"
             android:text="Designed By"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp">
-            <LinearLayout style="@style/ContactRow"
+            <LinearLayout style="@style/AboutRow"
                 android:layout_marginRight="10dp">
                 <de.hdodenhof.circleimageview.CircleImageView
-                    style="@style/ContactDP"
+                    style="@style/AboutDP"
                     android:src="@drawable/contact_us_creatives3"/>
-                <LinearLayout style="@style/ContactCol">
+                <LinearLayout style="@style/AboutCol">
                     <in.workarounds.typography.TextView
-                        style="@style/ContactName"
+                        style="@style/AboutName"
                         android:text="Rohit Roshan Gogoi"/>
 
                     <in.workarounds.typography.TextView
-                        style="@style/ContactEmail"
+                        style="@style/AboutEmail"
                         android:text="rohit@moodi.org"/>
                 </LinearLayout>
             </LinearLayout>
-            <LinearLayout style="@style/ContactRow">
+            <LinearLayout style="@style/AboutRow">
                 <de.hdodenhof.circleimageview.CircleImageView
-                    style="@style/ContactDP"
+                    style="@style/AboutDP"
                     android:src="@drawable/dev_dp_jalwa"/>
-                <LinearLayout style="@style/ContactCol">
+                <LinearLayout style="@style/AboutCol">
                     <in.workarounds.typography.TextView
-                        style="@style/ContactName"
+                        style="@style/AboutName"
                         android:text="Suraj Naik"/>
 
                     <in.workarounds.typography.TextView
-                        style="@style/ContactEmail"
+                        style="@style/AboutEmail"
                         android:text="srj143m@gmail.com"/>
                 </LinearLayout>
             </LinearLayout>
