@@ -14,6 +14,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 
 import com.facebook.login.LoginManager;
@@ -40,6 +42,7 @@ public class BaseActivity extends AppCompatActivity {
     DatabaseHandler db;
     private static final String TAG = "BaseActivity";
     Toolbar mToolbar;
+    View mSystemBarBG;
 
     @DrawableRes
     protected int mColorPrimary=R.color.colorPrimary;
@@ -73,12 +76,24 @@ public class BaseActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        mSystemBarBG=findViewById(R.id.system_bar_bg);
+
         if(Build.VERSION.SDK_INT >= 21 ) {
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             getWindow().setStatusBarColor(getResources().getColor(mColorPrimaryDark));
         } else if(Build.VERSION.SDK_INT >= 19 ){
+            int result = 0;
+            int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+            if (resourceId > 0) {
+                result = getResources().getDimensionPixelSize(resourceId);
+            }
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
+            if(mSystemBarBG!=null) {
+                mSystemBarBG.getLayoutParams().height=result;
+                mSystemBarBG.setBackgroundResource(mColorPrimaryDark);
+            }
         }
 
         if(mToolbar!=null) mToolbar.setBackgroundResource(mColorPrimary);

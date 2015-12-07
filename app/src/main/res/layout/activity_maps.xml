@@ -13,12 +13,20 @@
         tools:context="org.iitb.moodi.ui.activity.MapsActivity"
         android:name="com.google.android.gms.maps.SupportMapFragment" />
 
-    <android.support.v7.widget.Toolbar
-        android:layout_width="fill_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:id="@+id/toolbar"
-        style="@style/AppToolbar"
-        android:background="@color/colorPrimary"/>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <View android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:id="@+id/system_bar_bg"/>
+        <android.support.v7.widget.Toolbar
+            android:layout_width="fill_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:id="@+id/toolbar"
+            style="@style/AppToolbar"
+            android:background="@color/colorPrimary"/>
+    </LinearLayout>
 
     <com.github.clans.fab.FloatingActionMenu
         android:layout_width="wrap_content"
