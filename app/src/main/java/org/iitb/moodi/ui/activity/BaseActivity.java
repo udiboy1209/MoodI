@@ -232,12 +232,15 @@ public class BaseActivity extends AppCompatActivity {
            if(!(this instanceof ResultActivity))
                 startActivity(new Intent(this,ResultActivity.class));
         } else if(p==4){
+            if(!(this instanceof QRActivity))
+                startActivity(new Intent(this,QRActivity.class));
+        } else if(p==5){
             if(!(this instanceof ProfileActivity))
                 startActivity(new Intent(this,ProfileActivity.class));
-        } else if(p==5){
+        } else if(p==6){
             if(!(this instanceof ContactActivity))
                 startActivity(new Intent(this,ContactActivity.class));
-        } else if(p==6){
+        } else if(p==7){
             String url = "http://moodi.org/accommodation";
             Intent i = new Intent(Intent.ACTION_VIEW);
             i.setData(Uri.parse(url));

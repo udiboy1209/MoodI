@@ -43,7 +43,7 @@ public class NavigationDrawerFragment extends Fragment implements View.OnClickLi
         HOME(IconValue.HOME,"Home"), SCHEDULE(IconValue.ALARM,"Schedule"), MAP(IconValue.MAP,"Map"),
         CONTACT(IconValue.PHONE,"Contact Us"), ACCO(IconValue.HOTEL,"Accomodation"),
         PROFILE(IconValue.ACCOUNT,"MI Profile"), ABOUT(IconValue.INFORMATION,"About Us"),
-        RESULT(IconValue.TROPHY, "Results");
+        RESULT(IconValue.TROPHY, "Results"), QR(IconValue.QRCODE, "QR Scanner");
 
 
         final IconValue icon;
@@ -129,6 +129,7 @@ public class NavigationDrawerFragment extends Fragment implements View.OnClickLi
                         ListData.MAP,
                         ListData.SCHEDULE,
                         ListData.RESULT,
+                        ListData.QR,
                         ListData.PROFILE,
                         ListData.CONTACT,
                         ListData.ACCO,
