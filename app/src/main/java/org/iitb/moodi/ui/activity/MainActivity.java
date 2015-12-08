@@ -157,7 +157,7 @@ public class MainActivity extends BaseActivity
             public void failure(RetrofitError retrofitError) {
                 retrofitError.printStackTrace();
                 dialog.dismiss();
-                Toast.makeText(MainActivity.this, "Error fetching data", Toast.LENGTH_LONG).show();
+                showErrorDialog("Error fetching data. Check your internet connection");
             }
         };
         methods.getEvents(id, callback);

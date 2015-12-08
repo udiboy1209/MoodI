@@ -159,7 +159,7 @@ public class TimelineActivity extends BaseActivity {
             public void failure(RetrofitError retrofitError) {
                 retrofitError.printStackTrace();
                 dialog.dismiss();
-                Toast.makeText(TimelineActivity.this, "Error fetching data", Toast.LENGTH_LONG).show();
+                showErrorDialog("Error fetching data. Check your internet connection.");
             }
         };
         methods.getTimeline(callback);

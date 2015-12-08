@@ -108,7 +108,7 @@ public class EventDetailsActivity extends BaseActivity {
                 dialog.dismiss();
                 showErrorDialog("Can't fetch data, Please check your internet connection");
                 //Toast.makeText(getBaseContext(), "Can't fetch data! Check internet connection", Toast.LENGTH_LONG).show();
-                finish();
+                //finish();
             }
         };
         methods.getEventDetails(eventDetails.id, callback);

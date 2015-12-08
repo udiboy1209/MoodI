@@ -110,7 +110,6 @@ public class ResultActivity extends BaseActivity implements AdapterView.OnItemCl
                 Log.e(TAG, error);
                 dialog.dismiss();
                 showErrorDialog("Can't fetch data. Please check your internet connection!");
-                finish();
             }
         };
         methods.getResults(callback);
