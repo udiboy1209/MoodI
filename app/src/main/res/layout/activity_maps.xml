@@ -34,7 +34,6 @@
         android:id="@+id/map_filter_menu"
         android:layout_marginBottom="20dp"
         android:layout_marginRight="10dp"
-        android:padding="10dp"
         android:layout_gravity="bottom|end"
         fab:menu_icon="@drawable/ic_filter"
         fab:menu_colorNormal="@color/colorPrimary"
@@ -95,5 +94,17 @@
             fab:fab_colorPressed="@color/colorSecondary"
             fab:fab_label="Clear Filter"/>
     </com.github.clans.fab.FloatingActionMenu>
+
+    <com.github.clans.fab.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|left"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="10dp"
+        fab:fab_colorNormal="@color/colorPrimary"
+        fab:fab_colorPressed="@color/colorSecondary"
+        android:src="@drawable/ic_friend_finder"
+        android:id="@+id/map_ff_control"
+        android:onClick="ffControl"/>
 
 </android.support.design.widget.CoordinatorLayout>

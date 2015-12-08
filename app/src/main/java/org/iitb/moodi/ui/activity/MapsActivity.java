@@ -21,6 +21,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.amulyakhare.textdrawable.TextDrawable;
+import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -70,6 +71,7 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Se
     ProgressDialog dialog=null;
     private ArrayList<Venue> venues = new ArrayList<>();
     private LocationTrackerService mLocationTracker;
+    private FloatingActionButton mFFControl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,41 +87,12 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Se
 
         setSupportActionBar(mToolbar);
 
+        mFFControl= (FloatingActionButton) findViewById(R.id.map_ff_control);
 
-        if(!LocationTrackerService.RUNNING) {
-            new AlertDialog.Builder(this)
-                    .setTitle("Switch on Friend-Finder?")
-                    .setMessage("Friend-Finder helps you view the locations of your friends on the map. " +
-                            "They can also view your location on their map. " +
-                            "Note that your location will only be shared with your facebook " +
-                            "friends who have also enabled this feature.")
-                    .setCancelable(true)
-                    .setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface d, int which) {
-                            d.cancel();
-                        }
-                    }).setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface d, int which) {
-                    d.dismiss();
-                    loadMap();
-
-                    startService(new Intent(MapsActivity.this, LocationTrackerService.class));
-                    bindService(new Intent(MapsActivity.this, LocationTrackerService.class), MapsActivity.this, Context.BIND_AUTO_CREATE);
-                }
-            })
-                    .setOnCancelListener(new DialogInterface.OnCancelListener() {
-                        @Override
-                        public void onCancel(DialogInterface d) {
-                            loadMap();
-                        }
-                    })
-                    .show();
-        } else {
-            loadMap();
-            bindService(new Intent(MapsActivity.this, LocationTrackerService.class), MapsActivity.this, Context.BIND_AUTO_CREATE);
-        }
+        startService(new Intent(MapsActivity.this, LocationTrackerService.class));
+        bindService(new Intent(MapsActivity.this, LocationTrackerService.class),
+                MapsActivity.this,
+                Context.BIND_AUTO_CREATE);
     }
 
     private void loadMap(){
@@ -141,12 +114,6 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Se
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             onBackPressed();
-        } else if(item.getItemId() == R.id.action_ff){
-            if(mLocationTracker!=null){
-                mLocationTracker.stopOnUpdateListener();
-                unbindService(this);
-                mLocationTracker=null;
-            }
         }
 
         return super.onOptionsItemSelected(item);
@@ -167,6 +134,7 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Se
 
         LatLng iitb = new LatLng(19.13124,72.91649);
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(iitb,15.3F));
+        mMap.setMyLocationEnabled(true);
 
         dialog.setMessage("Fetching Data...");
 
@@ -180,7 +148,7 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Se
                 VenueResponse vr = (VenueResponse) o;
                 for (Venue v : vr.venues){
                     venues.add(v);
-                    Log.d(TAG, v.venue_name+" : "+v.location);
+                    //Log.d(TAG, v.venue_name+" : "+v.location);
                     IdMarker m = new IdMarker(mMap.addMarker(new MarkerOptions()
                             .position(new LatLng(v.getLat(),v.getLng()))
                             .title(v.venue_name)
@@ -282,6 +250,18 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Se
         mFilterMenu.close(true);
     }
 
+    public void ffControl(View v){
+        if(mLocationTracker!=null){
+            if(mLocationTracker.isFriendFinderRunning()){
+                mFFControl.setColorNormal(Color.GRAY);
+                mLocationTracker.stopFriendFinder();
+            } else {
+                mFFControl.setColorNormalResId(R.color.colorPrimary);
+                mLocationTracker.startFriendFinder();
+            }
+        }
+    }
+
     @Override
     protected void onDestroy() {
         if(mLocationTracker!=null) {
@@ -296,6 +276,42 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Se
         mLocationTracker = ((LocationTrackerService.LocalBinder)service).getService();
         mLocationTracker.setOnUpdateListener(this);
         mLocationTracker.updateUserInfo();
+
+        if(!mLocationTracker.isFriendFinderRunning()) {
+            mFFControl.setColorNormal(Color.GRAY);
+            new AlertDialog.Builder(this)
+                    .setTitle("Switch on Friend-Finder?")
+                    .setMessage("Friend-Finder helps you view the locations " +
+                            "of your friends on the map. " +
+                            "They can also view your location on their map. " +
+                            "Note that your location will only be shared with your facebook " +
+                            "friends who have also enabled this feature.")
+                    .setCancelable(true)
+                    .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface d, int which) {
+                            d.cancel();
+                        }
+                    }).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface d, int which) {
+                            d.dismiss();
+                            loadMap();
+                            mFFControl.setColorNormalResId(R.color.colorPrimary);
+                            mLocationTracker.startFriendFinder();
+                        }
+                    })
+                    .setOnCancelListener(new DialogInterface.OnCancelListener() {
+                        @Override
+                        public void onCancel(DialogInterface d) {
+                            loadMap();
+                        }
+                    })
+                    .show();
+        } else {
+            mFFControl.setColorNormalResId(R.color.colorPrimary);
+            loadMap();
+        }
     }
 
     @Override
@@ -323,7 +339,8 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Se
                 friend_markers.add(new IdMarker(
                     mMap.addMarker(new MarkerOptions()
                         .position(new LatLng(f.getLat(),f.getLng()))
-                        /*.icon(BitmapDescriptorFactory.fromBitmap(Util.drawableToBitmap(TextDrawable.builder()
+                        /*.icon(BitmapDescriptorFactory.
+                                fromBitmap(Util.drawableToBitmap(TextDrawable.builder()
                                 .beginConfig()
                                     .bold()
                                     .textColor(0xFF000000)

@@ -34,4 +34,6 @@
     <string name="results_note"><b>Note:</b> In case you can\'t find the event you are searching for,
     the results might not have been uploaded yet. Please check again later.</string>
 
+    <string name="ff_preference_running">ff_preference_running</string>
+
 </resources>

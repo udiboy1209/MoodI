@@ -3,6 +3,7 @@ package org.iitb.moodi;
 
 import android.app.Service;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Binder;
 import android.os.Bundle;
@@ -37,15 +38,16 @@ public class LocationTrackerService extends Service implements LocationListener,
         GoogleApiClient.OnConnectionFailedListener{
 
     private static final String TAG = "LocationTracker";
-    private static final long INTERVAL = 1000 * 10;
-    private static final long FASTEST_INTERVAL = 1000;
+    private static final long INTERVAL = 1000 * 60 * 5;
+    private static final long FASTEST_INTERVAL = 1000 * 60 * 4;
 
     public final String API_URL = "https://moodi.org";
     public final String m_API_URL = "http://m.moodi.org";
 
-    public static boolean RUNNING=false;
+    private boolean RUNNING=false;
 
     private User me;
+    private SharedPreferences prefs;
 
     public FusedLocationProviderApi locApi = LocationServices.FusedLocationApi;
     public GoogleApiClient apiClient;
@@ -73,14 +75,40 @@ public class LocationTrackerService extends Service implements LocationListener,
         locRequest.setFastestInterval(FASTEST_INTERVAL);
         locRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
 
+        prefs=getSharedPreferences(getString(R.string.preferences),MODE_PRIVATE);
+
         Log.d(TAG,"Friend-Finder started");
         updateUserInfo();
-        RUNNING=true;
+        RUNNING=prefs.getBoolean(getString(R.string.ff_preference_running),false);
 
-        connect();
+        if(RUNNING) connect();
     }
 
     public LocationTrackerService(){
+    }
+
+    public boolean startFriendFinder(){
+        if(!RUNNING) {
+            RUNNING=true;
+            connect();
+            return true;
+        }
+        return false;
+    }
+
+    public boolean stopFriendFinder(){
+        if(RUNNING) {
+            RUNNING=false;
+            disconnect();
+            if(mOnUpdateListener!=null)
+                mOnUpdateListener.onUpdate(new ArrayList<FriendFinderRespone.Friend>());
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isFriendFinderRunning() {
+        return RUNNING;
     }
 
     public void connect(){
@@ -101,6 +129,7 @@ public class LocationTrackerService extends Service implements LocationListener,
     }
 
     public void startLocationUpdates() {
+
         LocationServices.FusedLocationApi.requestLocationUpdates(
                 apiClient, locRequest, this);
         Log.d(TAG, "Location update started .......................");
@@ -188,11 +217,10 @@ public class LocationTrackerService extends Service implements LocationListener,
 
     @Override
     public void onDestroy(){
-
         stopLocationUpdates();
         disconnect();
 
-        RUNNING=false;
+        prefs.edit().putBoolean(getString(R.string.ff_preference_running),RUNNING);
 
         super.onDestroy();
 

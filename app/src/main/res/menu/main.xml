@@ -4,8 +4,6 @@
     <item android:id="@+id/action_faq" android:title="FAQs" app:showAsAction="never" />
     <item android:id="@+id/action_share" android:title="Share app"
         app:showAsAction="never" />
-    <item android:id="@+id/action_ff" android:title="Switch off Friend-Finder"
-        app:showAsAction="never" />
     <item android:id="@+id/action_logout" android:title="Logout"
         app:showAsAction="never" />
 </menu>
