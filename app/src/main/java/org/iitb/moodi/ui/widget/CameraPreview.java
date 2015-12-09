@@ -12,10 +12,12 @@ import java.io.IOException;
 public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback {
     private SurfaceHolder mHolder;
     private Camera mCamera;
+    private Camera.PreviewCallback mPreviewCallback;
 
-    public CameraPreview(Context context, Camera camera) {
+    public CameraPreview(Context context, Camera camera, Camera.PreviewCallback pcb) {
         super(context);
         mCamera = camera;
+        mPreviewCallback=pcb;
 
         // Install a SurfaceHolder.Callback so we get notified when the
         // underlying surface is created and destroyed.
@@ -62,6 +64,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         try {
             mCamera.setPreviewDisplay(mHolder);
             mCamera.startPreview();
+            mCamera.setPreviewCallback(mPreviewCallback);
 
         } catch (Exception e){
             Log.d("CameraPreview", "Error starting camera preview: " + e.getMessage());

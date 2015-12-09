@@ -1,22 +1,33 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" tools:context=".ui.activity.QRActivity">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.activity.QRActivity">
 
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:id="@+id/toolbar"
+        style="@style/AppToolbar"
+        android:background="@color/colorPrimary"/>
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/camera_preview"
+        android:layout_below="@+id/toolbar"
         android:layout_alignParentBottom="true"/>
 
-    <Button android:text="Scan" android:layout_width="wrap_content"
+    <in.workarounds.typography.TextView android:text="Point to someone's QR Sticker to scan" android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="30sp"
+        android:textSize="20sp"
         android:textColor="#FFFFFF"
-        android:background="#66777777"
+        app:font_name="Roboto"
+        app:font_variant="Regular"
+        android:background="@color/colorPrimary"
         android:layout_centerHorizontal="true"
-        android:padding="7dp"
-        android:layout_marginBottom="30dp"
-        android:onClick="scan"
+        android:padding="13dp"
+        android:gravity="center"
         android:layout_alignParentBottom="true"/>
 
 
