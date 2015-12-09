@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<in.workarounds.typography.TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:font_name="Pacifico"
+    android:text="Enjoy the best days of your life at Mood Indigo 2015"
+    android:paddingBottom="45dp"
+    android:paddingRight="45dp"
+    android:paddingLeft="45dp"
+    android:paddingTop="20dp"
+    android:gravity="center"
+    android:textSize="20sp"
+    android:textColor="#FFF"/>

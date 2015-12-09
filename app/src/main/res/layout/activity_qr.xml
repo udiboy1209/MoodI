@@ -20,7 +20,7 @@
 
     <in.workarounds.typography.TextView android:text="Point to someone's QR Sticker to scan" android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
+        android:textSize="16sp"
         android:textColor="#FFFFFF"
         app:font_name="Roboto"
         app:font_variant="Regular"

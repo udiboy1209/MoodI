@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +46,15 @@ public class MainActivity extends BaseActivity
         @Override
         public void run() {
             long left = 1450409400000L-System.currentTimeMillis(); // Long is MI TIME!
+
+            if(left<0) {
+                ((LinearLayout)findViewById(R.id.countdown_widget)).removeAllViews();
+                getLayoutInflater().inflate(
+                        R.layout.widget_countdown_over,
+                        ((LinearLayout)findViewById(R.id.countdown_widget)),
+                        true);
+                return;
+            }
             long days = left/(24*60*60000);
             long hrs = (left/(60*60000)) % 24;
             long mins = (left/(60000)) % 60;
