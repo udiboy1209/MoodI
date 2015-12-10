@@ -96,6 +96,7 @@ public class BackgroundService extends Service implements LocationListener,
         RUNNING=prefs.getBoolean(getString(R.string.ff_preference_running),false);
 
         if(RUNNING) startFriendFinder();
+        else stopFriendFinder();
 
         notifHandle = new Handler(getMainLooper());
 
@@ -126,6 +127,7 @@ public class BackgroundService extends Service implements LocationListener,
         if(!RUNNING) {
             RUNNING=true;
             connect();
+            prefs.edit().putBoolean(getString(R.string.ff_preference_running),RUNNING).apply();
             mNotificationManager.notify(007, mFFNotification);
             return true;
         }
@@ -139,6 +141,7 @@ public class BackgroundService extends Service implements LocationListener,
             mNotificationManager.cancel(007);
             if(mOnUpdateListener!=null)
                 mOnUpdateListener.onUpdate(new ArrayList<FriendFinderRespone.Friend>());
+            prefs.edit().putBoolean(getString(R.string.ff_preference_running),RUNNING).apply();
             return true;
         }
         return false;
@@ -207,8 +210,6 @@ public class BackgroundService extends Service implements LocationListener,
                 public void success(Object o, Response response) {
                     FriendFinderRespone c = (FriendFinderRespone) o;
 
-                    Log.d("FFSuccess", "friend count:"+c.friends.length);
-
                     friends.clear();
                     friends.addAll(Arrays.asList(c.friends));
 
@@ -256,9 +257,6 @@ public class BackgroundService extends Service implements LocationListener,
     public void onDestroy(){
         stopLocationUpdates();
         disconnect();
-
-        prefs.edit().putBoolean(getString(R.string.ff_preference_running),RUNNING).apply();
-
         super.onDestroy();
 
         Log.d(TAG, "Background service stopped");

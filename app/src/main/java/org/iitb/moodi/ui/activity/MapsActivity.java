@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.amulyakhare.textdrawable.TextDrawable;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -143,7 +144,7 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Se
                     IdMarker m = new IdMarker(mMap.addMarker(new MarkerOptions()
                             .position(new LatLng(v.getLat(),v.getLng()))
                             .title(v.venue_name)
-                            .icon(getIcon(v.venue_id))),
+                            .icon(getIcon(v.venue_type))),
                             v.venue_type!=null?v.venue_type:TYPE_EVENTS+"");
                     markers.add(m);
                 }
@@ -160,8 +161,8 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Se
         methods.getVenues(callback);
     }
 
-    private BitmapDescriptor getIcon(String venue_id) {
-        int venueType = getVenueType(venue_id);
+    private BitmapDescriptor getIcon(String venue_type) {
+        int venueType = venue_type!=null?Integer.valueOf(venue_type):TYPE_EVENTS;
         switch(venueType){
             case TYPE_ACCO:
                 return BitmapDescriptorFactory.fromBitmap(
@@ -197,14 +198,6 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Se
                                 .setSizeDp(30)
                                 .build()));
 
-        }
-    }
-
-    private int getVenueType(String venue_id) {
-        int id = Integer.valueOf(venue_id);
-        switch (id){
-            default:
-                return TYPE_EVENTS;
         }
     }
 
@@ -314,31 +307,21 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Se
         Log.d("MapsActivity", "onUpdate:"+arr.size());
         if(arr.size()>0) Log.d("MapsActivity", "onUpdateData:"+arr.get(0).location);
         for(FriendFinderRespone.Friend f : arr) {
-            boolean found=false;
-            for (IdMarker m : friend_markers) {
-                if(m.id.equals(f.fbid)){
-                    m.marker.setPosition(new LatLng(f.getLat(),f.getLng()));
-                    Log.d("MapsActivity", "onUpdate: found existing marker");
-                    found=true;
-                    break;
-                }
-            }
+            friend_markers.clear();
 
-            if(!found){
-                Log.d("MapsActivity", "onUpdate: created new marker");
-                friend_markers.add(new IdMarker(
-                    mMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(f.getLat(),f.getLng()))
-                        /*.icon(BitmapDescriptorFactory.
-                                fromBitmap(Util.drawableToBitmap(TextDrawable.builder()
-                                .beginConfig()
-                                    .bold()
-                                    .textColor(0xFF000000)
-                                    .fontSize(20)
-                                .endConfig()
-                                .buildRound(f.initials(), 0xFF818181))))*/
-                        .title(f.name)),f.fbid));
-            }
+            Log.d("MapsActivity", "onUpdate: created new marker");
+            friend_markers.add(new IdMarker(
+                mMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(f.getLat(),f.getLng()))
+                    /*.icon(BitmapDescriptorFactory.
+                            fromBitmap(Util.drawableToBitmap(TextDrawable.builder()
+                            .beginConfig()
+                                .bold()
+                                .textColor(0xFF000000)
+                                .fontSize(20)
+                            .endConfig()
+                            .buildRound(f.initials(), 0xFF818181))))*/
+                    .title(f.name)),f.fbid));
         }
     }
 
