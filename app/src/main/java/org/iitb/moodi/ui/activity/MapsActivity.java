@@ -14,6 +14,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.github.clans.fab.FloatingActionButton;
@@ -37,6 +39,7 @@ import org.iitb.moodi.Util;
 import org.iitb.moodi.api.FriendFinderRespone;
 import org.iitb.moodi.api.VenueResponse;
 import org.iitb.moodi.api.VenueResponse.Venue;
+import org.iitb.moodi.ui.widget.InstantAutoComplete;
 
 import java.util.ArrayList;
 
@@ -46,7 +49,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class MapsActivity extends BaseActivity implements OnMapReadyCallback, ServiceConnection,
-        BackgroundService.OnUpdateListener {
+        BackgroundService.OnUpdateListener, AdapterView.OnItemClickListener {
 
     private static final int TYPE_ACCO=1;
     private static final int TYPE_AID=2;
@@ -60,11 +63,13 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Se
 
     ArrayList<IdMarker> markers=new ArrayList<>();
     ArrayList<IdMarker> friend_markers=new ArrayList<>();
+    ArrayAdapter<String> friend_suggestions;
 
     ProgressDialog dialog=null;
     private ArrayList<Venue> venues = new ArrayList<>();
     private BackgroundService mLocationTracker;
     private FloatingActionButton mFFControl;
+    private InstantAutoComplete mFFSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +86,10 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Se
         setSupportActionBar(mToolbar);
 
         mFFControl= (FloatingActionButton) findViewById(R.id.map_ff_control);
+        mFFSearch = (InstantAutoComplete) findViewById(R.id.map_ff_search_bar);
+        friend_suggestions=new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line);
+        mFFSearch.setAdapter(friend_suggestions);
+        mFFSearch.setOnItemClickListener(this);
 
         bindService(new Intent(MapsActivity.this, BackgroundService.class),
                 MapsActivity.this,
@@ -111,15 +120,6 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Se
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -208,13 +208,13 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Se
                 type=TYPE_ACCO;
                 break;
             case R.id.map_filter_food:
-                type=TYPE_ACCO;
+                type=TYPE_FOOD;
                 break;
             case R.id.map_filter_aid:
-                type=TYPE_ACCO;
+                type=TYPE_AID;
                 break;
             case R.id.map_filter_events:
-                type=TYPE_ACCO;
+                type=TYPE_EVENTS;
                 break;
             case R.id.map_filter_clear:
                 for(IdMarker m : markers){
@@ -237,9 +237,11 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Se
         if(mLocationTracker!=null){
             if(mLocationTracker.isFriendFinderRunning()){
                 mFFControl.setColorNormal(Color.GRAY);
+                //findViewById(R.id.map_ff_search_container).setVisibility(View.GONE);
                 mLocationTracker.stopFriendFinder();
             } else {
                 mFFControl.setColorNormalResId(R.color.colorPrimary);
+                //findViewById(R.id.map_ff_search_container).setVisibility(View.VISIBLE);
                 mLocationTracker.startFriendFinder();
             }
         }
@@ -305,24 +307,31 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Se
     @Override
     public void onUpdate(ArrayList<FriendFinderRespone.Friend> arr) {
         Log.d("MapsActivity", "onUpdate:"+arr.size());
-        if(arr.size()>0) Log.d("MapsActivity", "onUpdateData:"+arr.get(0).location);
-        for(FriendFinderRespone.Friend f : arr) {
-            friend_markers.clear();
+        friend_suggestions.clear();
+        friend_markers.clear();
 
-            Log.d("MapsActivity", "onUpdate: created new marker");
+        for(FriendFinderRespone.Friend f : arr) {
+            Log.d("MapsActivity", "onUpdate: created new marker for "+f.initials()+", "+f.name);
             friend_markers.add(new IdMarker(
                 mMap.addMarker(new MarkerOptions()
                     .position(new LatLng(f.getLat(),f.getLng()))
-                    /*.icon(BitmapDescriptorFactory.
+                    .icon(BitmapDescriptorFactory.
                             fromBitmap(Util.drawableToBitmap(TextDrawable.builder()
                             .beginConfig()
                                 .bold()
                                 .textColor(0xFF000000)
-                                .fontSize(20)
+                                .fontSize(25)
                             .endConfig()
-                            .buildRound(f.initials(), 0xFF818181))))*/
+                            .buildRect(f.initials(), 0x00000000))))
                     .title(f.name)),f.fbid));
+            friend_suggestions.add(f.name);
         }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        mMap.animateCamera(CameraUpdateFactory
+                .newLatLngZoom(friend_markers.get(position).marker.getPosition(), 17));
     }
 
     private class IdMarker{

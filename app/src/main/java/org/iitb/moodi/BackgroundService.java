@@ -47,8 +47,8 @@ public class BackgroundService extends Service implements LocationListener,
         GoogleApiClient.OnConnectionFailedListener{
 
     private static final String TAG = "BackgroundService";
-    private static final long INTERVAL = 1000 * 60 * 5;
-    private static final long FASTEST_INTERVAL = 1000 * 60 * 4;
+    private static final long INTERVAL = 1000 * 60;
+    private static final long FASTEST_INTERVAL = 1000 * 30;
 
     public final String API_URL = "https://moodi.org";
     public final String m_API_URL = "http://m.moodi.org";
@@ -95,9 +95,6 @@ public class BackgroundService extends Service implements LocationListener,
         updateUserInfo();
         RUNNING=prefs.getBoolean(getString(R.string.ff_preference_running),false);
 
-        if(RUNNING) startFriendFinder();
-        else stopFriendFinder();
-
         notifHandle = new Handler(getMainLooper());
 
         Intent resultIntent = new Intent(this, MapsActivity.class);
@@ -118,33 +115,31 @@ public class BackgroundService extends Service implements LocationListener,
         mFFNotification.flags |= Notification.FLAG_NO_CLEAR | Notification.FLAG_ONGOING_EVENT;
 
         mNotificationManager=(NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if(RUNNING) startFriendFinder();
     }
 
     public BackgroundService(){
     }
 
     public boolean startFriendFinder(){
-        if(!RUNNING) {
-            RUNNING=true;
-            connect();
-            prefs.edit().putBoolean(getString(R.string.ff_preference_running),RUNNING).apply();
-            mNotificationManager.notify(007, mFFNotification);
-            return true;
-        }
-        return false;
+        Log.d("FriendFinder", "ff started");
+        RUNNING=true;
+        connect();
+        prefs.edit().putBoolean(getString(R.string.ff_preference_running),RUNNING).apply();
+        mNotificationManager.notify(007, mFFNotification);
+        return true;
     }
 
     public boolean stopFriendFinder(){
-        if(RUNNING) {
-            RUNNING=false;
-            disconnect();
-            mNotificationManager.cancel(007);
-            if(mOnUpdateListener!=null)
-                mOnUpdateListener.onUpdate(new ArrayList<FriendFinderRespone.Friend>());
-            prefs.edit().putBoolean(getString(R.string.ff_preference_running),RUNNING).apply();
-            return true;
-        }
-        return false;
+        Log.d("FriendFinder", "ff stopped");
+        RUNNING=false;
+        disconnect();
+        mNotificationManager.cancel(007);
+        if(mOnUpdateListener!=null)
+            mOnUpdateListener.onUpdate(new ArrayList<FriendFinderRespone.Friend>());
+        prefs.edit().putBoolean(getString(R.string.ff_preference_running),RUNNING).apply();
+        return true;
     }
 
     public boolean isFriendFinderRunning() {
@@ -282,6 +277,7 @@ public class BackgroundService extends Service implements LocationListener,
 
     public void setOnUpdateListener(OnUpdateListener ll){
         mOnUpdateListener=ll;
+        //if(mOnUpdateListener!=null) mOnUpdateListener.onUpdate(friends);
     }
 
     public void stopOnUpdateListener(){

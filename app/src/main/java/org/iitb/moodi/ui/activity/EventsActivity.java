@@ -92,6 +92,8 @@ public class EventsActivity extends BaseActivity implements
         super.onPause();
     }
 
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will

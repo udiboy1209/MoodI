@@ -26,6 +26,33 @@
             android:id="@+id/toolbar"
             style="@style/AppToolbar"
             android:background="@color/colorPrimary"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/map_ff_search_container"
+            android:background="@color/colorPrimary"
+            android:padding="5dp"
+            android:visibility="gone">
+            <net.steamcrafted.materialiconlib.MaterialIconView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fab:materialIcon="account_search"
+                fab:materialIconColor="#fff"
+                fab:materialIconSize="24dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="5dp"/>
+            <org.iitb.moodi.ui.widget.InstantAutoComplete
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/map_ff_search_bar"
+                android:layout_marginBottom="3dp"
+                android:background="@color/colorPrimary"
+                android:hint="Search Friends"
+                android:textColorHint="#BBB"
+                android:textColor="#FFF"
+                android:textCursorDrawable="@drawable/cursor"/>
+        </LinearLayout>
     </LinearLayout>
 
     <com.github.clans.fab.FloatingActionMenu
