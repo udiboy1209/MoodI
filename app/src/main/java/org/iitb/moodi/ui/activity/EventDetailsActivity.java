@@ -279,7 +279,7 @@ public class EventDetailsActivity extends BaseActivity {
     }
     public boolean validateData() {
         boolean check = true;
-        String mi_regex = "^MI-[A-Z]{3}-[0-9]{3}$";
+        String mi_regex = "^MI-[A-Z]{3}-[0-9]{3,5}$";
         LinearLayout ll = (LinearLayout) findViewById(R.id.event_reg_edittext_holder);
         int children = ll.getChildCount();
         int filledCount = 0;

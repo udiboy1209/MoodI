@@ -16,8 +16,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:id="@+id/event_reg_edittext_holder">
+        android:layout_marginRight="15dp">
         <in.workarounds.typography.TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -36,6 +35,13 @@
             android:id="@+id/event_reg_min_participants"
             app:font_name="Roboto"
             app:font_variant="Regular"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/event_reg_edittext_holder"
+            android:orientation="vertical">
+
+        </LinearLayout>
 
      </LinearLayout>
         </ScrollView>

@@ -1,9 +1,12 @@
 package org.iitb.moodi.ui.activity;
 
 import android.app.ProgressDialog;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -19,6 +22,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.iitb.moodi.BackgroundService;
 import org.iitb.moodi.MoodIndigoClient;
 import org.iitb.moodi.R;
 import org.iitb.moodi.api.Event;
@@ -34,8 +38,8 @@ import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class EventsActivity extends BaseActivity
-        implements View.OnClickListener,ViewPager.OnPageChangeListener {
+public class EventsActivity extends BaseActivity implements
+        View.OnClickListener, ViewPager.OnPageChangeListener, ServiceConnection{
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -49,6 +53,7 @@ public class EventsActivity extends BaseActivity
     private float lastScroll;
 
     private Typeface tabFont;
+    private BackgroundService mService;
 
 
     @Override
@@ -77,6 +82,14 @@ public class EventsActivity extends BaseActivity
 
         mColorPrimary=R.drawable.toolbar_shadow_gradient;
         mColorPrimaryDark=R.color.colorDark;
+
+        bindService(new Intent(this, BackgroundService.class), this, BIND_AUTO_CREATE);
+    }
+
+    @Override
+    protected void onPause() {
+        //mService.postEventNotifications();
+        super.onPause();
     }
 
     @Override
@@ -318,6 +331,16 @@ public class EventsActivity extends BaseActivity
                 return "Arts and Workshops";
             else
                 return "Competitions";
+    }
+
+    @Override
+    public void onServiceConnected(ComponentName name, IBinder service) {
+        mService = ((BackgroundService.LocalBinder)service).getService();
+    }
+
+    @Override
+    public void onServiceDisconnected(ComponentName name) {
+        mService=null;
     }
 
     class SamplePagerAdapter extends PagerAdapter {

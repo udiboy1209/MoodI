@@ -76,7 +76,7 @@
             android:name=".ui.activity.ShareActivity"
             android:theme="@style/Theme.Transparent"/>
 
-        <service android:name=".LocationTrackerService" android:enabled="true" android:exported="false"/>
+        <service android:name=".BackgroundService" android:enabled="true" android:exported="false"/>
 
     </application>
 

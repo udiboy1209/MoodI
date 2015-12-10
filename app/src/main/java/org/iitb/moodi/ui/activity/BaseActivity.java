@@ -15,14 +15,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 
 import com.facebook.login.LoginManager;
 
 import org.iitb.moodi.BaseApplication;
 import org.iitb.moodi.DatabaseHandler;
-import org.iitb.moodi.LocationTrackerService;
 import org.iitb.moodi.R;
 import org.iitb.moodi.api.CityResponse;
 import org.iitb.moodi.api.User;
@@ -121,7 +119,7 @@ public class BaseActivity extends AppCompatActivity {
                 return true;
             case R.id.action_logout:
                 LoginManager.getInstance().logOut();
-                prefs.edit().remove("user_json").remove("user_exists").commit();
+                prefs.edit().remove("user_json").remove("user_exists").apply();
                 BaseApplication.getDB().clear();
                 for(BaseActivity a : activityStack)
                     a.finish();

@@ -6,21 +6,15 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
-import com.amulyakhare.textdrawable.TextDrawable;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -35,17 +29,15 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import net.steamcrafted.materialiconlib.MaterialDrawableBuilder;
 
-import org.iitb.moodi.LocationTrackerService;
+import org.iitb.moodi.BackgroundService;
 import org.iitb.moodi.MoodIndigoClient;
 import org.iitb.moodi.R;
 import org.iitb.moodi.Util;
-import org.iitb.moodi.api.EventDetailsResponse;
 import org.iitb.moodi.api.FriendFinderRespone;
 import org.iitb.moodi.api.VenueResponse;
 import org.iitb.moodi.api.VenueResponse.Venue;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -53,7 +45,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class MapsActivity extends BaseActivity implements OnMapReadyCallback, ServiceConnection,
-        LocationTrackerService.OnUpdateListener {
+        BackgroundService.OnUpdateListener {
 
     private static final int TYPE_ACCO=1;
     private static final int TYPE_AID=2;
@@ -70,7 +62,7 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Se
 
     ProgressDialog dialog=null;
     private ArrayList<Venue> venues = new ArrayList<>();
-    private LocationTrackerService mLocationTracker;
+    private BackgroundService mLocationTracker;
     private FloatingActionButton mFFControl;
 
     @Override
@@ -89,8 +81,7 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Se
 
         mFFControl= (FloatingActionButton) findViewById(R.id.map_ff_control);
 
-        startService(new Intent(MapsActivity.this, LocationTrackerService.class));
-        bindService(new Intent(MapsActivity.this, LocationTrackerService.class),
+        bindService(new Intent(MapsActivity.this, BackgroundService.class),
                 MapsActivity.this,
                 Context.BIND_AUTO_CREATE);
     }
@@ -164,7 +155,6 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Se
                 Log.e(TAG, error);
                 dialog.dismiss();
                 showErrorDialog("Can't fetch data. Please check your internet connection!");
-                finish();
             }
         };
         methods.getVenues(callback);
@@ -273,7 +263,7 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Se
 
     @Override
     public void onServiceConnected(ComponentName name, IBinder service) {
-        mLocationTracker = ((LocationTrackerService.LocalBinder)service).getService();
+        mLocationTracker = ((BackgroundService.LocalBinder)service).getService();
         mLocationTracker.setOnUpdateListener(this);
         mLocationTracker.updateUserInfo();
 

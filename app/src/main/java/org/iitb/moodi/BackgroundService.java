@@ -1,15 +1,22 @@
 package org.iitb.moodi;
 
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.Binder;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
+import android.support.v4.app.TaskStackBuilder;
+import android.support.v7.app.NotificationCompat;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -18,8 +25,10 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
+import org.iitb.moodi.api.Event;
 import org.iitb.moodi.api.FriendFinderRespone;
 import org.iitb.moodi.api.User;
+import org.iitb.moodi.ui.activity.MapsActivity;
 import org.json.JSONObject;
 
 import java.text.DateFormat;
@@ -33,11 +42,11 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 
-public class LocationTrackerService extends Service implements LocationListener,
+public class BackgroundService extends Service implements LocationListener,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener{
 
-    private static final String TAG = "LocationTracker";
+    private static final String TAG = "BackgroundService";
     private static final long INTERVAL = 1000 * 60 * 5;
     private static final long FASTEST_INTERVAL = 1000 * 60 * 4;
 
@@ -59,6 +68,11 @@ public class LocationTrackerService extends Service implements LocationListener,
     private OnUpdateListener mOnUpdateListener=null;
 
     private ArrayList<FriendFinderRespone.Friend> friends = new ArrayList<>();
+    private Notification mFFNotification;
+    private NotificationManager mNotificationManager;
+
+    private ArrayList<Event> notifEvents=new ArrayList<>();
+    private Handler notifHandle;
 
     @Override
     public void onCreate(){
@@ -77,20 +91,42 @@ public class LocationTrackerService extends Service implements LocationListener,
 
         prefs=getSharedPreferences(getString(R.string.preferences),MODE_PRIVATE);
 
-        Log.d(TAG,"Friend-Finder started");
+        Log.d(TAG,"Background service started");
         updateUserInfo();
         RUNNING=prefs.getBoolean(getString(R.string.ff_preference_running),false);
 
-        if(RUNNING) connect();
+        if(RUNNING) startFriendFinder();
+
+        notifHandle = new Handler(getMainLooper());
+
+        Intent resultIntent = new Intent(this, MapsActivity.class);
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+        stackBuilder.addNextIntent(resultIntent);
+        PendingIntent ffPI =
+                stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        mFFNotification = new NotificationCompat.Builder(this)
+                .setContentTitle("Friend-Finder is active")
+                .setContentInfo("View the location of your friends on the map")
+                .setSmallIcon(R.drawable.ic_friend_finder)
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(),R.drawable.ic_launcher))
+                .setAutoCancel(false)
+                .setColor(getResources().getColor(R.color.colorSecondary))
+                .setContentIntent(ffPI)
+                .build();
+        mFFNotification.flags |= Notification.FLAG_NO_CLEAR | Notification.FLAG_ONGOING_EVENT;
+
+        mNotificationManager=(NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
     }
 
-    public LocationTrackerService(){
+    public BackgroundService(){
     }
 
     public boolean startFriendFinder(){
         if(!RUNNING) {
             RUNNING=true;
             connect();
+            mNotificationManager.notify(007, mFFNotification);
             return true;
         }
         return false;
@@ -100,6 +136,7 @@ public class LocationTrackerService extends Service implements LocationListener,
         if(RUNNING) {
             RUNNING=false;
             disconnect();
+            mNotificationManager.cancel(007);
             if(mOnUpdateListener!=null)
                 mOnUpdateListener.onUpdate(new ArrayList<FriendFinderRespone.Friend>());
             return true;
@@ -220,11 +257,11 @@ public class LocationTrackerService extends Service implements LocationListener,
         stopLocationUpdates();
         disconnect();
 
-        prefs.edit().putBoolean(getString(R.string.ff_preference_running),RUNNING);
+        prefs.edit().putBoolean(getString(R.string.ff_preference_running),RUNNING).apply();
 
         super.onDestroy();
 
-        Log.d(TAG, "Friend-Finder stopped");
+        Log.d(TAG, "Background service stopped");
         //Toast.makeText(this, "Friend-Finder stopped",Toast.LENGTH_LONG).show();
     }
 
@@ -237,7 +274,7 @@ public class LocationTrackerService extends Service implements LocationListener,
             me=new User(new JSONObject(
                     getSharedPreferences(getString(R.string.preferences),MODE_PRIVATE)
                             .getString("user_json","")));
-            Log.d("LocationTrackerService", me.getJSON());
+            Log.d("BackgroundService", me.getJSON());
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -253,10 +290,14 @@ public class LocationTrackerService extends Service implements LocationListener,
         mOnUpdateListener=null;
     }
 
+    public void updateEventNotifications() {
+        notifEvents.clear();
+    }
+
     public class LocalBinder extends Binder {
-        public LocationTrackerService getService() {
+        public BackgroundService getService() {
             // Return this instance of LocalService so clients can call public methods
-            return LocationTrackerService.this;
+            return BackgroundService.this;
         }
     }
 
