@@ -243,7 +243,7 @@ public class BaseActivity extends AppCompatActivity {
             Intent i = new Intent(Intent.ACTION_VIEW);
             i.setData(Uri.parse(url));
             startActivity(i);
-        } else if(p==7){
+        } else if(p==8){
             if(!(this instanceof AboutActivity))
                 startActivity(new Intent(this,AboutActivity.class));
         }
