@@ -308,6 +308,9 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Se
     public void onUpdate(ArrayList<FriendFinderRespone.Friend> arr) {
         Log.d("MapsActivity", "onUpdate:"+arr.size());
         friend_suggestions.clear();
+        for(IdMarker m: friend_markers){
+            m.marker.remove();
+        }
         friend_markers.clear();
 
         for(FriendFinderRespone.Friend f : arr) {
