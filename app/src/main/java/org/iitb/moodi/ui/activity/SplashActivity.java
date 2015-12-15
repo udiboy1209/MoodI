@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -161,9 +162,14 @@ public class SplashActivity extends BaseActivity {
 
         if(prefs.contains("user_exists")) {
             dialog.dismiss();
-            Intent i = new Intent(getBaseContext(), MainActivity.class);
-            startActivity(i);
-            finish();
+            new Handler(getMainLooper()).postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent i = new Intent(getBaseContext(), MainActivity.class);
+                    startActivity(i);
+                    finish();
+                }
+            },1350);
         } else {
             RestAdapter restAdapter = new RestAdapter.Builder()
                     .setEndpoint(m_API_URL)
