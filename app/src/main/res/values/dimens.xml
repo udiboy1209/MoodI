@@ -8,4 +8,5 @@
     <dimen name="navigation_drawer_width">260dp</dimen>
 
     <dimen name="genre_card_size">150dp</dimen>
+    <dimen name="map_ff_marker_size">15sp</dimen>
 </resources>

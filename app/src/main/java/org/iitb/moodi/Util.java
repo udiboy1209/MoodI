@@ -135,4 +135,27 @@ public class Util {
         drawable.draw(canvas);
         return bitmap;
     }
+
+    public static Bitmap drawableToBitmap (Drawable drawable, int stdsize) {
+        Bitmap bitmap = null;
+
+        if (drawable instanceof BitmapDrawable) {
+            BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
+            if(bitmapDrawable.getBitmap() != null) {
+                return bitmapDrawable.getBitmap();
+            }
+        }
+
+        int width = drawable.getIntrinsicWidth();
+        width = width > 0 ? width : stdsize*2;
+        int height = drawable.getIntrinsicHeight();
+        height = height > 0 ? height : stdsize;
+
+        bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888); // Single color bitmap will be created of 1x1 pixel
+
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        drawable.draw(canvas);
+        return bitmap;
+    }
 }

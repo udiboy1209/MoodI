@@ -14,8 +14,11 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Filter;
+import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.github.clans.fab.FloatingActionButton;
@@ -49,7 +52,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class MapsActivity extends BaseActivity implements OnMapReadyCallback, ServiceConnection,
-        BackgroundService.OnUpdateListener, AdapterView.OnItemClickListener {
+        BackgroundService.OnUpdateListener, AdapterView.OnItemClickListener, View.OnFocusChangeListener {
 
     private static final int TYPE_ACCO=1;
     private static final int TYPE_AID=2;
@@ -90,6 +93,7 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Se
         friend_suggestions=new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line);
         mFFSearch.setAdapter(friend_suggestions);
         mFFSearch.setOnItemClickListener(this);
+        mFFSearch.setOnFocusChangeListener(this);
 
         bindService(new Intent(MapsActivity.this, BackgroundService.class),
                 MapsActivity.this,
@@ -237,11 +241,11 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Se
         if(mLocationTracker!=null){
             if(mLocationTracker.isFriendFinderRunning()){
                 mFFControl.setColorNormal(Color.GRAY);
-                //findViewById(R.id.map_ff_search_container).setVisibility(View.GONE);
+                findViewById(R.id.map_ff_search_container).setVisibility(View.GONE);
                 mLocationTracker.stopFriendFinder();
             } else {
                 mFFControl.setColorNormalResId(R.color.colorPrimary);
-                //findViewById(R.id.map_ff_search_container).setVisibility(View.VISIBLE);
+                findViewById(R.id.map_ff_search_container).setVisibility(View.VISIBLE);
                 mLocationTracker.startFriendFinder();
             }
         }
@@ -264,6 +268,7 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Se
 
         if(!mLocationTracker.isFriendFinderRunning()) {
             mFFControl.setColorNormal(Color.GRAY);
+            findViewById(R.id.map_ff_search_container).setVisibility(View.GONE);
             new AlertDialog.Builder(this)
                     .setTitle("Switch on Friend-Finder?")
                     .setMessage("Friend-Finder helps you view the locations " +
@@ -283,6 +288,7 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Se
                             d.dismiss();
                             loadMap();
                             mFFControl.setColorNormalResId(R.color.colorPrimary);
+                            findViewById(R.id.map_ff_search_container).setVisibility(View.VISIBLE);
                             mLocationTracker.startFriendFinder();
                         }
                     })
@@ -295,6 +301,7 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Se
                     .show();
         } else {
             mFFControl.setColorNormalResId(R.color.colorPrimary);
+            findViewById(R.id.map_ff_search_container).setVisibility(View.VISIBLE);
             loadMap();
         }
     }
@@ -323,18 +330,31 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Se
                             .beginConfig()
                                 .bold()
                                 .textColor(0xFF000000)
-                                .fontSize(25)
+                                .fontSize(getResources().getDimensionPixelSize(R.dimen.map_ff_marker_size))
                             .endConfig()
-                            .buildRect(f.initials(), 0x00000000))))
-                    .title(f.name)),f.fbid));
+                            .buildRect(f.initials(), 0x00000000),getResources().getDimensionPixelSize(R.dimen.map_ff_marker_size))))
+                    .title(f.name)),f.name));
             friend_suggestions.add(f.name);
         }
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        mMap.animateCamera(CameraUpdateFactory
-                .newLatLngZoom(friend_markers.get(position).marker.getPosition(), 17));
+        String name = (String) parent.getItemAtPosition(position);
+
+        for(IdMarker m : friend_markers){
+            if(m.id.equals(name)) {
+                mMap.animateCamera(CameraUpdateFactory
+                        .newLatLngZoom(m.marker.getPosition(), 18));
+                break;
+            }
+        }
+    }
+
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+        if(hasFocus)
+            ((TextView)v).setText("");
     }
 
     private class IdMarker{
