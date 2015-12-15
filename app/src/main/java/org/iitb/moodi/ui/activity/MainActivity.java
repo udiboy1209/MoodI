@@ -127,49 +127,11 @@ public class MainActivity extends BaseActivity
         return super.onOptionsItemSelected(item);
     }
 
-    public void gotoEventList(View v){
-        int id = Integer.valueOf((String)v.getTag());
+    public void gotoEventList(View v) {
+        int id = Integer.valueOf((String) v.getTag());
         Intent eventlist = new Intent();
         eventlist.setClass(MainActivity.this, EventsActivity.class);
-        eventlist.putExtra("id",id);
+        eventlist.putExtra("id", id);
         startActivity(eventlist);
-
-        final ProgressDialog dialog = ProgressDialog.show(this, "",
-                "Fetching data. Please wait...", true);
-
-        /*File httpCacheDirectory = new File(getBaseContext().getCacheDir(), "responses");
-
-        Cache cache = null;
-        try {
-            cache = new Cache(httpCacheDirectory, 10 * 1024 * 1024);
-        } catch (Exception e) {
-            Log.e("OKHttp", "Could not create http cache", e);
-        }
-
-        OkHttpClient okHttpClient = new OkHttpClient();
-        if (cache != null) {
-            okHttpClient.setCache(cache);
-        }*/
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(API_URL)
-                .build();
-        MoodIndigoClient methods = restAdapter.create(MoodIndigoClient.class);
-        Callback callback = new Callback() {
-            @Override
-            public void success(Object o, Response response) {
-                EventsResponse c = (EventsResponse)o;
-                dialog.dismiss();
-                Log.d("EventFetchResponse", c.id+" "+c.genres.length);
-
-
-            }
-            @Override
-            public void failure(RetrofitError retrofitError) {
-                retrofitError.printStackTrace();
-                dialog.dismiss();
-                showErrorDialog("Error fetching data. Check your internet connection");
-            }
-        };
-        methods.getEvents(id, callback);
     }
 }

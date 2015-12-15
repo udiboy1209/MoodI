@@ -87,12 +87,10 @@ public class EventsActivity extends BaseActivity implements
     }
 
     @Override
-    protected void onPause() {
-        //mService.postEventNotifications();
-        super.onPause();
+    protected void onDestroy() {
+        unbindService(this);
+        super.onDestroy();
     }
-
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
